@@ -1,2 +1,11 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
+
+
+:root {
+    --my-purple: #4b0082ff;
+    --my-cyan: #00ffffff;
+    --my-black: #1c1c1cff;
+    --white: #ffffffff;
+    --my-green: #00ff88ff;
+}
