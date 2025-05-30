@@ -1,19 +1,40 @@
+import { Card, CardHeader, CardFooter, Button } from "@heroui/react";
+import { Link } from "react-router-dom";
 import LazyLoadGameImage from "./LazyLoadGameImage";
-import { Link } from "react-router";
 
 export default function CardGame({ game }) {
-
-    const genres = game.genres.map((genre) => genre.name).join(', ');
+    const genres = game.genres?.map((g) => g.name).join(", ") || "N/A";
 
     return (
-        <article key={game.id}>
-            <LazyLoadGameImage image={game.background_image} />
-            <strong>{game.name}</strong>
-            <small>{genres}</small>
-            <p>{game.released}</p>
-            <Link to={`/games/${game.slug}/${game.id}`}>
-                Vai al gioco
-            </Link>
-        </article>
+        <Card className="relative h-[350px] w-full overflow-hidden hover:scale-105 transition-transform duration-300">
+            <CardHeader className="absolute z-10 top-1 flex-col !items-start">
+                <p className="text-tiny text-white/80 uppercase font-bold drop-shadow-lg">
+                    {game.released || "Release date not available"}
+                </p>
+                <h4 className="text-white font-semibold text-large drop-shadow-lg">
+                    {game.name}
+                </h4>
+            </CardHeader>
+
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent">
+                <LazyLoadGameImage image={game.background_image} alt={game.name} />
+            </div>
+
+            <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 flex items-center justify-between">
+                <div className="flex flex-col gap-1">
+                    <p className="text-tiny text-white/80">Genres: {genres}</p>
+                    <p className="text-tiny text-white/80">Rating: {game.rating || "N/A"}</p>
+                </div>
+                <Button
+                    as={Link}
+                    to={`/games/${game.slug}/${game.id}`}
+                    radius="full"
+                    size="sm"
+                    className="bg-my-purple hover:bg-my-cyan text-white transition-colors duration-300"
+                >
+                    View Details
+                </Button>
+            </CardFooter>
+        </Card>
     );
 }
