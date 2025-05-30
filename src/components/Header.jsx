@@ -28,8 +28,8 @@ export default function Header() {
         <nav className="flex items-center justify-between px-6 py-4 bg-my-purple">
             {/* Logo */}
             <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 bg-black rounded-full" /> {/* Placeholder logo */}
-                <span className="font-bold text-xl text-black">Dayos</span>
+                <div className="w-6 h-6 bg-white rounded-full" /> {/* Placeholder logo */}
+                <a href="/" className="font-bold text-xl text-white">XPHub</a>
             </div>
 
             {/* Center menu */}

@@ -1,4 +1,5 @@
 import LazyLoadGameImage from "./LazyLoadGameImage";
+import { Link } from "react-router";
 
 export default function CardGame({ game }) {
 
@@ -10,7 +11,9 @@ export default function CardGame({ game }) {
             <strong>{game.name}</strong>
             <small>{genres}</small>
             <p>{game.released}</p>
-            <button>Visita il gioco</button>
+            <Link to={`/games/${game.slug}/${game.id}`}>
+                Vai al gioco
+            </Link>
         </article>
     );
 }
