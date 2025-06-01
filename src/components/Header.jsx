@@ -1,36 +1,14 @@
-// export default function Header() {
-//     return (
-//         <nav>
-//             <ul>
-//                 <li><strong>XPHub</strong></li>
-//             </ul>
-//             <ul>
-//                 <li>
-//                     <a href="#" className="secondary">Services</a>
-//                 </li>
-//                 <li>
-//                     <details className="dropdown">
-//                         <summary>Account</summary>
-//                         <ul dir="rtl">
-//                             <li><a href="#">Profile</a></li>
-//                             <li><a href="#">Settings</a></li>
-//                             <li><a href="#">Logout</a></li>
-//                         </ul>
-//                     </details>
-//                 </li>
-//             </ul>
-//         </nav>
-//     )
-// }
+import logo from '../assets/logo.png'
 
 export default function Header() {
     return (
-        <nav className="flex items-center justify-between px-6 py-4 bg-my-purple">
+        <nav className="flex items-center justify-between px-6 py-4 bg-my-black">
             {/* Logo */}
             <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 bg-white rounded-full" /> {/* Placeholder logo */}
+                <img src={logo} alt="Logo" className="h-8" />
                 <a href="/" className="font-bold text-xl text-white">XPHub</a>
             </div>
+
 
             {/* Center menu */}
             <div className="flex space-x-2 bg-black rounded-full px-4 py-2">
