@@ -35,7 +35,7 @@ export default function Header() {
                     </summary>
                     <ul className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg text-sm text-right hidden group-open:block">
                         <li className="border-b hover:bg-gray-100">
-                            <Link to="/settings" className="block px-4 py-2">Settings</Link>
+                            <Link to="/account" className="block px-4 py-2">Settings</Link>
                         </li>
                         <li className="hover:bg-gray-100">
                             <button

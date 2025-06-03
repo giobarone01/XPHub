@@ -5,8 +5,9 @@ import GenrePage from "../pages/genrepage";
 import GamePage from "../pages/gamepage";
 import Layout from "../layout/Layout";
 import SearchPage from "../pages/searchpage";
-import RegisterPage from "../pages/register"
-import LoginPage from "../pages/login"
+import RegisterPage from "../pages/register";
+import LoginPage from "../pages/login";
+import AccountPage from "../pages/account";
 
 export function Routing() {
     return (
@@ -19,6 +20,7 @@ export function Routing() {
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/register" element={<RegisterPage />}/>
                     <Route path="/login" element={<LoginPage />}/>
+                    <Route path="/account" element={<AccountPage />}/>
                     <Route path="*" element={<ErrorPage />} />
                 </Route>
             </Routes>
