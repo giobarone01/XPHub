@@ -1,31 +1,19 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import supabase from "../supabase/supabase-client";
 import logo from '../assets/logo.png';
 import SearchBar from './SearchBar.jsx';
+import SessionContext from "../context/SessionContext";
 
 export default function Header() {
-    const [session, setSession] = useState(null);
-
-    useEffect(() => {
-        const getCurrentSession = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            setSession(session);
-        };
-
-        getCurrentSession();
-
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-            setSession(session);
-        });
-
-        return () => subscription.unsubscribe();
-    }, []);
+    const { session } = useContext(SessionContext);
+    const navigate = useNavigate();
 
     const signOut = async () => {
         const { error } = await supabase.auth.signOut();
         if (error) console.log(error);
         alert('Signed out successfully');
+        navigate('/');
     };
 
     return (
