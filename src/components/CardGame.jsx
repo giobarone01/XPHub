@@ -1,9 +1,9 @@
+// CardGame.jsx con cuore in alto a destra
 import { Card, CardHeader, CardFooter, Button } from "@heroui/react";
 import { Link } from "react-router-dom";
 import LazyLoadGameImage from "./LazyLoadGameImage";
+import ToggleFavorite from "./ToggleFavorite";
 import { FaWindows, FaPlaystation, FaXbox, FaApple, FaLinux, FaAndroid } from "react-icons/fa";
-
-
 
 export default function CardGame({ game }) {
     const genres = game.genres?.map((g) => g.name).join(", ") || "N/A";
@@ -26,7 +26,7 @@ export default function CardGame({ game }) {
     };
 
     return (
-        <Card isFooterBlurred className="relative h-[350px] w-full overflow-hidden hover:scale-105 transition-transform duration-300">
+        <Card className="relative h-[350px] w-full overflow-hidden hover:scale-105 transition-transform duration-300">
             <CardHeader className="absolute z-10 top-1 flex-col !items-start">
                 <div className="flex gap-2 text-white drop-shadow-lg mb-1">
                     {[...new Set(
@@ -34,7 +34,7 @@ export default function CardGame({ game }) {
                     )].map((slug, i) => {
                         const Icon = platformIcons[slug];
                         return Icon ? (
-                            <span key={i} title={slug} className="text-base drop-shadow-sm">
+                            <span key={i} title={slug} className="text-base drop-shadow-sm" aria-label={slug}>
                                 {Icon}
                             </span>
                         ) : null;
@@ -44,6 +44,10 @@ export default function CardGame({ game }) {
                     {game.name}
                 </h4>
             </CardHeader>
+
+            <div className="absolute top-2 right-2 z-30 p-1 drop-shadow-lg">
+                <ToggleFavorite data={game} />
+            </div>
 
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent">
                 <LazyLoadGameImage image={game.background_image} alt={game.name} />

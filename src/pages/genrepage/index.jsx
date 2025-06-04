@@ -3,6 +3,7 @@ import CardGame from "../../components/CardGame";
 import useFetchSolution from "../../hook/useFetchSolution";
 import { useEffect } from "react";
 import Grid from "../../components/Grid";
+import SkeletonCardGame from "../../components/SkeletonCard";
 
 export default function GenrePage() {
     const { genre } = useParams();
@@ -21,11 +22,16 @@ export default function GenrePage() {
         <>
             <h2>Welcome to {genre} page</h2>
             <Grid>
-
                 {error && <article>{error}</article>}
-                {data && data.results.map((game) => (
-                    <CardGame key={game.id} game={game} />
-                ))}
+
+                {loading &&
+                    Array.from({ length: 20 }).map((_, i) => <SkeletonCardGame key={i} />)}
+
+                {!loading &&
+                    data &&
+                    data.results.map((game) => (
+                        <CardGame key={game.id} game={game} />
+                    ))}
             </Grid>
         </>
     );
