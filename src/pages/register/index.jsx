@@ -1,13 +1,10 @@
 import { useState } from "react";
-import {
-    ConfirmSchema,
-    getErrors,
-    getFieldError,
-} from "../../lib/validationForm";
+import { useNavigate, Link } from "react-router-dom";
+import { Input, Button } from "@heroui/react";
+import { ConfirmSchema, getErrors, getFieldError } from "../../lib/validationForm";
 import supabase from "../../supabase/supabase-client";
-
-
-import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import logo from "../../assets/logo.png";
 
 export default function RegisterPage() {
     const navigate = useNavigate();
@@ -59,7 +56,6 @@ export default function RegisterPage() {
         setTouchedFields((prev) => ({ ...prev, [property]: true }));
     };
 
-
     const isInvalid = (property) => {
         if (formSubmitted || touchedFields[property]) {
             return !!formErrors[property];
@@ -67,84 +63,189 @@ export default function RegisterPage() {
         return undefined;
     };
 
-    const setField = (property, valueSelector) => (e) => {
+    const setField = (property) => (value) => {
         setFormState((prev) => ({
             ...prev,
-            [property]: valueSelector ? valueSelector(e) : e.target.value,
+            [property]: value,
         }));
     };
 
     return (
-        <div className="container">
-            <form onSubmit={onSubmit} noValidate>
-                <label htmlFor="email">Email:</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formState.email}
-                    onChange={setField("email")}
-                    onBlur={onBlur("email")}
-                    aria-invalid={isInvalid("email")}
-                    required
-                />
-                {formErrors.email && <small>{formErrors.email}</small>}
+        <div className="min-h-screen flex items-center justify-center p-4 bg-my-black">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="w-full max-w-md p-8 rounded-lg bg-my-black"
+            >
+                <motion.div
+                    initial={{ scale: 0.9 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.2, type: "spring" }}
+                    className="text-center mb-8"
+                >
+                    <div className="flex justify-center mb-6">
+                        <img src={logo} alt="Logo" className="h-15"/>
+                    </div>
 
-                <label htmlFor="firstName">First Name:</label>
-                <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    value={formState.firstName}
-                    onChange={setField("firstName")}
-                    onBlur={onBlur("firstName")}
-                    aria-invalid={isInvalid("firstName")}
-                    required
-                />
-                {formErrors.firstName && <small>{formErrors.firstName}</small>}
+                    <h1 className="text-3xl font-bold mb-2 text-white">Create Your Account</h1>
+                </motion.div>
 
-                <label htmlFor="lastName">Last Name:</label>
-                <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    value={formState.lastName}
-                    onChange={setField("lastName")}
-                    onBlur={onBlur("lastName")}
-                    aria-invalid={isInvalid("lastName")}
-                    required
-                />
-                {formErrors.lastName && <small>{formErrors.lastName}</small>}
+                <form onSubmit={onSubmit} noValidate className="space-y-0">
+                    <motion.div
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.3 }}
+                        className="mb-1"
+                    >
+                        <Input
+                            isClearable
+                            label="Email"
+                            labelPlacement="outside"
+                            name="email"
+                            type="email"
+                            variant="bordered"
+                            value={formState.email}
+                            onValueChange={setField("email")}
+                            onBlur={onBlur("email")}
+                            isInvalid={isInvalid("email")}
+                            errorMessage={formErrors.email}
+                            className="w-full"
+                            classNames={{
+                                label: "heroui-input-label-outside text-my-cyan",
+                                inputWrapper: "bg-my-black border-my-purple",
+                                input: "text-white placeholder-zinc-500",
+                            }}
+                        />
+                    </motion.div>
 
-                <label htmlFor="username">Username:</label>
-                <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    value={formState.username}
-                    onChange={setField("username")}
-                    onBlur={onBlur("username")}
-                    aria-invalid={isInvalid("username")}
-                    required
-                />
-                {formErrors.username && <small>{formErrors.username}</small>}
+                    <motion.div
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.4 }}
+                        className="grid grid-cols-2 gap-4 mb-6"
+                    >
+                        <Input
+                            label="First Name"
+                            labelPlacement="outside"
+                            name="firstName"
+                            variant="bordered"
+                            value={formState.firstName}
+                            onValueChange={setField("firstName")}
+                            onBlur={onBlur("firstName")}
+                            isInvalid={isInvalid("firstName")}
+                            errorMessage={formErrors.firstName}
+                            className="w-full"
+                            classNames={{
+                                label: "heroui-input-label-outside text-my-cyan",
+                                inputWrapper: "bg-my-black border-my-purple",
+                                input: "text-white placeholder-zinc-500",
+                            }}
+                        />
 
-                <label htmlFor="password">Password:</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={formState.password}
-                    onChange={setField("password")}
-                    onBlur={onBlur("password")}
-                    aria-invalid={isInvalid("password")}
-                    required
-                />
-                {formErrors.password && <small>{formErrors.password}</small>}
+                        <Input
+                            label="Last Name"
+                            labelPlacement="outside"
+                            name="lastName"
+                            variant="bordered"
+                            value={formState.lastName}
+                            onValueChange={setField("lastName")}
+                            onBlur={onBlur("lastName")}
+                            isInvalid={isInvalid("lastName")}
+                            errorMessage={formErrors.lastName}
+                            className="w-full"
+                            classNames={{
+                                label: "heroui-input-label-outside text-my-cyan",
+                                inputWrapper: "bg-my-black border-my-purple",
+                                input: "text-white placeholder-zinc-500",
+                            }}
+                        />
+                    </motion.div>
 
-                <br />
-                <button type="submit">Sign Up</button>
-            </form>
+                    <motion.div
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.5 }}
+                        className="mb-6"
+                    >
+                        <Input
+                            label="Username"
+                            labelPlacement="outside"
+                            name="username"
+                            variant="bordered"
+                            value={formState.username}
+                            onValueChange={setField("username")}
+                            onBlur={onBlur("username")}
+                            isInvalid={isInvalid("username")}
+                            errorMessage={formErrors.username}
+                            className="w-full"
+                            classNames={{
+                                label: "heroui-input-label-outside text-my-cyan",
+                                inputWrapper: "bg-my-black border-my-purple",
+                                input: "text-white placeholder-zinc-500",
+                            }}
+                        />
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.6 }}
+                        className="mb-6"
+                    >
+                        <Input
+                            label="Password"
+                            labelPlacement="outside"
+                            name="password"
+                            type="password"
+                            variant="bordered"
+                            value={formState.password}
+                            onValueChange={setField("password")}
+                            onBlur={onBlur("password")}
+                            isInvalid={isInvalid("password")}
+                            errorMessage={formErrors.password}
+                            description="At least 8 characters with uppercase, lowercase and number"
+                            className="w-full"
+                            classNames={{
+                                label: "heroui-input-label-outside text-my-cyan",
+                                inputWrapper: "bg-my-black border-my-purple",
+                                input: "text-white placeholder-zinc-500",
+                            }}
+                        />
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.7 }}
+                        className="pt-2"
+                    >
+                        <Button
+                            type="submit"
+                            className="w-full bg-my-purple hover:bg-my-purple/90 text-white font-medium py-5"
+                        >
+                            Sign Up
+                        </Button>
+                    </motion.div>
+                </form>
+
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.9 }}
+                    className="text-center mt-6"
+                >
+                    <p className="text-zinc-400">
+                        Already have an account?{" "}
+                        <Link
+                            to="/login"
+                            className="text-my-cyan hover:text-my-green transition-colors"
+                        >
+                            Sign in
+                        </Link>
+                    </p>
+                </motion.div>
+            </motion.div>
         </div>
     );
 }

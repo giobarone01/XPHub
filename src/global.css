@@ -9,3 +9,16 @@
     --white: #ffffffff;
     --my-green: #00ff88ff;
 }
+
+
+/*--- FORM REGISTRAZIONE ---*/
+.heroui-input-label-outside {
+    color: white !important;
+}
+
+/* Quando è attiva o compilata mantieni bianco */
+.heroui-input-label-outside[data-filled="true"],
+.heroui-input-label-outside[data-focused="true"] {
+    color: white !important;
+}
+/*--- FINE FORM REGISTRAZIONE ---*/

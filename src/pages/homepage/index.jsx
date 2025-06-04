@@ -9,7 +9,6 @@ export default function HomePage() {
 
     return (
         <>
-            <h1>Home Page</h1>
             <Grid>
                 {error && <article>{error}</article>}
                 {data && data.results.map((game) => (
