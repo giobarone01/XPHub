@@ -21,17 +21,13 @@ export default function GenrePage() {
     return (
         <>
             <h2>Welcome to {genre} page</h2>
+
+            {error && <article>{error}</article>}
+
             <Grid>
-                {error && <article>{error}</article>}
-
-                {loading &&
-                    Array.from({ length: 20 }).map((_, i) => <SkeletonCardGame key={i} />)}
-
-                {!loading &&
-                    data &&
-                    data.results.map((game) => (
-                        <CardGame key={game.id} game={game} />
-                    ))}
+                {loading
+                    ? Array.from({ length: 20 }).map((_, i) => <SkeletonCardGame key={i} />)
+                    : data?.results.map((game) => <CardGame key={game.id} game={game} />)}
             </Grid>
         </>
     );

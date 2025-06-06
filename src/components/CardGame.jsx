@@ -1,4 +1,3 @@
-// CardGame.jsx con cuore in alto a destra
 import { Card, CardHeader, CardFooter, Button } from "@heroui/react";
 import { Link } from "react-router-dom";
 import LazyLoadGameImage from "./LazyLoadGameImage";
@@ -45,7 +44,7 @@ export default function CardGame({ game }) {
                 </h4>
             </CardHeader>
 
-            <div className="absolute top-2 right-2 z-30 p-1 drop-shadow-lg">
+            <div className="absolute top-2 right-2 z-10 p-1 drop-shadow-lg">
                 <ToggleFavorite data={game} />
             </div>
 
@@ -56,7 +55,16 @@ export default function CardGame({ game }) {
             <CardFooter className="absolute bottom-0 z-20 flex items-center justify-between rounded-xl bg-black/50 transition-all duration-300">
                 <div className="flex flex-col gap-1">
                     <p className="text-tiny text-white/80">{genres}</p>
-                    <p className="text-tiny text-white/80">Rating: {game.rating || "N/A"}</p>
+                    <p className="text-tiny text-white/80 flex items-center gap-1">
+                        Rating:
+                        {[...Array(5)].map((_, i) => (
+                            <span key={i} className={i < Math.round(game.rating) ? "text-yellow-400" : "text-gray-600"}>
+                                ★
+                            </span>
+                        ))}
+                        <span className="ml-1 text-white/60">({game.rating?.toFixed(2) || "N/A"})</span>
+                    </p>
+
                 </div>
                 <Button
                     as={Link}

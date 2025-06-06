@@ -5,6 +5,8 @@ import { ConfirmSchema, getErrors, getFieldError } from "../../lib/validationFor
 import supabase from "../../supabase/supabase-client";
 import { motion } from "framer-motion";
 import logo from "../../assets/logo.png";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 
 export default function RegisterPage() {
     const navigate = useNavigate();
@@ -18,6 +20,7 @@ export default function RegisterPage() {
         username: "",
         password: "",
     });
+    const [showPassword, setShowPassword] = useState(false);
 
     const onSubmit = async (event) => {
         event.preventDefault();
@@ -85,7 +88,7 @@ export default function RegisterPage() {
                     className="text-center mb-8"
                 >
                     <div className="flex justify-center mb-6">
-                        <img src={logo} alt="Logo" className="h-15"/>
+                        <img src={logo} alt="Logo" className="h-15" />
                     </div>
 
                     <h1 className="text-3xl font-bold mb-2 text-white">Create Your Account</h1>
@@ -197,7 +200,7 @@ export default function RegisterPage() {
                             label="Password"
                             labelPlacement="outside"
                             name="password"
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             variant="bordered"
                             value={formState.password}
                             onValueChange={setField("password")}
@@ -206,6 +209,15 @@ export default function RegisterPage() {
                             errorMessage={formErrors.password}
                             description="At least 8 characters with uppercase, lowercase and number"
                             className="w-full"
+                            endContent={
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword((prev) => !prev)}
+                                    className="focus:outline-none"
+                                >
+                                    {showPassword ? <FaEyeSlash className="text-xl text-default-400" /> : <FaEye className="text-xl text-default-400" />}
+                                </button>
+                            }
                             classNames={{
                                 label: "heroui-input-label-outside text-my-cyan",
                                 inputWrapper: "bg-my-black border-my-purple",

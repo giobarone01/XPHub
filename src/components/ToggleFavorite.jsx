@@ -1,4 +1,3 @@
-// ToggleFavorite.jsx (modifica minima per supportare className)
 import { useContext } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import FavoritesContext from "../context/FavoritesContext";

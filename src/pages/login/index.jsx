@@ -5,6 +5,8 @@ import { ConfirmSchemaLogin, getErrors, getFieldError } from "../../lib/validati
 import supabase from "../../supabase/supabase-client";
 import { motion } from "framer-motion";
 import logo from "../../assets/logo.png";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 
 export default function LoginPage() {
     const navigate = useNavigate();
@@ -15,6 +17,8 @@ export default function LoginPage() {
         email: "",
         password: "",
     });
+    const [showPassword, setShowPassword] = useState(false);
+
 
     const onSubmit = async (event) => {
         event.preventDefault();
@@ -120,14 +124,24 @@ export default function LoginPage() {
                             label="Password"
                             labelPlacement="outside"
                             name="password"
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             variant="bordered"
                             value={formState.password}
                             onValueChange={setField("password")}
                             onBlur={onBlur("password")}
                             isInvalid={isInvalid("password")}
                             errorMessage={formErrors.password}
+                            description="At least 8 characters with uppercase, lowercase and number"
                             className="w-full"
+                            endContent={
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword((prev) => !prev)}
+                                    className="focus:outline-none"
+                                >
+                                    {showPassword ? <FaEyeSlash className="text-xl text-default-400" /> : <FaEye className="text-xl text-default-400" />}
+                                </button>
+                            }
                             classNames={{
                                 label: "heroui-input-label-outside text-my-cyan",
                                 inputWrapper: "bg-my-black border-my-purple",
