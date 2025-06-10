@@ -18,8 +18,12 @@ export default function SearchPage() {
 
     return (
         <>
-            <h1>Risultati per: {game} game</h1>
+            <div className="container my-10 mx-4">
+                <h1 className="text-4xl font-semibold">Results for: {game.charAt(0).toUpperCase() + game.slice(1)}</h1>
+            </div>
+
             {loading && <p>loading...</p>}
+
             {error && <h1>{error}</h1>}
             <Grid>
                 {data && data.results.map(( game ) => <CardGame key={game.id} game={game} />)}

@@ -20,7 +20,9 @@ export default function GenrePage() {
 
     return (
         <>
-            <h2>Welcome to {genre} page</h2>
+            <div className="container my-10 mx-4">
+                <h1 className="text-4xl font-semibold">{genre.charAt(0).toUpperCase() + genre.slice(1)} games  </h1>
+            </div>
 
             {error && <article>{error}</article>}
 
