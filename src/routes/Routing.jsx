@@ -8,10 +8,12 @@ import SearchPage from "../pages/searchpage";
 import RegisterPage from "../pages/register";
 import LoginPage from "../pages/login";
 import AccountPage from "../pages/account";
+import ScrollToTop from "../components/ScrollToTop";
 
 export function Routing() {
     return (
         <BrowserRouter>
+            <ScrollToTop />
             <Routes>
                 <Route element={<Layout />}>
                     <Route path="/" element={<Homepage />} />

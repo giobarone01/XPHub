@@ -5,7 +5,7 @@ import logo from '../assets/logo.png';
 import SearchBar from './SearchBar.jsx';
 import SessionContext from "../context/SessionContext";
 
-export default function Header() {
+export default function Header({ toggleSidebar }) {
     const { session, profile } = useContext(SessionContext);
     const navigate = useNavigate();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -39,9 +39,19 @@ export default function Header() {
     }, [profile]);
 
     return (
-        <header className="sticky top-0 z-40 bg-my-black shadow-md">
-            <nav className="container mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
-                {/* Logo */}
+        <header className="sticky top-0 z-40 bg-my-black">
+            <nav className="w-full mx-auto sm:px-8 pt-6 flex items-center justify-between">
+
+                <button
+                    onClick={toggleSidebar}
+                    className="md:inline-block lg:hidden mr-3 p-2 rounded hover:bg-my-cyan/30 focus:outline-none"
+                    aria-label="Toggle sidebar"
+                >
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+
                 <div className="flex items-center space-x-2 flex-shrink-0">
                     <Link to="/" className="flex items-center space-x-2 rounded">
                         <img src={logo} alt="XPHub Logo" className="h-8 w-auto" />
@@ -51,7 +61,7 @@ export default function Header() {
                     </Link>
                 </div>
 
-                <div className="hidden md:flex flex-1 max-w-xl mx-4">
+                <div className="flex-1 max-w-xl mx-4 hidden md:block">
                     <SearchBar />
                 </div>
 
@@ -92,20 +102,27 @@ export default function Header() {
 
                             {isDropdownOpen && (
                                 <div
-                                    className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50"
+                                    className="absolute top-full right-0 mt-2 w-48 bg-my-dark rounded-lg shadow-lg py-2 border border-gray-700 z-50"
                                     onMouseLeave={() => setIsDropdownOpen(false)}
                                 >
                                     <Link
                                         to="/account"
-                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                        className="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-my-cyan hover:text-black transition"
                                         onClick={() => setIsDropdownOpen(false)}
                                     >
-                                        Settings
+                                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A9 9 0 1117.804 5.121 9 9 0 015.121 17.804z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                        My Account
                                     </Link>
                                     <button
                                         onClick={signOut}
-                                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                        className="w-full flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-red-500 hover:text-white transition"
                                     >
+                                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7" />
+                                        </svg>
                                         Logout
                                     </button>
                                 </div>
