@@ -22,6 +22,7 @@
     "react-router-dom": "^7.6.1",
     "swiper": "^11.2.8",
     "tailwindcss": "^4.1.8",
+    "yet-another-react-lightbox": "^3.23.2",
     "zod": "^3.25.48"
   },
   "devDependencies": {

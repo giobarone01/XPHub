@@ -12,7 +12,7 @@ export default function ToggleFavorite({ data, className = "" }) {
             onClick={() => {
                 isFavorite() ? removeFavorite(data.id) : addFavorites(data);
             }}
-            className={`text-white hover:text-my-cyan transition-colors duration-300 ${className}`}
+            className={`text-white cursor-pointer hover:text-my-cyan transition-colors duration-300 ${className}`}
             aria-label={isFavorite() ? "Remove from favorites" : "Add to favorites"}
         >
             {isFavorite() ? <FaHeart /> : <FaRegHeart />}
