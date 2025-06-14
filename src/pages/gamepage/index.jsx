@@ -1,10 +1,13 @@
 import { useParams } from "react-router";
 import useFetchSolution from "../../hook/useFetchSolution";
+import useDominantColor from "../../hook/useDominantColor";
 import ToggleFavorite from "../../components/ToggleFavorite";
-import Chatbox from "../../components/ChatBox";
+import Chatbox from "../../components/Chatbox";
 import GamesSlider from "../../components/Slider";
 import { FaWindows, FaPlaystation, FaXbox, FaApple, FaLinux, FaAndroid } from "react-icons/fa";
-import { Button, Divider, Chip } from "@heroui/react";
+import { SiSteam, SiEpicgames, SiGogdotcom, SiPlaystation, SiGoogleplay, SiAppstore } from "react-icons/si";
+import { TiVendorMicrosoft } from "react-icons/ti";
+import { Button, Divider } from "@heroui/react";
 import FallbackImg from "../../assets/fallback.png";
 
 export default function GamePage() {
@@ -16,6 +19,8 @@ export default function GamePage() {
     const { data, loading, error } = useFetchSolution(gameUrl);
     const { data: screenshotsData } = useFetchSolution(screenshotsUrl);
     const { data: moviesData } = useFetchSolution(moviesUrl);
+
+    const { dominantColor, palette, imgRef } = useDominantColor(data?.background_image);
 
     const platformIcons = {
         pc: <FaWindows />,
@@ -33,6 +38,19 @@ export default function GamePage() {
         return slug;
     };
 
+    const getDynamicStyle = (index = 0, opacity = 0.7) => {
+        if (palette && palette.length > 0) {
+            const color = palette[index % palette.length];
+            return {
+                backgroundColor: color.replace('rgb', 'rgba').replace(')', `, ${opacity})`),
+                borderColor: color,
+            };
+        }
+        return {
+            backgroundColor: `rgba(31, 41, 55, ${opacity})`,
+        };
+    };
+
     if (error) return <h1 className="text-red-500 text-center mt-8">{error}</h1>;
     if (loading || !data) return <p className="text-center mt-8">Loading game details...</p>;
 
@@ -43,11 +61,20 @@ export default function GamePage() {
             {/* Copertina */}
             <div className="relative rounded-xl overflow-hidden mb-8 h-96">
                 <img
+                    ref={imgRef}
                     src={data.background_image || FallbackImg}
                     alt={data.name}
                     className="w-full h-full object-cover"
+                    crossOrigin="anonymous"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent flex items-end p-6">
+                <div
+                    className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent flex items-end p-6"
+                    style={{
+                        background: dominantColor
+                            ? `linear-gradient(to top, ${dominantColor.replace('0.7', '0.8')} 0%, transparent 100%)`
+                            : undefined
+                    }}
+                >
                     <div className="w-full">
                         <div className="flex justify-between items-end">
                             <div>
@@ -86,8 +113,11 @@ export default function GamePage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2">
-                    {/* About */}
-                    <div className="bg-gray-900/50 rounded-xl p-6 mb-6">
+                    {/* About Section */}
+                    <div
+                        className="rounded-xl p-6 mb-6 transition-all duration-500 backdrop-blur-sm"
+                        style={getDynamicStyle(0, 0.5)}
+                    >
                         <h2 className="text-2xl font-bold mb-4">About</h2>
                         <p className="text-gray-300 whitespace-pre-line">
                             {data.description_raw || "No description available."}
@@ -100,7 +130,7 @@ export default function GamePage() {
                             <GamesSlider
                                 title="Screenshots"
                                 slidesPerView={3}
-                                enableLightbox = {true}
+                                enableLightbox={true}
                                 items={screenshotsData.results}
                                 renderItem={(shot) => (
                                     <img
@@ -114,40 +144,67 @@ export default function GamePage() {
                         </div>
                     )}
 
-
                     {/* Info Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                        <div className="bg-gray-900/50 rounded-xl p-4">
+                        <div
+                            className="rounded-xl p-4 transition-all duration-500 backdrop-blur-sm"
+                            style={getDynamicStyle(1, 0.5)}
+                        >
                             <h3 className="font-semibold mb-2">Genres</h3>
                             <div className="flex flex-wrap gap-2">
-                                {data.genres?.map(genre => (
-                                    <Chip key={genre.id} variant="flat" color="secondary">
+                                {data.genres?.map((genre, i) => (
+                                    <span
+                                        key={genre.id}
+                                        className="px-3 py-1 rounded-full text-xs font-medium"
+                                        style={{
+                                            ...getDynamicStyle(i, 0.8),
+                                            ...getDynamicStyle(i, 1, true)
+                                        }}
+                                    >
                                         {genre.name}
-                                    </Chip>
+                                    </span>
                                 )) || "N/A"}
                             </div>
                         </div>
-                        <div className="bg-gray-900/50 rounded-xl p-4">
+                        <div
+                            className="rounded-xl p-4 transition-all duration-500 backdrop-blur-sm"
+                            style={getDynamicStyle(2, 0.5)}
+                        >
                             <h3 className="font-semibold mb-2">Developers</h3>
                             <div className="flex flex-wrap gap-2">
-                                {data.developers?.map(dev => (
-                                    <Chip key={dev.id} variant="flat">
+                                {data.developers?.map((dev, i) => (
+                                    <span
+                                        key={dev.id}
+                                        className="px-3 py-1 rounded-full text-xs font-medium"
+                                        style={getDynamicStyle(i, 0.8)}
+                                    >
                                         {dev.name}
-                                    </Chip>
+                                    </span>
                                 )) || "N/A"}
                             </div>
                         </div>
-                        <div className="bg-gray-900/50 rounded-xl p-4">
+
+                        <div
+                            className="rounded-xl p-4 transition-all duration-500 backdrop-blur-sm"
+                            style={getDynamicStyle(3, 0.5)}
+                        >
                             <h3 className="font-semibold mb-2">Tags</h3>
                             <div className="flex flex-wrap gap-2">
-                                {data.tags?.slice(0, 5).map(tag => (
-                                    <Chip key={tag.id} variant="flat" color="primary">
-                                        {tag.name}
-                                    </Chip>
+                                {data.tags?.slice(0, 5).map((tag, i) => (
+                                    <span
+                                        key={tag.id}
+                                        className="px-3 py-1 rounded-full text-xs font-medium border border-white/50 text-white/70 backdrop-blur-sm"
+                                        style={getDynamicStyle(i + 5, 0.3)}
+                                    >
+                                        #{tag.name}
+                                    </span>
                                 )) || "N/A"}
                             </div>
                         </div>
-                        <div className="bg-gray-900/50 rounded-xl p-4">
+                        <div
+                            className="rounded-xl p-4 transition-all duration-500 backdrop-blur-sm"
+                            style={getDynamicStyle(4, 0.5)}
+                        >
                             <h3 className="font-semibold mb-2">Stores</h3>
                             <div className="flex flex-wrap gap-2">
                                 {data.stores?.map(store => (
@@ -167,39 +224,47 @@ export default function GamePage() {
                     </div>
                 </div>
 
-                {/* Stats Sidebar */}
+                {/* Sidebar */}
                 <div className="space-y-6">
-
                     {/* Trailer */}
                     {trailerUrl && (
                         <div className="mb-8">
                             <h2 className="text-2xl font-bold mb-4">Trailer</h2>
-                            <video controls className="w-full rounded-xl">
-                                <source src={trailerUrl} type="video/mp4" />
-                                Your browser does not support the video tag.
-                            </video>
+                            <div
+                                className="rounded-xl overflow-hidden"
+                                style={getDynamicStyle(5, 0.3)}
+                            >
+                                <video controls className="w-full">
+                                    <source src={trailerUrl} type="video/mp4" />
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
                         </div>
                     )}
 
-                    <div className="bg-gray-900/50 rounded-xl p-6">
+                    {/* Game Stats */}
+                    <div
+                        className="rounded-xl p-6 transition-all duration-500 backdrop-blur-sm"
+                        style={getDynamicStyle(0, 0.5)}
+                    >
                         <h3 className="font-bold text-xl mb-4">Game Stats</h3>
                         <div className="space-y-3">
                             <div>
-                                <p className="text-gray-400 text-sm">Metacritic</p>
+                                <p className="text-gray-300 text-sm">Metacritic</p>
                                 <p className="text-white font-medium">
                                     {data.metacritic ? `${data.metacritic}/100` : "N/A"}
                                 </p>
                             </div>
-                            <Divider />
+                            <Divider className="opacity-50" />
                             <div>
-                                <p className="text-gray-400 text-sm">Playtime</p>
+                                <p className="text-gray-300 text-sm">Playtime</p>
                                 <p className="text-white font-medium">
                                     {data.playtime ? `${data.playtime} hours` : "N/A"}
                                 </p>
                             </div>
-                            <Divider />
+                            <Divider className="opacity-50" />
                             <div>
-                                <p className="text-gray-400 text-sm">Achievements</p>
+                                <p className="text-gray-300 text-sm">Achievements</p>
                                 <p className="text-white font-medium">
                                     {data.achievements_count || "N/A"}
                                 </p>
@@ -207,23 +272,42 @@ export default function GamePage() {
                         </div>
                     </div>
 
+
+                    {/* Where to Buy */}
                     {data.stores?.length > 0 && (
-                        <div className="bg-gray-900/50 rounded-xl p-6">
+                        <div
+                            className="rounded-xl p-6 transition-all duration-500 backdrop-blur-sm"
+                            style={getDynamicStyle(1, 0.5)}
+                        >
                             <h3 className="font-bold text-xl mb-4">Where to Buy</h3>
                             <div className="space-y-2">
-                                {data.stores?.slice(0, 3).map(store => (
-                                    <Button
-                                        key={store.id}
-                                        as="a"
-                                        href={`https://${store.store.domain}`}
-                                        target="_blank"
-                                        fullWidth
-                                        className="justify-between"
-                                        endContent="→"
-                                    >
-                                        {store.store.name}
-                                    </Button>
-                                ))}
+                                {data.stores?.slice(0, 3).map(store => {
+                                    const name = store.store.name.toLowerCase();
+                                    const iconsMap = {
+                                        steam: <SiSteam className="w-6 h-6" />,
+                                        "epic games": <SiEpicgames className="w-6 h-6" />,
+                                        gog: <SiGogdotcom className="w-6 h-6" />,
+                                        "xbox store": <TiVendorMicrosoft className="w-6 h-6" />,
+                                        playstation: <SiPlaystation className="w-6 h-6" />,
+                                        "google play": <SiGoogleplay className="w-6 h-6" />,
+                                        "app store": <SiAppstore className="w-6 h-6" />,
+                                    };
+                                    const Icon = Object.entries(iconsMap).find(([key]) => name.includes(key))?.[1] || null;
+
+                                    return (
+                                        <Button
+                                            key={store.id}
+                                            as="a"
+                                            href={`https://${store.store.domain}`}
+                                            target="_blank"
+                                            fullWidth
+                                            className="justify-between"
+                                            endContent={Icon}
+                                        >
+                                            {store.store.name}
+                                        </Button>
+                                    );
+                                })}
                             </div>
                         </div>
                     )}
@@ -233,7 +317,10 @@ export default function GamePage() {
             {/* Community Chat */}
             <div className="mt-12">
                 <h2 className="text-2xl font-bold mb-6">Community Chat</h2>
-                <div className="bg-gray-900/50 rounded-xl p-6">
+                <div
+                    className="rounded-xl p-6 transition-all duration-500 backdrop-blur-sm"
+                    style={getDynamicStyle(2, 0.5)}
+                >
                     <Chatbox data={data} />
                 </div>
             </div>
