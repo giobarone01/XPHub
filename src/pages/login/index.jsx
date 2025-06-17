@@ -6,6 +6,7 @@ import supabase from "../../supabase/supabase-client";
 import { motion } from "framer-motion";
 import logo from "../../assets/logo.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 
 export default function LoginPage() {
@@ -13,6 +14,7 @@ export default function LoginPage() {
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [formErrors, setFormErrors] = useState({});
     const [touchedFields, setTouchedFields] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
     const [formState, setFormState] = useState({
         email: "",
         password: "",
@@ -28,7 +30,11 @@ export default function LoginPage() {
             const errors = getErrors(error);
             setFormErrors(errors);
             console.log(errors);
-        } else {
+            return;
+        }
+        
+        setIsLoading(true);
+        try {
             let { error: signInError } = await supabase.auth.signInWithPassword({
                 email: data.email,
                 password: data.password
@@ -42,6 +48,11 @@ export default function LoginPage() {
                 await new Promise((resolve) => setTimeout(resolve, 1000));
                 navigate("/");
             }
+        } catch (error) {
+            console.error("Unexpected error:", error);
+            alert("An unexpected error occurred");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -158,9 +169,14 @@ export default function LoginPage() {
                     >
                         <Button
                             type="submit"
-                            className="w-full bg-my-purple hover:bg-my-purple/90 text-white font-medium py-5"
+                            className="w-full bg-my-purple hover:bg-my-purple/90 text-white font-medium py-5 flex items-center justify-center min-h-[40px]"
+                            disabled={isLoading}
                         >
-                            Sign In
+                            {isLoading ? (
+                                <LoadingSpinner size="sm" className="text-white" />
+                            ) : (
+                                'Sign In'
+                            )}
                         </Button>
                     </motion.div>
                 </form>

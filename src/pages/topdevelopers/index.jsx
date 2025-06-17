@@ -28,13 +28,17 @@ export default function DevelopersPage() {
                 </div>
             )}
 
-            <Grid>
-                {loading
-                    ? Array.from({ length: 20 }).map((_, i) => (
-                        <SkeletonCardGame key={i} />
-                    ))
-                    : developers?.map((dev) => <DeveloperCard key={dev.id} developer={dev} />)}
-            </Grid>
+            {loading ? (
+                <Grid>
+                    {[...Array(8)].map((_, index) => (
+                        <SkeletonCardGame key={index} />
+                    ))}
+                </Grid>
+            ) : (
+                <Grid>
+                    {developers?.map((dev) => <DeveloperCard key={dev.id} developer={dev} />)}
+                </Grid>
+            )}
         </>
     );
 }

@@ -3,8 +3,10 @@ import { useParams } from "react-router-dom";
 import useFetchSolution from "../../hook/useFetchSolution";
 import CardGame from "../../components/CardGame";
 import Grid from "../../components/Grid";
-import SkeletonCardGame from "../../components/SkeletonCard";
 import { Button } from "@heroui/react";
+import SkeletonCardGame from "../../components/SkeletonCard";
+import SkeletonText from "../../components/SkeletonText";
+import LoadingSpinner from "../../components/LoadingSpinner"
 
 export default function DeveloperDetailPage() {
     const { id } = useParams();
@@ -53,7 +55,19 @@ export default function DeveloperDetailPage() {
         }
     };
 
-    if (devLoading || initialLoading) return <p>Loading...</p>;
+    if (devLoading || initialLoading) return (
+    <>
+        <div className="container y-10 mx-4 my-10">
+            <SkeletonText width="50%" height="2.5rem" className="mb-2" /> {/* h1 skeleton */}
+            <SkeletonText width="8rem" height="1.5rem" /> {/* p skeleton */}
+        </div>
+        <Grid>
+            {[...Array(8)].map((_, index) => (
+                <SkeletonCardGame key={index} />
+            ))}
+        </Grid>
+    </>
+);
     if (devError) return <p>Error loading developer: {devError}</p>;
     if (initialError) return <p>Error loading games: {initialError}</p>;
     if (errorMore) return <p>Error loading more games: {errorMore}</p>;
@@ -71,20 +85,26 @@ export default function DeveloperDetailPage() {
                 {games.map((game) => (
                     <CardGame key={game.id} game={game} />
                 ))}
-                {loadingMore && Array.from({ length: 4 }).map((_, i) => (
-                    <SkeletonCardGame key={`skeleton-${i}`} />
-                ))}
+
             </Grid>
 
-            {hasNext && !loadingMore && (
+            {hasNext && (
                 <div className="flex justify-center my-6">
                     <Button
                         radius="full"
                         size="lg"
-                        className="bg-my-purple hover:bg-my-cyan text-white transition-colors duration-300"
+                        className="bg-my-purple hover:bg-my-purple/50 text-white transition-colors duration-300 flex items-center gap-2"
                         onClick={loadMore}
+                        disabled={loadingMore}
                     >
-                        Load More
+                        {loadingMore ? (
+                            <>
+                                <LoadingSpinner size="sm" className="text-white" />
+                                Loading...
+                            </>
+                        ) : (
+                            'Load More'
+                        )}
                     </Button>
                 </div>
             )}

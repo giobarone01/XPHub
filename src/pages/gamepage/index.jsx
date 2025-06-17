@@ -4,6 +4,7 @@ import useDominantColor from "../../hook/useDominantColor";
 import ToggleFavorite from "../../components/ToggleFavorite";
 import Chatbox from "../../components/Chatbox";
 import GamesSlider from "../../components/Slider";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import { FaWindows, FaPlaystation, FaXbox, FaApple, FaLinux, FaAndroid } from "react-icons/fa";
 import { SiSteam, SiEpicgames, SiGogdotcom, SiPlaystation, SiGoogleplay, SiAppstore } from "react-icons/si";
 import { TiVendorMicrosoft } from "react-icons/ti";
@@ -38,6 +39,26 @@ export default function GamePage() {
         if (slug.includes("xbox")) return "xbox";
         return slug;
     };
+
+    if (loading) {
+        return (
+            <div className="container mx-auto flex flex-col items-center justify-center min-h-screen">
+                <LoadingSpinner size="lg" className="text-my-cyan" />
+                <p className="mt-4 text-gray-400">Loading game details...</p>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="container mx-auto text-center py-12">
+                <p className="text-red-400 text-lg">{error}</p>
+                <Link to="/" className="mt-4 inline-block text-my-cyan hover:text-my-purple transition-colors">
+                    ← Back to Home
+                </Link>
+            </div>
+        );
+    }
 
     const getDynamicStyle = (index = 0, opacity = 0.7) => {
         if (palette && palette.length > 0) {
