@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import LazyLoadGameImage from "./LazyLoadGameImage";
 import ToggleFavorite from "./ToggleFavorite";
 import { FaWindows, FaPlaystation, FaXbox, FaApple, FaLinux, FaAndroid } from "react-icons/fa";
+import FallbackCardImg from "../assets/fallbackcard.png"
 
 export default function CardGame({ game }) {
     const genres = game.genres?.map((g) => g.name).join(", ") || "N/A";
@@ -49,7 +50,7 @@ export default function CardGame({ game }) {
             </div>
 
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent">
-                <LazyLoadGameImage image={game.background_image} alt={game.name} />
+                <LazyLoadGameImage image={game.background_image || FallbackCardImg } alt={game.name} />
             </div>
 
             <CardFooter className="absolute bottom-0 z-20 flex items-center justify-between rounded-xl bg-black/50 transition-all duration-300">

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import GenresDropdown from "./GenresDropdown";
 
 export default function Sidebar({ isOpen, toggleSidebar }) {
@@ -25,6 +26,16 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
             `}
         >
             <GenresDropdown />
+            {/* Link Developers in stile dropdown */}
+            <div className="mb-6">
+                <Link
+                    to="/developers"
+                    className="block pt-2 text-gray-300 hover:text-my-cyan transition-colors duration-250 font-semibold text-white text-xl"
+                    onClick={() => isOpen && toggleSidebar()}
+                >
+                    Developers
+                </Link>
+            </div>
         </aside>
     );
 }

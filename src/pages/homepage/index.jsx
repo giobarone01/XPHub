@@ -9,13 +9,13 @@ export default function HomePage() {
     const initialUrl = `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&dates=2024-01-01,2024-12-31&page=1`;
     const { data, loading, error } = useFetchSolution(initialUrl);
 
-    const { data: topData, loading: loadingTop, error: errorTop } = useFetchSolution(
-        `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&ordering=-rating&page=1`
+    const { data: popularData, loading: loadingPopular, error: errorPopular } = useFetchSolution(
+        `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&ordering=-added&page=1`
     );
 
     return (
         <>
-            {(error || errorTop) && <article>{error || errorTop}</article>}
+            {(error || errorPopular) && <article>{error || errorPopular}</article>}
             <div className="container y-10 mx-4 my-10">
                 <h1 className="text-4xl font-semibold">Trending games</h1>
                 <p>Most clicked</p>
@@ -25,10 +25,10 @@ export default function HomePage() {
                     ? Array.from({ length: 20 }).map((_, i) => <SkeletonCardGame key={i} />)
                     : data?.results.map((game) => <CardGame key={game.id} game={game} />)}
             </Grid>
-            {topData?.results?.length > 0 && (
+            {popularData?.results?.length > 0 && (
                 <GamesSlider
-                    items={topData.results.slice(0, 15)}
-                    title="Highest ratings"
+                    items={popularData.results.slice(0, 15)}
+                    title="Most Popular Games"
                     renderItem={(game) => (
                         <CompactGameCard key={game.id} game={game} height="120px" />
                     )}

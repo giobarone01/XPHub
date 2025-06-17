@@ -46,7 +46,7 @@ export default function GenresDropdown() {
                 aria-expanded={isOpen}
                 aria-controls="genres-dropdown"
             >
-                <span className="font-semibold text-white text-xl">Genres</span>
+                <span className="block text-gray-300 hover:text-my-cyan transition-colors duration-250 font-semibold text-white text-xl cursor-pointer">Genres</span>
                 <svg
                     className={`w-5 h-5 text-my-cyan transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
                     fill="none"

@@ -1,0 +1,40 @@
+import useFetchSolution from "../../hook/useFetchSolution";
+import DeveloperCard from "../../components/DeveloperCard";
+import Grid from "../../components/Grid";
+import SkeletonCardGame from "../../components/SkeletonCard";
+
+export default function DevelopersPage() {
+    const { data, loading, error, load } = useFetchSolution(
+        "https://api.rawg.io/api/developers?key=65f57c71e58e4703a6b14f979b6d8fbb&page_size=40"
+    );
+
+    const developers = data?.results;
+
+    return (
+        <>
+            <div className="container y-10 mx-4 my-10">
+                <h1 className="text-4xl font-semibold">Developers</h1>
+            </div>
+
+            {error && (
+                <div className="text-red-400 mb-4">
+                    <p>{error}</p>
+                    <button
+                        onClick={load}
+                        className="mt-2 px-3 py-1 bg-my-cyan rounded text-black hover:bg-my-purple transition-colors"
+                    >
+                        Retry
+                    </button>
+                </div>
+            )}
+
+            <Grid>
+                {loading
+                    ? Array.from({ length: 20 }).map((_, i) => (
+                        <SkeletonCardGame key={i} />
+                    ))
+                    : developers?.map((dev) => <DeveloperCard key={dev.id} developer={dev} />)}
+            </Grid>
+        </>
+    );
+}

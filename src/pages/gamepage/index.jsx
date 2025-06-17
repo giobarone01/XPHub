@@ -9,6 +9,7 @@ import { SiSteam, SiEpicgames, SiGogdotcom, SiPlaystation, SiGoogleplay, SiAppst
 import { TiVendorMicrosoft } from "react-icons/ti";
 import { Button, Divider } from "@heroui/react";
 import FallbackImg from "../../assets/fallback.png";
+import { Link } from "react-router-dom";
 
 export default function GamePage() {
     const { id } = useParams();
@@ -153,17 +154,15 @@ export default function GamePage() {
                             <h3 className="font-semibold mb-2">Genres</h3>
                             <div className="flex flex-wrap gap-2">
                                 {data.genres?.map((genre, i) => (
-                                    <span
+                                    <Link
                                         key={genre.id}
-                                        className="px-3 py-1 rounded-full text-xs font-medium"
-                                        style={{
-                                            ...getDynamicStyle(i, 0.8),
-                                            ...getDynamicStyle(i, 1, true)
-                                        }}
+                                        to={`/games/${genre.slug}`}
+                                        className="px-3 py-1 rounded-full text-xs font-medium hover:opacity-80"
+                                        style={getDynamicStyle(i, 0.8)}
                                     >
                                         {genre.name}
-                                    </span>
-                                )) || "N/A"}
+                                    </Link>
+                                ))}
                             </div>
                         </div>
                         <div
@@ -173,13 +172,14 @@ export default function GamePage() {
                             <h3 className="font-semibold mb-2">Developers</h3>
                             <div className="flex flex-wrap gap-2">
                                 {data.developers?.map((dev, i) => (
-                                    <span
+                                    <Link
                                         key={dev.id}
-                                        className="px-3 py-1 rounded-full text-xs font-medium"
+                                        to={`/developers/${dev.id}`}
+                                        className="px-3 py-1 rounded-full text-xs font-medium hover:opacity-80"
                                         style={getDynamicStyle(i, 0.8)}
                                     >
                                         {dev.name}
-                                    </span>
+                                    </Link>
                                 )) || "N/A"}
                             </div>
                         </div>
