@@ -315,7 +315,7 @@ export default function GamePage() {
             </div>
 
             {/* Community Chat */}
-            <div className="mt-12">
+            <div className="mt-12 overflow-auto overscroll-contain">
                 <h2 className="text-2xl font-bold mb-6">Community Chat</h2>
                 <div
                     className="rounded-xl p-6 transition-all duration-500 backdrop-blur-sm"

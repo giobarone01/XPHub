@@ -1,21 +1,9 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+import utc from 'dayjs/plugin/utc';
 import supabase from '../supabase/supabase-client';
 
-const chatContainer = {
-    marginTop: '5px',
-    padding: '0px 3px',
-    width: '100%',
-    height: '50vh',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    backgroundColor: '#1b212b',
-    overflowY: 'scroll'
-}
-
-dayjs.extend(relativeTime);
+dayjs.extend(utc);
 
 export default function RealtimeChat({ data }) {
     const [messages, setMessages] = useState([]);
@@ -30,13 +18,16 @@ export default function RealtimeChat({ data }) {
     }
 
     const getInitialMessages = useCallback(async () => {
+        if (!data?.id) return;
         setLoadingInitial(true);
         const { data: messages, error } = await supabase
             .from("messages")
-            .select()
-            .eq("game_id", data?.id);
+            .select("id, profile_username, content, updated_at")
+            .eq("game_id", data.id)
+            .order('updated_at', { ascending: true });
         if (error) {
             setError(error.message);
+            setLoadingInitial(false);
             return;
         }
         setLoadingInitial(false);
@@ -69,15 +60,30 @@ export default function RealtimeChat({ data }) {
     }, [messages]);
 
     return (
-        <div style={chatContainer} ref={messageRef}>
-            {loadingInitial && <progress></progress>}
-            {error && <article>{error}</article>}
+        <div className="h-full overflow-y-auto p-4 space-y-4 break-words" ref={messageRef}>
+            {loadingInitial && (
+                <div className="flex justify-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+                </div>
+            )}
+            {error && (
+                <div className="bg-red-500/10 text-red-500 p-3 rounded-lg">
+                    {error}
+                </div>
+            )}
             {messages &&
                 messages.map((message) => (
-                    <article key={message.id}>
-                        <p>{message.profile_username}</p>
-                        <small>{message.content}</small>
-                        <p>{dayjs().to(dayjs(message.created_at))}</p>
+                    <article key={message.id} className="bg-black/20 rounded-lg p-3 space-y-2 break-words">
+                        <div className="flex items-center gap-2">
+                            <span className="font-semibold text-white/90">{message.profile_username}</span>
+                            <span className="text-xs text-white/60">
+                                {message.updated_at
+                                    ? dayjs.utc(message.updated_at).local().format('DD/MM/YYYY HH:mm')
+                                    : "Date not available"
+                                }
+                            </span>
+                        </div>
+                        <p className="text-white/80 break-words break-all">{message.content}</p>
                     </article>
                 ))}
         </div>

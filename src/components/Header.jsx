@@ -55,7 +55,7 @@ export default function Header({ toggleSidebar }) {
                 <div className="flex items-center space-x-2 flex-shrink-0">
                     <Link to="/" className="flex items-center space-x-2 rounded">
                         <img src={logo} alt="XPHub Logo" className="h-8 w-auto" />
-                        <span className="font-bold text-xl text-white hover:text-my-cyan transition-colors duration-200">
+                        <span className="font-bold text-xl text-white hover:text-my-cyan transition-colors duration-200 hidden lg:inline">
                             XPHub
                         </span>
                     </Link>
