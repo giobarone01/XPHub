@@ -68,28 +68,48 @@ export default function GamePage() {
                     alt={data?.name || "Game cover"}
                     className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-my-black/80 via-my-black/50 to-transparent flex items-end p-6">
+                <div className="absolute inset-0 bg-gradient-to-t from-my-black/80 via-my-black/50 to-transparent flex flex-col justify-end p-6">
                     <div className="w-full">
-                        <div className="flex justify-between items-end">
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end">
                             <div>
                                 <h1 className="text-4xl font-bold text-white mb-2">{data?.name}</h1>
-                                <p className="text-gray-300 mb-4">{data?.released}</p>
-                            </div>
-                            <div className="flex items-center gap-4">
-                                <p className="text-tiny text-white/80 flex items-center gap-1">
-                                    Rating:
+                                <p className="text-gray-300 mb-2">{data?.released}</p>
+                                <div className="flex items-center gap-4 mt-2 sm:hidden">
+                                    <p className="text-sm text-white/90 flex items-center gap-1">
                                     {[...Array(5)].map((_, i) => (
-                                        <span key={i} className={i < Math.round(data?.rating || 0) ? "text-yellow-400" : "text-gray-600"}>
+                                        <span
+                                            key={i}
+                                            className={i < Math.round(data?.rating || 0) ? "text-yellow-400" : "text-gray-400"}
+                                        >
                                             ★
                                         </span>
                                     ))}
-                                    <span className="ml-1 text-white/60">({(data?.rating || 0)?.toFixed(2)})</span>
+                                    <span className="ml-1 text-white/80 text-sm bg-black/30 rounded p-2">
+                                        {(data?.rating || 0)?.toFixed(2)}
+                                    </span>
+                                </p>
+                                    <ToggleFavorite data={data} />
+                                </div>
+                            </div>
+                            <div className="hidden sm:flex items-center gap-4">
+                                <p className="text-md text-white/90 flex items-center gap-1">
+                                    {[...Array(5)].map((_, i) => (
+                                        <span
+                                            key={i}
+                                            className={i < Math.round(data?.rating || 0) ? "text-yellow-400" : "text-gray-400"}
+                                        >
+                                            ★
+                                        </span>
+                                    ))}
+                                    <span className="ml-1 text-white/80 text-sm bg-black/30 rounded p-2">
+                                        {(data?.rating || 0)?.toFixed(2)}
+                                    </span>
                                 </p>
                                 <ToggleFavorite data={data} />
                             </div>
                         </div>
 
-                        <div className="flex gap-2 text-white drop-shadow-lg mb-1">
+                        <div className="flex gap-2 text-white drop-shadow-lg mb-1 mt-4 sm:mt-1">
                             {data?.platforms && [...new Set(
                                 data.platforms?.map(p => normalizePlatformSlug(p.platform.slug))
                             )].map((slug, i) => {

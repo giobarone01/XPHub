@@ -42,13 +42,13 @@ export default function GenresDropdown() {
         <div className="mb-6">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center justify-between w-full text-left hover:bg-my-black/20 transition-colors duration-200"
+                className="flex items-center justify-between w-full text-left hover:bg-my-black/20 transition-colors duration-200 cursor-pointer"
                 aria-expanded={isOpen}
                 aria-controls="genres-dropdown"
             >
-                <span className="block text-gray-300 hover:text-my-cyan transition-colors duration-250 font-semibold text-white text-xl cursor-pointer">Genres</span>
+                <span className="block text-gray-300 hover:text-my-cyan transition-colors duration-250 font-semibold text-white text-xl">Genres</span>
                 <svg
-                    className={`w-5 h-5 text-my-cyan transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                    className={`w-5 h-5 mr-6 text-my-cyan transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"

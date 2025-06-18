@@ -16,26 +16,34 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
     }, [isOpen, toggleSidebar]);
 
     return (
-        <aside
-            ref={sidebarRef}
-            className={`
-                bg-my-black text-white w-52 pl-12 mt-16 space-y-3
-                ${isOpen ? 'fixed z-50 inset-y-0 left-0 transform translate-x-0' : 'hidden lg:block lg:relative lg:translate-x-0'}
-                lg:block lg:relative lg:translate-x-0
-                transition-transform duration-300
-            `}
-        >
-            <GenresDropdown />
-            {/* Link Developers in stile dropdown */}
-            <div className="mb-6">
-                <Link
-                    to="/developers"
-                    className="block pt-2 text-gray-300 hover:text-my-cyan transition-colors duration-250 font-semibold text-white text-xl"
-                    onClick={() => isOpen && toggleSidebar()}
-                >
-                    Developers
-                </Link>
-            </div>
-        </aside>
+        <>
+            {/* Overlay */}
+            <div
+                className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 lg:hidden ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+                    }`}
+                onClick={toggleSidebar}
+            />
+            <aside
+                ref={sidebarRef}
+                className={`
+        fixed top-0 left-0 h-full bg-my-black text-white w-52 pt-16 pl-6
+        space-y-1
+        transform transition-transform duration-300 z-50
+        ${isOpen ? "translate-x-0" : "-translate-x-full"}
+        lg:relative lg:translate-x-0 lg:top-auto lg:left-auto lg:h-auto lg:bg-transparent lg:pl-12 lg:block lg:z-auto
+    `}
+            >
+                <GenresDropdown />
+                <div className="mb-6">
+                    <Link
+                        to="/developers"
+                        className="block pt-2 text-gray-300 hover:text-my-cyan transition-colors duration-250 font-semibold text-white text-xl"
+                        onClick={() => isOpen && toggleSidebar()}
+                    >
+                        Developers
+                    </Link>
+                </div>
+            </aside>
+        </>
     );
 }

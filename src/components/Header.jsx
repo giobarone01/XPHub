@@ -74,7 +74,7 @@ export default function Header({ toggleSidebar }) {
                         <div className="relative">
                             <button
                                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                className="flex items-center space-x-2 focus:outline-none"
+                                className="flex items-center space-x-2 focus:outline-none cursor-pointer"
                                 aria-expanded={isDropdownOpen}
                                 aria-haspopup="true"
                             >
@@ -102,7 +102,7 @@ export default function Header({ toggleSidebar }) {
 
                             {isDropdownOpen && (
                                 <div
-                                    className="absolute top-full right-0 mt-2 w-48 bg-my-dark rounded-lg shadow-lg py-2 border border-gray-700 z-50"
+                                    className="absolute top-full right-0 mt-2 w-48 bg-my-black rounded-lg shadow-lg py-2 border border-gray-700 z-50"
                                     onMouseLeave={() => setIsDropdownOpen(false)}
                                 >
                                     <Link

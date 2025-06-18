@@ -55,11 +55,11 @@ export default function Chatbox({ data }) {
     };
 
     return (
-        <div className="flex flex-col h-[500px] sm:h-[600px] rounded-2xl bg-gradient-to-br from-white/10 via-white/5 to-black/10 shadow-inner shadow-white/10 backdrop-blur-md overflow-hidden ring-1 ring-white/10">
+        <div className="flex flex-col h-[500px] sm:h-[600px] bg-none overflow-hidden">
             <div className="flex-1 overflow-hidden">
                 <RealtimeChat data={data && data} />
             </div>
-            <div className="p-4 border-t border-black/40">
+            <div className="p-4">
                 <form onSubmit={handleMessageSubmit} className="flex gap-2 items-end">
                     <textarea
                         ref={textareaRef}
@@ -70,7 +70,7 @@ export default function Chatbox({ data }) {
                         placeholder="Be nice..."
                         maxLength={300}
                         rows={1}
-                            className="flex-1 bg-black/70 text-white rounded-2xl px-4 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-white/30 text-sm sm:text-base"
+                            className="flex-1 bg-black/70 text-white rounded-2xl px-4 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-pink-500/40 text-xs sm:text-sm shadow-inner shadow-white/5"
                         style={{ minHeight: "24px", maxHeight: "96px", overflowY: "hidden" }}
                     />
                     <button

@@ -75,15 +75,15 @@ export default function RealtimeChat({ data }) {
                 messages.map((message) => (
                     <article key={message.id} className="bg-black/20 rounded-lg p-3 space-y-2 break-words">
                         <div className="flex items-center gap-2">
-                            <span className="font-semibold text-white/90">{message.profile_username}</span>
-                            <span className="text-xs text-white/60">
+                            <span className="font-semibold text-white/90 text-xs sm:text-sm">{message.profile_username}</span>
+                            <span className="text-[10px] sm:text-xs text-white/60">
                                 {message.updated_at
                                     ? dayjs.utc(message.updated_at).local().format('DD/MM/YYYY HH:mm')
                                     : "Date not available"
                                 }
                             </span>
                         </div>
-                        <p className="text-white/80 break-words break-all">{message.content}</p>
+                        <p className="text-white/80 break-words break-all text-xs sm:text-sm">{message.content}</p>
                     </article>
                 ))}
         </div>
