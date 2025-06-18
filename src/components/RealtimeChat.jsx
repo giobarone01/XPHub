@@ -63,7 +63,7 @@ export default function RealtimeChat({ data }) {
         <div className="h-full overflow-y-auto p-4 space-y-4 break-words" ref={messageRef}>
             {loadingInitial && (
                 <div className="flex justify-center">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+                    <div className="animate-spin rounded-full h-8 w-8 border-4 border-white/30 border-t-transparent"></div>
                 </div>
             )}
             {error && (

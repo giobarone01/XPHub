@@ -55,7 +55,7 @@ export default function Chatbox({ data }) {
     };
 
     return (
-        <div className="flex flex-col h-[500px] sm:h-[600px] bg-black/20 rounded-lg shadow-lg">
+        <div className="flex flex-col h-[500px] sm:h-[600px] rounded-2xl bg-gradient-to-br from-white/10 via-white/5 to-black/10 shadow-inner shadow-white/10 backdrop-blur-md overflow-hidden ring-1 ring-white/10">
             <div className="flex-1 overflow-hidden">
                 <RealtimeChat data={data && data} />
             </div>
