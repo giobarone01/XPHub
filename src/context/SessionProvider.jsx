@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import SessionContext from "./SessionContext";
 import supabase from "../supabase/supabase-client";
+import { toast } from 'react-toastify';
 
 export default function SessionProvider({ children }) {
     const [session, setSession] = useState(null);
@@ -25,12 +26,13 @@ export default function SessionProvider({ children }) {
             if (session?.user) {
                 const { data, error } = await supabase
                     .from("profiles")
-                    .select("username, avatar_url")
+                    .select("username, avatar_url, first_name, last_name")
                     .eq("id", session.user.id)
                     .single();
 
                 if (error) {
-                    console.error("Errore caricamento profilo:", error.message);
+                    console.error("Error loading profile:", error.message);
+                    toast.error("Error loading profile");
                 } else {
                     setProfile(data);
                 }
@@ -41,7 +43,7 @@ export default function SessionProvider({ children }) {
     }, [session]);
 
     return (
-        <SessionContext.Provider value={{ session, profile }}>
+        <SessionContext.Provider value={{ session, profile, setProfile }}>
             {children}
         </SessionContext.Provider>
     );

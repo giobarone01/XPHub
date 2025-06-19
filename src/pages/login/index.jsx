@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import logo from "../../assets/logo.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import { toast } from 'react-toastify';
 
 
 export default function LoginPage() {
@@ -42,15 +43,15 @@ export default function LoginPage() {
 
             if (signInError) {
                 console.error("Signin error:", signInError.message);
-                alert("Signing in error 👎🏻! " + signInError.message);
+                toast.error("Login failed! " + signInError.message);
             } else {
-                alert("Signed In 👍🏻!");
+                toast.success("Login successful!");
                 await new Promise((resolve) => setTimeout(resolve, 1000));
                 navigate("/");
             }
         } catch (error) {
             console.error("Unexpected error:", error);
-            alert("An unexpected error occurred");
+            toast.error("An unexpected error occurred");
         } finally {
             setIsLoading(false);
         }

@@ -3,6 +3,8 @@ import { useSearchParams } from "react-router";
 import CardGame from "../../components/CardGame";
 import useFetchSolution from "../../hook/useFetchSolution";
 import Grid from "../../components/Grid";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { Link } from "react-router";
 
 export default function SearchPage() {
     let [searchParams] = useSearchParams();
@@ -16,13 +18,31 @@ export default function SearchPage() {
         updateUrl(initialUrl);
     }, [initialUrl, updateUrl]);
 
+    if (loading) {
+        return (
+            <div className="container mx-auto flex flex-col items-center justify-center min-h-screen">
+                <LoadingSpinner size="lg" className="text-my-cyan" />
+                <p className="mt-4 text-gray-400">Searching...</p>
+            </div>
+        );
+    }
+
+    if (error || !data) {
+        return (
+            <div className="container mx-auto text-center py-12">
+                <p className="text-red-400 text-lg">{error || "Game not found"}</p>
+                <Link to="/" className="mt-4 inline-block text-my-cyan hover:text-my-purple transition-colors">
+                    ← Back to Home
+                </Link>
+            </div>
+        );
+    }
+
     return (
         <>
             <div className="container my-10 mx-4">
                 <h1 className="text-4xl font-semibold">Results for: {game.charAt(0).toUpperCase() + game.slice(1)}</h1>
             </div>
-
-            {loading && <p>loading...</p>}
 
             {error && <h1>{error}</h1>}
             <Grid>
