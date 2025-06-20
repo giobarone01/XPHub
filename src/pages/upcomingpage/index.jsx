@@ -1,0 +1,81 @@
+import { useState, useEffect } from "react";
+import CardGame from "../../components/CardGame";
+import Grid from "../../components/Grid";
+import useFetchSolution from "../../hook/useFetchSolution";
+import SkeletonCardGame from "../../components/SkeletonCard";
+import LoadMoreButton from "../../components/LoadMoreButton";
+
+export default function UpcomingPage() {
+    const [page, setPage] = useState(1);
+    const [allGames, setAllGames] = useState([]);
+    
+    function getNextSixMonths() {
+        const today = new Date();
+        const sixMonthsLater = new Date();
+        sixMonthsLater.setMonth(today.getMonth() + 6);
+        
+        const formatDate = (date) => {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        };
+        
+        return `${formatDate(today)},${formatDate(sixMonthsLater)}`;
+    }
+
+    const initialUrl = `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&dates=${getNextSixMonths()}&ordering=released&page=${page}`;
+    
+    const { data, loading, error, updateUrl } = useFetchSolution(initialUrl);
+
+    useEffect(() => {
+        if (data && data.results) {
+            if (page === 1) {
+                setAllGames(data.results);
+            } else {
+                setAllGames(prev => [...prev, ...data.results]);
+            }
+        }
+    }, [data, page]);
+
+    const loadMore = () => {
+        const nextPage = page + 1;
+        setPage(nextPage);
+        updateUrl(`https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&dates=${getNextSixMonths()}&ordering=released&page=${nextPage}`);
+    };
+
+    return (
+        <>
+            <div className="container mx-auto px-4 my-10">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">Upcoming Games</h1>
+                <p className="text-sm sm:text-base">Games releasing in the next few months</p>
+            </div>
+
+            {error && (
+                <div className="container mx-auto px-4 text-red-400 mb-4">
+                    An error occurred: {error}
+                </div>
+            )}
+
+            {loading && page === 1 ? (
+                <Grid>
+                    {[...Array(8)].map((_, index) => (
+                        <SkeletonCardGame key={index} />
+                    ))}
+                </Grid>
+            ) : (
+                <>
+                    <Grid>
+                        {allGames.map((game) => <CardGame key={game.id} game={game} />)}
+                    </Grid>
+
+                    <LoadMoreButton 
+                        onClick={loadMore} 
+                        loading={loading} 
+                        hasMore={!!data?.next} 
+                    />
+                </>
+            )}
+        </>
+    );
+}

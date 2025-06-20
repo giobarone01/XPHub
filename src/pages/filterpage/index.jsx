@@ -3,9 +3,8 @@ import { useSearchParams } from "react-router";
 import CardGame from "../../components/CardGame";
 import useFetchSolution from "../../hook/useFetchSolution";
 import Grid from "../../components/Grid";
-import LoadingSpinner from "../../components/LoadingSpinner";
 import SkeletonCardGame from "../../components/SkeletonCard";
-import { Button } from "@heroui/react";
+import LoadMoreButton from "../../components/LoadMoreButton";
 
 export default function FilterPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -305,26 +304,11 @@ export default function FilterPage() {
             </Grid>
         )}
 
-        {hasNext && (
-            <div className="flex justify-center my-6">
-                <Button
-                    radius="full"
-                    size="lg"
-                    className="bg-my-purple hover:bg-my-purple/50 text-white transition-colors duration-300 flex items-center gap-2"
-                    onClick={loadMore}
-                    disabled={loadingMore}
-                >
-                    {loadingMore ? (
-                        <>
-                            <LoadingSpinner size="sm" className="text-white" />
-                            Loading...
-                        </>
-                    ) : (
-                        'Load More'
-                    )}
-                </Button>
-            </div>
-        )}
+        <LoadMoreButton 
+            onClick={loadMore} 
+            loading={loadingMore} 
+            hasMore={hasNext} 
+        />
     </>
 );
 }

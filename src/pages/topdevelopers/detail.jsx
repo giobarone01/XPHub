@@ -3,10 +3,9 @@ import { useParams } from "react-router-dom";
 import useFetchSolution from "../../hook/useFetchSolution";
 import CardGame from "../../components/CardGame";
 import Grid from "../../components/Grid";
-import { Button } from "@heroui/react";
 import SkeletonCardGame from "../../components/SkeletonCard";
 import SkeletonText from "../../components/SkeletonText";
-import LoadingSpinner from "../../components/LoadingSpinner"
+import LoadMoreButton from "../../components/LoadMoreButton";
 
 export default function DeveloperDetailPage() {
     const { id } = useParams();
@@ -85,29 +84,13 @@ export default function DeveloperDetailPage() {
                 {games.map((game) => (
                     <CardGame key={game.id} game={game} />
                 ))}
-
             </Grid>
 
-            {hasNext && (
-                <div className="flex justify-center my-6">
-                    <Button
-                        radius="full"
-                        size="lg"
-                        className="bg-my-purple hover:bg-my-purple/50 text-white transition-colors duration-300 flex items-center gap-2"
-                        onClick={loadMore}
-                        disabled={loadingMore}
-                    >
-                        {loadingMore ? (
-                            <>
-                                <LoadingSpinner size="sm" className="text-white" />
-                                Loading...
-                            </>
-                        ) : (
-                            'Load More'
-                        )}
-                    </Button>
-                </div>
-            )}
+            <LoadMoreButton 
+                onClick={loadMore} 
+                loading={loadingMore} 
+                hasMore={hasNext} 
+            />
         </>
     );
 }

@@ -40,11 +40,11 @@ export default function Header({ toggleSidebar }) {
 
     return (
         <header className="sticky top-0 z-40 bg-my-black">
-            <nav className="w-full mx-auto sm:px-8 pt-6 flex items-center justify-between">
+            <nav className="w-full mx-auto px-4 sm:px-8 pt-6 flex items-center justify-between">
 
                 <button
                     onClick={toggleSidebar}
-                    className="md:inline-block lg:hidden mr-3 p-2 rounded hover:bg-my-cyan/30 focus:outline-none"
+                    className="md:inline-block lg:hidden ml-1 mr-3 p-2 rounded hover:bg-my-cyan/30 focus:outline-none"
                     aria-label="Toggle sidebar"
                 >
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -52,8 +52,8 @@ export default function Header({ toggleSidebar }) {
                     </svg>
                 </button>
 
-                <div className="flex items-center space-x-2 flex-shrink-0">
-                    <Link to="/" className="flex items-center space-x-2 rounded">
+                <div className="flex items-center space-x-3 flex-shrink-0">
+                    <Link to="/" className="flex items-center space-x-2 rounded px-1">
                         <img src={logo} alt="XPHub Logo" className="h-8 w-auto" />
                         <span className="font-bold text-xl text-white hover:text-my-cyan transition-colors duration-200 hidden lg:inline">
                             XPHub
@@ -138,10 +138,41 @@ export default function Header({ toggleSidebar }) {
                             </Link>
                             <Link
                                 to="/register"
-                                className="bg-my-cyan text-black font-semibold text-sm px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-200"
+                                className="hidden sm:inline-block bg-my-cyan text-black font-semibold text-sm px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-200"
                             >
                                 Register
                             </Link>
+
+                            <div className="sm:hidden relative">
+                                <button
+                                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                    className="text-white p-2 rounded-full hover:bg-my-cyan/20 focus:outline-none"
+                                    aria-label="Account menu"
+                                >
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                </button>
+
+                                {isDropdownOpen && (
+                                    <div className="absolute right-0 mt-2 w-48 bg-my-black rounded-lg shadow-lg py-2 border border-gray-700 z-50">
+                                        <Link
+                                            to="/login"
+                                            className="block px-4 py-2 text-sm text-gray-300 hover:bg-my-cyan hover:text-black transition"
+                                            onClick={() => setIsDropdownOpen(false)}
+                                        >
+                                            Login
+                                        </Link>
+                                        <Link
+                                            to="/register"
+                                            className="block px-4 py-2 text-sm text-gray-300 hover:bg-my-cyan hover:text-black transition"
+                                            onClick={() => setIsDropdownOpen(false)}
+                                        >
+                                            Register
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
                         </>
                     )}
                 </div>

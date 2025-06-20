@@ -42,6 +42,13 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
                     </Link>
                 <GenresDropdown toggleSidebar={toggleSidebar} />
                     <Link
+                        to="/upcoming"
+                        className="mb-6 block pt-2 text-gray-300 hover:text-my-cyan transition-colors duration-250 font-semibold text-white text-lg sm:text-xl"
+                        onClick={() => isOpen && toggleSidebar()}
+                    >
+                        Upcoming Games
+                    </Link>
+                    <Link
                         to="/developers"
                         className="mb-6 block pt-2 text-gray-300 hover:text-my-cyan transition-colors duration-250 font-semibold text-white text-lg sm:text-xl"
                         onClick={() => isOpen && toggleSidebar()}

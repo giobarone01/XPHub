@@ -1,41 +1,54 @@
 import { useParams } from "react-router";
+import { useState, useEffect } from "react";
 import CardGame from "../../components/CardGame";
-import useFetchSolution from "../../hook/useFetchSolution";
-import { useEffect } from "react";
+import usePaginatedFetch from "../../hook/usePaginatedFetch";
 import Grid from "../../components/Grid";
 import SkeletonCardGame from "../../components/SkeletonCard";
+import LoadMoreButton from "../../components/LoadMoreButton";
 
 export default function GenrePage() {
     const { genre } = useParams();
-
     const initialUrl = `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&genres=${genre}&page=1`;
-
-    const { data, loading, error, updateUrl } = useFetchSolution(initialUrl);
-
+    
+    const { 
+        loading, 
+        error, 
+        allData: games, 
+        hasMore, 
+        loadNextPage, 
+        reset 
+    } = usePaginatedFetch(initialUrl);
 
     useEffect(() => {
-        const newUrl = `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&genres=${genre}&page=1`;
-        updateUrl(newUrl);
-    }, [genre, updateUrl]);
+        reset(`https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&genres=${genre}&page=1`);
+    }, [genre, reset]);
 
     return (
         <>
             <div className="container my-10 mx-4">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">{genre.charAt(0).toUpperCase() + genre.slice(1)} games  </h1>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">{genre.charAt(0).toUpperCase() + genre.slice(1)} games</h1>
             </div>
 
             {error && <article>{error}</article>}
 
-            {loading ? (
+            {loading && games.length === 0 ? (
                 <Grid>
                     {[...Array(8)].map((_, index) => (
                         <SkeletonCardGame key={index} />
                     ))}
                 </Grid>
             ) : (
-                <Grid>
-                    {data?.results.map((game) => <CardGame key={game.id} game={game} />)}
-                </Grid>
+                <>
+                    <Grid>
+                        {games.map((game) => <CardGame key={game.id} game={game} />)}
+                    </Grid>
+                    
+                    <LoadMoreButton 
+                        onClick={loadNextPage} 
+                        loading={loading} 
+                        hasMore={hasMore} 
+                    />
+                </>
             )}
         </>
     );
