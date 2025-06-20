@@ -9,7 +9,7 @@ export default function Footer() {
                 {/* Logo + Nome */}
                 <div className="flex items-center space-x-2 mb-4 md:mb-0">
                     <img src={logo} alt="XPHub Logo" className="h-8 w-auto" />
-                    <span className="font-bold text-xl text-white">XPHub</span>
+                    <span className="font-bold text-lg sm:text-xl text-white">XPHub</span>
                 </div>
 
                 {/* Link utili */}

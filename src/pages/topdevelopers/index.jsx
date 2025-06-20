@@ -12,12 +12,12 @@ export default function DevelopersPage() {
 
     return (
         <>
-            <div className="container y-10 mx-4 my-10">
-                <h1 className="text-4xl font-semibold">Developers</h1>
+            <div className="container mx-auto px-4 my-10">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">Developers</h1>
             </div>
 
             {error && (
-                <div className="text-red-400 mb-4">
+                <div className="container mx-auto px-4 text-red-400 mb-4">
                     <p>{error}</p>
                     <button
                         onClick={load}

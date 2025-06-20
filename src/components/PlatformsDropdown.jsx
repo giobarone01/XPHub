@@ -1,20 +1,20 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function GenresDropdown({ toggleSidebar }) {
-    const [genres, setGenres] = useState(null);
+export default function PlatformsDropdown() {
+    const [platforms, setPlatforms] = useState(null);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
-    const fetchGenres = async () => {
+    const fetchPlatforms = async () => {
         setIsLoading(true);
         setError(null);
         try {
-            const response = await fetch("https://api.rawg.io/api/genres?key=65f57c71e58e4703a6b14f979b6d8fbb");
-            if (!response.ok) throw new Error('Failed to fetch genres');
+            const response = await fetch("https://api.rawg.io/api/platforms?key=65f57c71e58e4703a6b14f979b6d8fbb");
+            if (!response.ok) throw new Error('Failed to fetch platforms');
             const data = await response.json();
-            setGenres(data.results);
+            setPlatforms(data.results);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -23,31 +23,30 @@ export default function GenresDropdown({ toggleSidebar }) {
     };
 
     useEffect(() => {
-        fetchGenres();
+        fetchPlatforms();
     }, []);
 
-    const genreList = useMemo(() => {
-        return genres?.map((genre) => (
+    const platformList = useMemo(() => {
+        return platforms?.map((platform) => (
             <Link
-                key={genre.id}
-                to={`/games/${genre.slug}`}
+                key={platform.id}
+                to={`/filter?platform=${platform.id}`}
                 className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-my-black/30 rounded transition-colors duration-150"
-                onClick={() => toggleSidebar && toggleSidebar()}
             >
-                {genre.name}
+                {platform.name}
             </Link>
         ));
-    }, [genres, toggleSidebar]);
+    }, [platforms]);
 
     return (
-        <div className="mb-6 pt-2">
+        <div className="mb-6">
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex items-center justify-between w-full text-left hover:bg-my-black/20 transition-colors duration-200 cursor-pointer"
                 aria-expanded={isOpen}
-                aria-controls="genres-dropdown"
+                aria-controls="platforms-dropdown"
             >
-                <span className="block text-gray-300 hover:text-my-cyan transition-colors duration-250 font-semibold text-white text-lg sm:text-xl">Genres</span>
+                <span className="block text-gray-300 hover:text-my-cyan transition-colors duration-250 font-semibold text-white text-xl">Piattaforme</span>
                 <svg
                     className={`w-5 h-5 mr-6 text-my-cyan transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
                     fill="none"
@@ -59,12 +58,12 @@ export default function GenresDropdown({ toggleSidebar }) {
             </button>
 
             {isOpen && (
-                <div id="genres-dropdown" className="pt-1 pl-4">
+                <div id="platforms-dropdown" className="mt-2 pl-4">
                     {error ? (
                         <div className="text-red-400 text-sm">
                             <p>{error}</p>
                             <button
-                                onClick={fetchGenres}
+                                onClick={fetchPlatforms}
                                 className="mt-1 text-my-cyan hover:underline"
                             >
                                 Retry
@@ -81,7 +80,7 @@ export default function GenresDropdown({ toggleSidebar }) {
                             ))}
                         </div>
                     ) : (
-                        genreList
+                        platformList
                     )}
                 </div>
             )}

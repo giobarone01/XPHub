@@ -33,16 +33,28 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
         lg:relative lg:translate-x-0 lg:top-auto lg:left-auto lg:h-auto lg:bg-transparent lg:pl-12 lg:block lg:z-auto
     `}
             >
-                <GenresDropdown />
-                <div className="mb-6">
+                <Link
+                        to="/"
+                        className="mb-6 block pt-2 text-gray-300 hover:text-my-cyan transition-colors duration-250 font-semibold text-white text-lg sm:text-xl"
+                        onClick={() => isOpen && toggleSidebar()}
+                    >
+                        Home
+                    </Link>
+                <GenresDropdown toggleSidebar={toggleSidebar} />
                     <Link
                         to="/developers"
-                        className="block pt-2 text-gray-300 hover:text-my-cyan transition-colors duration-250 font-semibold text-white text-xl"
+                        className="mb-6 block pt-2 text-gray-300 hover:text-my-cyan transition-colors duration-250 font-semibold text-white text-lg sm:text-xl"
                         onClick={() => isOpen && toggleSidebar()}
                     >
                         Developers
                     </Link>
-                </div>
+                    <Link
+                        to="/filter"
+                        className="mb-6 block pt-2 text-gray-300 hover:text-my-cyan transition-colors duration-250 font-semibold text-white text-lg sm:text-xl"
+                        onClick={() => isOpen && toggleSidebar()}
+                    >
+                        All games
+                    </Link>
             </aside>
         </>
     );

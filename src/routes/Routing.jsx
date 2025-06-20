@@ -11,6 +11,7 @@ import AccountPage from "../pages/account";
 import ScrollToTop from "../components/ScrollToTop";
 import DevelopersPage from "../pages/topdevelopers";
 import DeveloperDetailPage from "../pages/topdevelopers/detail";
+import FilterPage from "../pages/filterpage";
 
 export function Routing() {
     return (
@@ -22,6 +23,7 @@ export function Routing() {
                     <Route path="/games/:genre" element={<GenrePage />} />
                     <Route path="/games/:slug/:id" element={<GamePage />} />
                     <Route path="/search" element={<SearchPage />} />
+                    <Route path="/filter" element={<FilterPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/account" element={<AccountPage />} />

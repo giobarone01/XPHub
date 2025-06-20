@@ -40,11 +40,11 @@ export default function SearchPage() {
 
     return (
         <>
-            <div className="container my-10 mx-4">
-                <h1 className="text-4xl font-semibold">Results for: {game.charAt(0).toUpperCase() + game.slice(1)}</h1>
+            <div className="container mx-auto px-4 my-10">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">Results for: {game.charAt(0).toUpperCase() + game.slice(1)}</h1>
             </div>
 
-            {error && <h1>{error}</h1>}
+            {error && <h1 className="container mx-auto px-4">{error}</h1>}
             <Grid>
                 {data && data.results.map(( game ) => <CardGame key={game.id} game={game} />)}
             </Grid>

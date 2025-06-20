@@ -34,13 +34,13 @@ export default function CardGame({ game }) {
                     )].map((slug, i) => {
                         const Icon = platformIcons[slug];
                         return Icon ? (
-                            <span key={i} title={slug} className="text-base drop-shadow-sm" aria-label={slug}>
+                            <span key={i} title={slug} className="text-sm sm:text-base drop-shadow-sm" aria-label={slug}>
                                 {Icon}
                             </span>
                         ) : null;
                     })}
                 </div>
-                <h4 className="text-white font-semibold text-large drop-shadow-lg">
+                <h4 className="text-white font-semibold text-base sm:text-large drop-shadow-lg">
                     {game.name}
                 </h4>
             </CardHeader>

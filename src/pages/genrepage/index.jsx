@@ -3,7 +3,6 @@ import CardGame from "../../components/CardGame";
 import useFetchSolution from "../../hook/useFetchSolution";
 import { useEffect } from "react";
 import Grid from "../../components/Grid";
-import LoadingSpinner from "../../components/LoadingSpinner";
 import SkeletonCardGame from "../../components/SkeletonCard";
 
 export default function GenrePage() {
@@ -22,7 +21,7 @@ export default function GenrePage() {
     return (
         <>
             <div className="container my-10 mx-4">
-                <h1 className="text-4xl font-semibold">{genre.charAt(0).toUpperCase() + genre.slice(1)} games  </h1>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">{genre.charAt(0).toUpperCase() + genre.slice(1)} games  </h1>
             </div>
 
             {error && <article>{error}</article>}

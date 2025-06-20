@@ -57,7 +57,7 @@ export default function DeveloperDetailPage() {
 
     if (devLoading || initialLoading) return (
     <>
-        <div className="container y-10 mx-4 my-10">
+        <div className="container mx-auto px-4 my-10">
             <SkeletonText width="50%" height="2.5rem" className="mb-2" /> {/* h1 skeleton */}
             <SkeletonText width="8rem" height="1.5rem" /> {/* p skeleton */}
         </div>
@@ -74,8 +74,8 @@ export default function DeveloperDetailPage() {
 
     return (
         <>
-            <div className="container y-10 mx-4 my-10">
-                <h1 className="text-4xl font-semibold">
+            <div className="container mx-auto px-4 my-10">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">
                     Games by {devData?.name}
                 </h1>
                 <p className="text-lg mt-2">{devData?.games_count ?? games.length} games</p>
