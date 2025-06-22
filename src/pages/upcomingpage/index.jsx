@@ -4,6 +4,7 @@ import Grid from "../../components/Grid";
 import useFetchSolution from "../../hook/useFetchSolution";
 import SkeletonCardGame from "../../components/SkeletonCard";
 import LoadMoreButton from "../../components/LoadMoreButton";
+import PageTitle from "../../components/PageTitle";
 
 export default function UpcomingPage() {
     const [page, setPage] = useState(1);
@@ -46,9 +47,10 @@ export default function UpcomingPage() {
 
     return (
         <>
-            <div className="container mx-auto px-4 my-10">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">Upcoming Games</h1>
-                <p className="text-sm sm:text-base">Games releasing in the next few months</p>
+            <div className="container mx-auto px-4">
+                <PageTitle subtitle="Games releasing in the next few months">
+                    <span className="gradient-text">Upcoming</span> Games
+                </PageTitle>
             </div>
 
             {error && (

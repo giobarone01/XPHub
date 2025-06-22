@@ -26,7 +26,11 @@ export default function GamesSlider({
 
   return (
     <div className="mt-8 mb-4">
-      <h2 className="mb-4 text-xl font-semibold text-white">{title}</h2>
+      {title && (
+        <h2 className="mb-4 text-xl font-bold text-white relative inline-block">
+          {title}
+        </h2>
+      )}
       <Swiper
         slidesPerView={slidesPerView}
         spaceBetween={15}

@@ -6,6 +6,7 @@ import Grid from "../../components/Grid";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import LoadMoreButton from "../../components/LoadMoreButton";
 import { Link } from "react-router";
+import PageTitle from "../../components/PageTitle";
 
 export default function SearchPage() {
     let [searchParams] = useSearchParams();
@@ -62,21 +63,23 @@ export default function SearchPage() {
     }
 
     return (
-        <>
-            <div className="container mx-auto px-4 my-10">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">Results for: {game.charAt(0).toUpperCase() + game.slice(1)}</h1>
-            </div>
+        <div className="container mx-auto px-4">
+            <PageTitle subtitle={`${allGames.length} risultati trovati`}>
+                Risultati per <span className="gradient-text">"{game}"</span>
+            </PageTitle>
 
-            {error && <h1 className="container mx-auto px-4">{error}</h1>}
             <Grid>
-                {allGames.map((game) => <CardGame key={game.id} game={game} />)}
+                {allGames.map((gameItem) => (
+                    <CardGame key={gameItem.id} game={gameItem} />
+                ))}
             </Grid>
 
-            <LoadMoreButton
-                onClick={loadMore}
-                loading={loading}
-                hasMore={hasMore}
-            />
-        </>
+            {hasMore && (
+                <LoadMoreButton
+                    onClick={loadMore}
+                    loading={loading}
+                />
+            )}
+        </div>
     );
 }

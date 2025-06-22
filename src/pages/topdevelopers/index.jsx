@@ -2,6 +2,8 @@ import useFetchSolution from "../../hook/useFetchSolution";
 import DeveloperCard from "../../components/DeveloperCard";
 import Grid from "../../components/Grid";
 import SkeletonCardGame from "../../components/SkeletonCard";
+import { motion } from "framer-motion";
+import PageTitle from "../../components/PageTitle";
 
 export default function DevelopersPage() {
     const { data, loading, error, load } = useFetchSolution(
@@ -12,8 +14,10 @@ export default function DevelopersPage() {
 
     return (
         <>
-            <div className="container mx-auto px-4 my-10">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">Developers</h1>
+            <div className="container mx-auto px-4">
+                <PageTitle>
+                    <span className="gradient-text">Developers</span>
+                </PageTitle>
             </div>
 
             {error && (

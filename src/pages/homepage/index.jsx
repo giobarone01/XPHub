@@ -4,7 +4,8 @@ import useFetchSolution from "../../hook/useFetchSolution";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import GamesSlider from "../../components/Slider";
 import CompactGameCard from "../../components/CompactGameCard";
-import SkeletonCardGame from "../../components/SkeletonCard"
+import SkeletonCardGame from "../../components/SkeletonCard";
+import PageTitle from "../../components/PageTitle";
 
 export default function HomePage() {
     const initialUrl = `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&dates=${getLastSixMonths()}&ordering=-rating&page=1`;
@@ -32,9 +33,10 @@ export default function HomePage() {
     return (
         <>
             {(error || errorPopular) && <article className="container mx-auto">{error || errorPopular}</article>}
-            <div className="container mx-auto px-4 my-10">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">New and Trending</h1>
-                <p className="text-sm sm:text-base">Top games released in the last months</p>
+            <div className="container mx-auto px-4">
+                <PageTitle subtitle="Top games released in the last months">
+                    New and <span className="gradient-text">Trending</span>
+                </PageTitle>
             </div>
             {loading ? (
                 <Grid>
@@ -48,13 +50,16 @@ export default function HomePage() {
                 </Grid>
             )}
             {popularData?.results?.length > 0 && (
-                <GamesSlider
-                    items={popularData.results.slice(0, 15)}
-                    title="Most Popular Games"
-                    renderItem={(game) => (
-                        <CompactGameCard key={game.id} game={game} height="120px" />
-                    )}
-                />
+                <div className="container mx-auto px-4">
+                    <h2 className="mb-4 text-xl font-bold text-white title-with-line">Most Popular Games</h2>
+                    <GamesSlider
+                        items={popularData.results.slice(0, 15)}
+                        title=""
+                        renderItem={(game) => (
+                            <CompactGameCard key={game.id} game={game} height="120px" />
+                        )}
+                    />
+                </div>
             )}
         </>
     );

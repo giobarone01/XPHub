@@ -5,6 +5,7 @@ import useFetchSolution from "../../hook/useFetchSolution";
 import Grid from "../../components/Grid";
 import SkeletonCardGame from "../../components/SkeletonCard";
 import LoadMoreButton from "../../components/LoadMoreButton";
+import PageTitle from "../../components/PageTitle";
 
 export default function FilterPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -12,12 +13,12 @@ export default function FilterPage() {
     const genre = searchParams.get("genre");
     const publisher = searchParams.get("publisher");
     const sort = searchParams.get("sort") || "-added";
-    
+
     const [selectedPlatform, setSelectedPlatform] = useState(platform);
     const [selectedGenre, setSelectedGenre] = useState(genre);
     const [selectedPublisher, setSelectedPublisher] = useState(publisher);
     const [selectedSort, setSelectedSort] = useState(sort);
-    
+
     const [platforms, setPlatforms] = useState([]);
     const [genres, setGenres] = useState([]);
     const [publishers, setPublishers] = useState([]);
@@ -43,23 +44,23 @@ export default function FilterPage() {
 
     const buildUrl = (pageNum = 1) => {
         let url = `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&page=${pageNum}`;
-        
+
         if (selectedPlatform) {
             url += `&platforms=${selectedPlatform}`;
         }
-        
+
         if (selectedGenre) {
             url += `&genres=${selectedGenre}`;
         }
-        
+
         if (selectedPublisher) {
             url += `&publishers=${selectedPublisher}`;
         }
-        
+
         if (selectedSort) {
             url += `&ordering=${selectedSort}`;
         }
-        
+
         return url;
     };
 
@@ -119,7 +120,7 @@ export default function FilterPage() {
         setPage(1);
         setGames([]);
         setHasNext(true);
-        
+
         const params = new URLSearchParams();
         if (selectedPlatform) params.set("platform", selectedPlatform);
         if (selectedGenre) params.set("genre", selectedGenre);
@@ -156,7 +157,7 @@ export default function FilterPage() {
         setPage(1);
         setGames([]);
         setHasNext(true);
-        
+
         const params = new URLSearchParams();
         if (selectedPlatform) params.set("platform", selectedPlatform);
         if (selectedGenre) params.set("genre", selectedGenre);
@@ -190,10 +191,33 @@ export default function FilterPage() {
 
     return (
         <>
+            <div className="container mx-auto px-4">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <PageTitle subtitle="Customize your gaming experience" className="mb-0">
+                        <span>All </span><span className="gradient-text">Games</span>
+                    </PageTitle>
+                    
+                    {/* Sort Filter - Responsive */}
+                    <div className="flex items-center gap-2 w-full sm:w-auto self-center sm:self-auto">
+                        <span className="text-gray-300 whitespace-nowrap">Sort by:</span>
+                        <select
+                            id="sort-select"
+                            value={selectedSort}
+                            onChange={handleSortChange}
+                            className="bg-my-black/30 text-white border border-gray-700 rounded-md p-1.5 text-sm flex-grow sm:flex-grow-0 min-w-[180px]"
+                        >
+                            {sortOptions.map(option => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div className="container mx-auto px-4 my-10">
                 {/* Filters section */}
                 <div className="mb-8">
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">Filter Games</h1>
                     <div className="flex flex-col md:flex-row gap-4 flex-wrap">
                         {/* Platform Filter */}
                         <div className="w-full md:w-auto">
@@ -213,7 +237,7 @@ export default function FilterPage() {
                                 ))}
                             </select>
                         </div>
-                        
+
                         {/* Genre Filter */}
                         <div className="w-full md:w-auto">
                             <label htmlFor="genre-select" className="block text-gray-300 mb-2">Genre</label>
@@ -232,7 +256,7 @@ export default function FilterPage() {
                                 ))}
                             </select>
                         </div>
-                        
+
                         {/* Publisher Filter */}
                         <div className="w-full md:w-auto">
                             <label htmlFor="publisher-select" className="block text-gray-300 mb-2">Publisher</label>
@@ -251,7 +275,7 @@ export default function FilterPage() {
                                 ))}
                             </select>
                         </div>
-                        
+
                         {/* Reset Button */}
                         <div className="w-full md:w-auto self-end">
                             <button
@@ -260,30 +284,6 @@ export default function FilterPage() {
                             >
                                 Reset Filters
                             </button>
-                        </div>
-                    </div>
-                    
-                    {/* Results title with Sort dropdown - Responsive */}
-                    <div className="mb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0 mt-6">
-                        <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold">
-                            {selectedPlatform || selectedGenre || selectedPublisher ? 'Filtered results' : 'All games'}
-                        </h2>
-                        
-                        {/* Sort Filter - Responsive */}
-                        <div className="flex items-center gap-2 w-full sm:w-auto">
-                            <span className="text-gray-300 whitespace-nowrap">Sort by:</span>
-                            <select
-                                id="sort-select"
-                                value={selectedSort}
-                                onChange={handleSortChange}
-                                className="bg-my-black/30 text-white border border-gray-700 rounded-md p-1.5 text-sm flex-grow sm:flex-grow-0 min-w-[180px]"
-                            >
-                                {sortOptions.map(option => (
-                                    <option key={option.value} value={option.value}>
-                                        {option.label}
-                                    </option>
-                                ))}
-                            </select>
                         </div>
                     </div>
             </div>
@@ -304,10 +304,10 @@ export default function FilterPage() {
             </Grid>
         )}
 
-        <LoadMoreButton 
-            onClick={loadMore} 
-            loading={loadingMore} 
-            hasMore={hasNext} 
+        <LoadMoreButton
+            onClick={loadMore}
+            loading={loadingMore}
+            hasMore={hasNext}
         />
     </>
 );

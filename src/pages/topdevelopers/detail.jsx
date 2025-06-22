@@ -6,6 +6,7 @@ import Grid from "../../components/Grid";
 import SkeletonCardGame from "../../components/SkeletonCard";
 import SkeletonText from "../../components/SkeletonText";
 import LoadMoreButton from "../../components/LoadMoreButton";
+import PageTitle from "../../components/PageTitle";
 
 export default function DeveloperDetailPage() {
     const { id } = useParams();
@@ -73,11 +74,10 @@ export default function DeveloperDetailPage() {
 
     return (
         <>
-            <div className="container mx-auto px-4 my-10">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">
-                    Games by {devData?.name}
-                </h1>
-                <p className="text-lg mt-2">{devData?.games_count ?? games.length} games</p>
+            <div className="container mx-auto px-4">
+                <PageTitle subtitle={`${devData?.games_count ?? games.length} games`}>
+                    Games by <span className="gradient-text">{devData?.name}</span>
+                </PageTitle>
             </div>
 
             <Grid>

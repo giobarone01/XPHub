@@ -16,9 +16,16 @@
     color: white !important;
 }
 
-/* Quando è attiva o compilata mantieni bianco */
 .heroui-input-label-outside[data-filled="true"],
 .heroui-input-label-outside[data-focused="true"] {
     color: white !important;
 }
 /*--- FINE FORM REGISTRAZIONE ---*/
+
+.gradient-text {
+    background: linear-gradient(90deg, #ffffff, #a0a0a0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
