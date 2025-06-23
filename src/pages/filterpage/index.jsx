@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
+import { AnimatePresence } from "framer-motion";
 import CardGame from "../../components/CardGame";
 import useFetchSolution from "../../hook/useFetchSolution";
 import Grid from "../../components/Grid";
 import SkeletonCardGame from "../../components/SkeletonCard";
 import LoadMoreButton from "../../components/LoadMoreButton";
 import PageTitle from "../../components/PageTitle";
+import FilterToggle from "../../components/FilterToggle";
+import FilterPanel from "../../components/FilterPanel";
+import SortSelector from "../../components/SortSelector";
+import useGameFilters from "../../hook/useGameFilters";
 
 export default function FilterPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -14,106 +19,60 @@ export default function FilterPage() {
     const publisher = searchParams.get("publisher");
     const sort = searchParams.get("sort") || "-added";
 
-    const [selectedPlatform, setSelectedPlatform] = useState(platform);
-    const [selectedGenre, setSelectedGenre] = useState(genre);
-    const [selectedPublisher, setSelectedPublisher] = useState(publisher);
-    const [selectedSort, setSelectedSort] = useState(sort);
+    const {
+        platforms,
+        genres,
+        publishers,
+        loadingFilters,
+        selectedPlatform,
+        selectedGenre,
+        selectedPublisher,
+        selectedSort,
+        showFilters,
+        setShowFilters,
+        handlePlatformChange,
+        handleGenreChange,
+        handlePublisherChange,
+        handleSortChange,
+        resetFilters,
+        sortOptions,
+        buildUrl
+    } = useGameFilters(platform, genre, publisher, sort);
 
-    const [platforms, setPlatforms] = useState([]);
-    const [genres, setGenres] = useState([]);
-    const [publishers, setPublishers] = useState([]);
-    const [loadingFilters, setLoadingFilters] = useState(false);
     const [games, setGames] = useState([]);
     const [page, setPage] = useState(1);
     const [hasNext, setHasNext] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
     const [errorMore, setErrorMore] = useState(null);
 
-    const sortOptions = [
-        { value: "-added", label: "Popularity (highest)" },
-        { value: "added", label: "Popularity (lowest)" },
-        { value: "-released", label: "Release date (newest)" },
-        { value: "released", label: "Release date (oldest)" },
-        { value: "-rating", label: "Rating (highest)" },
-        { value: "rating", label: "Rating (lowest)" },
-        { value: "name", label: "Name (A-Z)" },
-        { value: "-name", label: "Name (Z-A)" },
-        { value: "-metacritic", label: "Metacritic (highest)" },
-        { value: "metacritic", label: "Metacritic (lowest)" },
-    ];
-
-    const buildUrl = (pageNum = 1) => {
-        let url = `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&page=${pageNum}`;
-
-        if (selectedPlatform) {
-            url += `&platforms=${selectedPlatform}`;
+    const filterVariants = {
+        open: {
+            opacity: 1,
+            height: "auto",
+            transition: {
+                duration: 0.3,
+                staggerChildren: 0.05,
+                delayChildren: 0.1
+            }
+        },
+        closed: {
+            opacity: 0,
+            height: 0,
+            transition: {
+                duration: 0.3,
+                staggerChildren: 0.05,
+                staggerDirection: -1
+            }
         }
+    };
 
-        if (selectedGenre) {
-            url += `&genres=${selectedGenre}`;
-        }
-
-        if (selectedPublisher) {
-            url += `&publishers=${selectedPublisher}`;
-        }
-
-        if (selectedSort) {
-            url += `&ordering=${selectedSort}`;
-        }
-
-        return url;
+    const itemVariants = {
+        open: { opacity: 1, y: 0 },
+        closed: { opacity: 0, y: -10 }
     };
 
     const initialUrl = buildUrl();
     const { data, loading, error, updateUrl } = useFetchSolution(initialUrl);
-
-    useEffect(() => {
-        const fetchPlatforms = async () => {
-            setLoadingFilters(true);
-            try {
-                const response = await fetch("https://api.rawg.io/api/platforms?key=65f57c71e58e4703a6b14f979b6d8fbb");
-                if (!response.ok) throw new Error('Failed to fetch platforms');
-                const data = await response.json();
-                setPlatforms(data.results);
-            } catch (err) {
-                console.error(err);
-            }
-        };
-
-        fetchPlatforms();
-    }, []);
-
-    useEffect(() => {
-        const fetchGenres = async () => {
-            try {
-                const response = await fetch("https://api.rawg.io/api/genres?key=65f57c71e58e4703a6b14f979b6d8fbb");
-                if (!response.ok) throw new Error('Failed to fetch genres');
-                const data = await response.json();
-                setGenres(data.results);
-            } catch (err) {
-                console.error(err);
-            }
-        };
-
-        fetchGenres();
-    }, []);
-
-    useEffect(() => {
-        const fetchPublishers = async () => {
-            try {
-                const response = await fetch("https://api.rawg.io/api/publishers?key=65f57c71e58e4703a6b14f979b6d8fbb&page_size=40");
-                if (!response.ok) throw new Error('Failed to fetch publishers');
-                const data = await response.json();
-                setPublishers(data.results);
-            } catch (err) {
-                console.error(err);
-            } finally {
-                setLoadingFilters(false);
-            }
-        };
-
-        fetchPublishers();
-    }, []);
 
     useEffect(() => {
         updateUrl(buildUrl());
@@ -135,43 +94,6 @@ export default function FilterPage() {
             setHasNext(data.next !== null);
         }
     }, [data]);
-
-    const handlePlatformChange = (e) => {
-        setSelectedPlatform(e.target.value);
-    };
-
-    const handleGenreChange = (e) => {
-        setSelectedGenre(e.target.value);
-    };
-
-    const handlePublisherChange = (e) => {
-        setSelectedPublisher(e.target.value);
-    };
-
-    const handleSortChange = (e) => {
-        setSelectedSort(e.target.value);
-    };
-
-    useEffect(() => {
-        updateUrl(buildUrl());
-        setPage(1);
-        setGames([]);
-        setHasNext(true);
-
-        const params = new URLSearchParams();
-        if (selectedPlatform) params.set("platform", selectedPlatform);
-        if (selectedGenre) params.set("genre", selectedGenre);
-        if (selectedPublisher) params.set("publisher", selectedPublisher);
-        if (selectedSort) params.set("sort", selectedSort);
-        setSearchParams(params);
-    }, [selectedPlatform, selectedGenre, selectedPublisher, selectedSort]);
-
-    const resetFilters = () => {
-        setSelectedPlatform("");
-        setSelectedGenre("");
-        setSelectedPublisher("");
-        setSelectedSort("-added");
-    };
 
     const loadMore = async () => {
         const nextPage = page + 1;
@@ -196,119 +118,63 @@ export default function FilterPage() {
                     <PageTitle subtitle="Customize your gaming experience" className="mb-0">
                         <span>All </span><span className="gradient-text">Games</span>
                     </PageTitle>
-                    
-                    {/* Sort Filter - Responsive */}
-                    <div className="flex items-center gap-2 w-full sm:w-auto self-center sm:self-auto">
-                        <span className="text-gray-300 whitespace-nowrap">Sort by:</span>
-                        <select
-                            id="sort-select"
-                            value={selectedSort}
-                            onChange={handleSortChange}
-                            className="bg-my-black/30 text-white border border-gray-700 rounded-md p-1.5 text-sm flex-grow sm:flex-grow-0 min-w-[180px]"
-                        >
-                            {sortOptions.map(option => (
-                                <option key={option.value} value={option.value}>
-                                    {option.label}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+
+                    {/* Sort Filter */}
+                    <SortSelector
+                        selectedSort={selectedSort}
+                        handleSortChange={handleSortChange}
+                        sortOptions={sortOptions}
+                    />
                 </div>
             </div>
-            <div className="container mx-auto px-4 my-10">
+            <div className="container mx-auto px-4 my-6">
                 {/* Filters section */}
-                <div className="mb-8">
-                    <div className="flex flex-col md:flex-row gap-4 flex-wrap">
-                        {/* Platform Filter */}
-                        <div className="w-full md:w-auto">
-                            <label htmlFor="platform-select" className="block text-gray-300 mb-2">Platform</label>
-                            <select
-                                id="platform-select"
-                                value={selectedPlatform || ""}
-                                onChange={handlePlatformChange}
-                                className="w-full md:w-64 bg-my-black/30 text-white border border-gray-700 rounded-md p-2"
-                                disabled={loadingFilters}
-                            >
-                                <option value="">All platforms</option>
-                                {platforms.map(platform => (
-                                    <option key={platform.id} value={platform.id}>
-                                        {platform.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+                <div className="mb-6">
+                    <FilterToggle showFilters={showFilters} setShowFilters={setShowFilters} />
 
-                        {/* Genre Filter */}
-                        <div className="w-full md:w-auto">
-                            <label htmlFor="genre-select" className="block text-gray-300 mb-2">Genre</label>
-                            <select
-                                id="genre-select"
-                                value={selectedGenre || ""}
-                                onChange={handleGenreChange}
-                                className="w-full md:w-64 bg-my-black/30 text-white border border-gray-700 rounded-md p-2"
-                                disabled={loadingFilters}
-                            >
-                                <option value="">All genres</option>
-                                {genres.map(genre => (
-                                    <option key={genre.id} value={genre.slug}>
-                                        {genre.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        {/* Publisher Filter */}
-                        <div className="w-full md:w-auto">
-                            <label htmlFor="publisher-select" className="block text-gray-300 mb-2">Publisher</label>
-                            <select
-                                id="publisher-select"
-                                value={selectedPublisher || ""}
-                                onChange={handlePublisherChange}
-                                className="w-full md:w-64 bg-my-black/30 text-white border border-gray-700 rounded-md p-2"
-                                disabled={loadingFilters}
-                            >
-                                <option value="">All publishers</option>
-                                {publishers.map(publisher => (
-                                    <option key={publisher.id} value={publisher.id}>
-                                        {publisher.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        {/* Reset Button */}
-                        <div className="w-full md:w-auto self-end">
-                            <button
-                                onClick={resetFilters}
-                                className="bg-my-purple hover:bg-my-cyan text-white py-2 px-4 rounded-md transition-colors duration-300"
-                            >
-                                Reset Filters
-                            </button>
-                        </div>
-                    </div>
+                    <AnimatePresence>
+                        {(showFilters || window.innerWidth >= 768) && (
+                            <FilterPanel
+                                showFilters={showFilters}
+                                platforms={platforms}
+                                genres={genres}
+                                publishers={publishers}
+                                selectedPlatform={selectedPlatform}
+                                selectedGenre={selectedGenre}
+                                selectedPublisher={selectedPublisher}
+                                handlePlatformChange={handlePlatformChange}
+                                handleGenreChange={handleGenreChange}
+                                handlePublisherChange={handlePublisherChange}
+                                resetFilters={resetFilters}
+                                loadingFilters={loadingFilters}
+                                filterVariants={filterVariants}
+                                itemVariants={itemVariants}
+                            />
+                        )}
+                    </AnimatePresence>
+                </div>
             </div>
 
             {error && <article className="text-red-500">{error}</article>}
             {errorMore && <article className="text-red-500">{errorMore}</article>}
-        </div>
 
-        {loading && games.length === 0 ? (
-            <Grid>
-                {[...Array(8)].map((_, index) => (
-                    <SkeletonCardGame key={index} />
-                ))}
-            </Grid>
-        ) : (
-            <Grid>
-                {games.map((game) => <CardGame key={game.id} game={game} />)}
-            </Grid>
-        )}
+            {loading && games.length === 0 ? (
+                <Grid>
+                    {[...Array(8)].map((_, index) => (
+                        <SkeletonCardGame key={index} />
+                    ))}
+                </Grid>
+            ) : (
+                <Grid>
+                    {games.map((game) => <CardGame key={game.id} game={game} />)}
+                </Grid>
+            )}
 
-        <LoadMoreButton
-            onClick={loadMore}
-            loading={loadingMore}
-            hasMore={hasNext}
-        />
-    </>
-);
+            <LoadMoreButton
+                onClick={loadMore}
+                loading={loadingMore}
+                hasMore={hasNext}
+            />
+        </>
+    );
 }
