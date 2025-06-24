@@ -7,6 +7,7 @@ import SkeletonCardGame from "../../components/SkeletonCard";
 import SkeletonText from "../../components/SkeletonText";
 import LoadMoreButton from "../../components/LoadMoreButton";
 import PageTitle from "../../components/PageTitle";
+import { getRawgUrl } from "../../config/api.js";
 
 export default function DeveloperDetailPage() {
     const { id } = useParams();
@@ -17,11 +18,11 @@ export default function DeveloperDetailPage() {
     const [errorMore, setErrorMore] = useState(null);
 
     const { data: devData, loading: devLoading, error: devError } = useFetchSolution(
-        `https://api.rawg.io/api/developers/${id}?key=65f57c71e58e4703a6b14f979b6d8fbb`
+        getRawgUrl(`developers/${id}`)
     );
 
     const { data: initialGames, loading: initialLoading, error: initialError } = useFetchSolution(
-        `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&developers=${id}&page=1`
+        getRawgUrl("games", { developers: id, page: 1 })
     );
 
     useEffect(() => {
@@ -42,7 +43,7 @@ export default function DeveloperDetailPage() {
         setLoadingMore(true);
         try {
             const res = await fetch(
-                `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&developers=${id}&page=${nextPage}`
+                getRawgUrl("games", { developers: id, page: nextPage })
             );
             const data = await res.json();
             setGames(prev => [...prev, ...data.results]);
@@ -86,10 +87,10 @@ export default function DeveloperDetailPage() {
                 ))}
             </Grid>
 
-            <LoadMoreButton 
-                onClick={loadMore} 
-                loading={loadingMore} 
-                hasMore={hasNext} 
+            <LoadMoreButton
+                onClick={loadMore}
+                loading={loadingMore}
+                hasMore={hasNext}
             />
         </>
     );

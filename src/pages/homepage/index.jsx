@@ -6,27 +6,32 @@ import GamesSlider from "../../components/Slider";
 import CompactGameCard from "../../components/CompactGameCard";
 import SkeletonCardGame from "../../components/SkeletonCard";
 import PageTitle from "../../components/PageTitle";
+import { getRawgUrl } from "../../config/api.js";
 
 export default function HomePage() {
-    const initialUrl = `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&dates=${getLastSixMonths()}&ordering=-rating&page=1`;
+    const initialUrl = getRawgUrl("games", {
+        dates: getLastSixMonths(),
+        ordering: "-rating",
+        page: 1
+    });
     const { data, loading, error } = useFetchSolution(initialUrl);
 
     const { data: popularData, loading: loadingPopular, error: errorPopular } = useFetchSolution(
-        `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&ordering=-added&page=1`
+        getRawgUrl("games", { ordering: "-added", page: 1 })
     );
 
     function getLastSixMonths() {
         const today = new Date();
         const sixMonthsAgo = new Date();
         sixMonthsAgo.setMonth(today.getMonth() - 6);
-        
+
         const formatDate = (date) => {
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, '0');
             const day = String(date.getDate()).padStart(2, '0');
             return `${year}-${month}-${day}`;
         };
-        
+
         return `${formatDate(sixMonthsAgo)},${formatDate(today)}`;
     }
 

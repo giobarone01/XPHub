@@ -7,8 +7,8 @@ export default function FavoritesSection() {
 
     return (
         <>
-            <h2>I tuoi giochi favoriti</h2>
-            {favorites.length === 0 && <p>Non ci sono favoriti al momento...</p>}
+            <h2>Your favorite games</h2>
+            {favorites.length === 0 && <p>No favorites at the moment...</p>}
             <ul>
                 {favorites.map((game) => (
                     <li key={game.id} style={{

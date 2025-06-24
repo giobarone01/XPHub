@@ -7,6 +7,7 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 import LoadMoreButton from "../../components/LoadMoreButton";
 import { Link } from "react-router";
 import PageTitle from "../../components/PageTitle";
+import { getRawgUrl } from "../../config/api.js";
 
 export default function SearchPage() {
     let [searchParams] = useSearchParams();
@@ -15,8 +16,7 @@ export default function SearchPage() {
     const [allGames, setAllGames] = useState([]);
     const [hasMore, setHasMore] = useState(true);
 
-    const initialUrl = `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&search=${game}&page=${page}`;
-
+    const initialUrl = getRawgUrl("games", { search: game, page: page });
     const { loading, data, error, updateUrl } = useFetchSolution(initialUrl);
 
     useEffect(() => {
@@ -33,13 +33,13 @@ export default function SearchPage() {
     useEffect(() => {
         setPage(1);
         setAllGames([]);
-        updateUrl(`https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&search=${game}&page=1`);
+        updateUrl(getRawgUrl("games", { search: game, page: 1 }));
     }, [game, updateUrl]);
 
     const loadMore = () => {
         const nextPage = page + 1;
         setPage(nextPage);
-        updateUrl(`https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&search=${game}&page=${nextPage}`);
+        updateUrl(getRawgUrl("games", { search: game, page: nextPage }));
     };
 
     if (loading && page === 1) {

@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
+import { getRawgUrl } from "../config/api.js";
 
 export default function useGameFilters(initialPlatform, initialGenre, initialPublisher, initialSort) {
   const [platforms, setPlatforms] = useState([]);
   const [genres, setGenres] = useState([]);
   const [publishers, setPublishers] = useState([]);
   const [loadingFilters, setLoadingFilters] = useState(false);
-  
+
   const [selectedPlatform, setSelectedPlatform] = useState(initialPlatform);
   const [selectedGenre, setSelectedGenre] = useState(initialGenre);
   const [selectedPublisher, setSelectedPublisher] = useState(initialPublisher);
@@ -29,7 +30,7 @@ export default function useGameFilters(initialPlatform, initialGenre, initialPub
     const fetchPlatforms = async () => {
       setLoadingFilters(true);
       try {
-        const response = await fetch("https://api.rawg.io/api/platforms?key=65f57c71e58e4703a6b14f979b6d8fbb");
+        const response = await fetch(getRawgUrl("platforms"));
         if (!response.ok) throw new Error('Failed to fetch platforms');
         const data = await response.json();
         setPlatforms(data.results);
@@ -44,7 +45,7 @@ export default function useGameFilters(initialPlatform, initialGenre, initialPub
   useEffect(() => {
     const fetchGenres = async () => {
       try {
-        const response = await fetch("https://api.rawg.io/api/genres?key=65f57c71e58e4703a6b14f979b6d8fbb");
+        const response = await fetch(getRawgUrl("genres"));
         if (!response.ok) throw new Error('Failed to fetch genres');
         const data = await response.json();
         setGenres(data.results);
@@ -59,7 +60,7 @@ export default function useGameFilters(initialPlatform, initialGenre, initialPub
   useEffect(() => {
     const fetchPublishers = async () => {
       try {
-        const response = await fetch("https://api.rawg.io/api/publishers?key=65f57c71e58e4703a6b14f979b6d8fbb&page_size=40");
+        const response = await fetch(getRawgUrl("publishers", { page_size: 40 }));
         if (!response.ok) throw new Error('Failed to fetch publishers');
         const data = await response.json();
         setPublishers(data.results);
@@ -97,7 +98,7 @@ export default function useGameFilters(initialPlatform, initialGenre, initialPub
   };
 
   const buildUrl = (pageNum = 1) => {
-    let url = `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&page=${pageNum}`;
+    let url = getRawgUrl("games", { page: pageNum });
 
     if (selectedPlatform) {
       url += `&platforms=${selectedPlatform}`;

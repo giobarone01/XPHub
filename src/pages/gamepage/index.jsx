@@ -10,12 +10,13 @@ import { TiVendorMicrosoft } from "react-icons/ti";
 import { Button, Divider } from "@heroui/react";
 import FallbackImg from "../../assets/fallback.png";
 import { Link } from "react-router-dom";
+import { getRawgUrl } from "../../config/api.js";
 
 export default function GamePage() {
     const { id } = useParams();
-    const gameUrl = `https://api.rawg.io/api/games/${id}?key=65f57c71e58e4703a6b14f979b6d8fbb`;
-    const screenshotsUrl = `https://api.rawg.io/api/games/${id}/screenshots?key=65f57c71e58e4703a6b14f979b6d8fbb`;
-    const moviesUrl = `https://api.rawg.io/api/games/${id}/movies?key=65f57c71e58e4703a6b14f979b6d8fbb`;
+    const gameUrl = getRawgUrl(`games/${id}`);
+    const screenshotsUrl = getRawgUrl(`games/${id}/screenshots`);
+    const moviesUrl = getRawgUrl(`games/${id}/movies`);
 
     const { data, loading, error } = useFetchSolution(gameUrl);
     const { data: screenshotsData } = useFetchSolution(screenshotsUrl);

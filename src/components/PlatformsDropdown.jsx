@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { getRawgUrl } from "../config/api.js";
 
 export default function PlatformsDropdown() {
     const [platforms, setPlatforms] = useState(null);
@@ -11,7 +12,7 @@ export default function PlatformsDropdown() {
         setIsLoading(true);
         setError(null);
         try {
-            const response = await fetch("https://api.rawg.io/api/platforms?key=65f57c71e58e4703a6b14f979b6d8fbb");
+            const response = await fetch(getRawgUrl("platforms"));
             if (!response.ok) throw new Error('Failed to fetch platforms');
             const data = await response.json();
             setPlatforms(data.results);

@@ -115,7 +115,7 @@ export default function FilterPage() {
         <>
             <div className="container mx-auto px-4">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <PageTitle subtitle="Customize your gaming experience" className="mb-0">
+                    <PageTitle subtitle="Find your favorite games" className="mb-0">
                         <span>All </span><span className="gradient-text">Games</span>
                     </PageTitle>
 

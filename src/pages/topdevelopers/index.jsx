@@ -4,10 +4,11 @@ import Grid from "../../components/Grid";
 import SkeletonCardGame from "../../components/SkeletonCard";
 import { motion } from "framer-motion";
 import PageTitle from "../../components/PageTitle";
+import { getRawgUrl } from "../../config/api.js";
 
 export default function DevelopersPage() {
     const { data, loading, error, load } = useFetchSolution(
-        "https://api.rawg.io/api/developers?key=65f57c71e58e4703a6b14f979b6d8fbb&page_size=40"
+        getRawgUrl("developers", { page_size: 40 })
     );
 
     const developers = data?.results;

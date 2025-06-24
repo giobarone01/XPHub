@@ -6,10 +6,11 @@ import Grid from "../../components/Grid";
 import SkeletonCardGame from "../../components/SkeletonCard";
 import LoadMoreButton from "../../components/LoadMoreButton";
 import PageTitle from "../../components/PageTitle";
+import { getRawgUrl } from "../../config/api.js";
 
 export default function GenrePage() {
     const { genre } = useParams();
-    const initialUrl = `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&genres=${genre}&page=1`;
+    const initialUrl = getRawgUrl("games", { genres: genre, page: 1 });
 
     const {
         loading,
@@ -21,7 +22,7 @@ export default function GenrePage() {
     } = usePaginatedFetch(initialUrl);
 
     useEffect(() => {
-        reset(`https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&genres=${genre}&page=1`);
+        reset(getRawgUrl("games", { genres: genre, page: 1 }));
     }, [genre, reset]);
 
     return (

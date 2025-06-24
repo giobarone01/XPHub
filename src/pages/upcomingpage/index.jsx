@@ -5,28 +5,30 @@ import useFetchSolution from "../../hook/useFetchSolution";
 import SkeletonCardGame from "../../components/SkeletonCard";
 import LoadMoreButton from "../../components/LoadMoreButton";
 import PageTitle from "../../components/PageTitle";
+import { getRawgUrl } from "../../config/api.js";
 
 export default function UpcomingPage() {
     const [page, setPage] = useState(1);
     const [allGames, setAllGames] = useState([]);
-    
+
     function getNextSixMonths() {
         const today = new Date();
         const sixMonthsLater = new Date();
         sixMonthsLater.setMonth(today.getMonth() + 6);
-        
+
         const formatDate = (date) => {
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, '0');
             const day = String(date.getDate()).padStart(2, '0');
             return `${year}-${month}-${day}`;
         };
-        
+
         return `${formatDate(today)},${formatDate(sixMonthsLater)}`;
     }
 
-    const initialUrl = `https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&dates=${getNextSixMonths()}&ordering=released&page=${page}`;
-    
+
+    const initialUrl = getRawgUrl("games", { dates: getNextSixMonths(), ordering: "released", page: page });
+
     const { data, loading, error, updateUrl } = useFetchSolution(initialUrl);
 
     useEffect(() => {
@@ -42,7 +44,7 @@ export default function UpcomingPage() {
     const loadMore = () => {
         const nextPage = page + 1;
         setPage(nextPage);
-        updateUrl(`https://api.rawg.io/api/games?key=65f57c71e58e4703a6b14f979b6d8fbb&dates=${getNextSixMonths()}&ordering=released&page=${nextPage}`);
+        updateUrl(getRawgUrl("games", { dates: getNextSixMonths(), ordering: "released", page: nextPage }));
     };
 
     return (
@@ -71,10 +73,10 @@ export default function UpcomingPage() {
                         {allGames.map((game) => <CardGame key={game.id} game={game} />)}
                     </Grid>
 
-                    <LoadMoreButton 
-                        onClick={loadMore} 
-                        loading={loading} 
-                        hasMore={!!data?.next} 
+                    <LoadMoreButton
+                        onClick={loadMore}
+                        loading={loading}
+                        hasMore={!!data?.next}
                     />
                 </>
             )}

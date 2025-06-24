@@ -10,7 +10,7 @@ import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 export default function GamesSlider({
   items,
   renderItem,
-  title = "Scopri altri giochi",
+  title = "Discover more games",
   slidesPerView = 5,
   enableLightbox = false
 }) {

@@ -48,7 +48,7 @@ export default function AccountForm() {
             setLoading(false);
             return;
         }
-        
+
         toast.success("Profile updated successfully!");
 
         setUsername(updates.username);
@@ -70,61 +70,73 @@ export default function AccountForm() {
         avatar_url !== (profile?.avatar_url ?? "");
 
     return (
-        <form onSubmit={updateProfile} className="space-y-4 text-white text-sm">
-            <Avatar
-                url={avatar_url}
-                size={150}
-                onUpload={(event, url) => updateProfile(event, url)}
-            />
-
-            <div>
-                <label className="block mb-1 text-gray-400">Email</label>
-                <input
-                    type="text"
-                    value={session.user.email}
-                    disabled
-                    className="w-full bg-gray-700 border border-gray-600 rounded-xl p-2 cursor-not-allowed text-gray-400"
+        <form onSubmit={updateProfile} className="space-y-6 text-white text-sm sm:text-base">
+            <div className="flex justify-center">
+                <Avatar
+                    url={avatar_url}
+                    size={150}
+                    onUpload={(event, url) => updateProfile(event, url)}
                 />
             </div>
 
-            <div>
-                <label className="block mb-1 text-gray-300">Username</label>
-                <input
-                    type="text"
-                    required
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="w-full bg-white/10 border border-white/10 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-my-cyan/50"
-                />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="md:col-span-2">
+                    <label className="block mb-1 text-gray-300 text-xs sm:text-sm font-medium">Email</label>
+                    <input
+                        type="text"
+                        value={session.user.email}
+                        disabled
+                        className="w-full bg-gray-700/50 border border-gray-600/50 rounded-xl p-3 cursor-not-allowed text-gray-400 backdrop-blur-sm"
+                    />
+                </div>
+
+                <div className="md:col-span-2">
+                    <label className="block mb-1 text-gray-300 text-xs sm:text-sm font-medium">Username</label>
+                    <input
+                        type="text"
+                        required
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        className="w-full bg-white/10 border border-white/10 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-my-cyan/50 backdrop-blur-sm hover:border-my-cyan/30"
+                    />
+                </div>
+
+                <div>
+                    <label className="block mb-1 text-gray-300 text-xs sm:text-sm font-medium">First name</label>
+                    <input
+                        type="text"
+                        value={first_name}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        className="w-full bg-white/10 border border-white/10 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-my-cyan/50 backdrop-blur-sm hover:border-my-cyan/30"
+                    />
+                </div>
+
+                <div>
+                    <label className="block mb-1 text-gray-300 text-xs sm:text-sm font-medium">Last name</label>
+                    <input
+                        type="text"
+                        value={last_name}
+                        onChange={(e) => setLastName(e.target.value)}
+                        className="w-full bg-white/10 border border-white/10 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-my-cyan/50 backdrop-blur-sm hover:border-my-cyan/30"
+                    />
+                </div>
             </div>
 
-            <div>
-                <label className="block mb-1 text-gray-300">Nome</label>
-                <input
-                    type="text"
-                    value={first_name}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    className="w-full bg-white/10 border border-white/10 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-my-cyan/50"
-                />
-            </div>
-
-            <div>
-                <label className="block mb-1 text-gray-300">Cognome</label>
-                <input
-                    type="text"
-                    value={last_name}
-                    onChange={(e) => setLastName(e.target.value)}
-                    className="w-full bg-white/10 border border-white/10 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-my-cyan/50"
-                />
-            </div>
-
-            <div>
+            <div className="pt-4">
                 <button
                     type="submit"
                     disabled={loading || !hasChanges}
-                    className="w-full py-2 rounded-xl bg-my-cyan/50 hover:bg-my-cyan/70 transition text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-my-cyan/60 to-my-purple/60 hover:from-my-cyan/80 hover:to-my-purple/80 text-white font-medium text-sm sm:text-base shadow-md disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm"
                 >
-                    {loading ? "Loading..." : "Update"}
+                    {loading ? (
+                        <span className="flex items-center justify-center gap-2">
+                            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Updating...
+                        </span>
+                    ) : "Update"}
                 </button>
             </div>
         </form>

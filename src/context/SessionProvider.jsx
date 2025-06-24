@@ -6,8 +6,19 @@ import { toast } from 'react-toastify';
 export default function SessionProvider({ children }) {
     const [session, setSession] = useState(null);
     const [profile, setProfile] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        const checkSession = async () => {
+            const { data } = await supabase.auth.getSession();
+            if (data.session) {
+                setSession(data.session);
+            }
+            setIsLoading(false);
+        };
+
+        checkSession();
+
         const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
             if (event === "SIGNED_OUT") {
                 setSession(null);
@@ -16,6 +27,7 @@ export default function SessionProvider({ children }) {
                 setSession(session);
             }
         });
+
         return () => {
             subscription.unsubscribe();
         };
@@ -43,7 +55,7 @@ export default function SessionProvider({ children }) {
     }, [session]);
 
     return (
-        <SessionContext.Provider value={{ session, profile, setProfile }}>
+        <SessionContext.Provider value={{ session, profile, setProfile, isLoading }}>
             {children}
         </SessionContext.Provider>
     );

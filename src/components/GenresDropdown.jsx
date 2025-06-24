@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from "framer-motion";
+import { getRawgUrl } from "../config/api.js";
 
 export default function GenresDropdown({ toggleSidebar }) {
     const [genres, setGenres] = useState(null);
@@ -12,7 +13,7 @@ export default function GenresDropdown({ toggleSidebar }) {
         setIsLoading(true);
         setError(null);
         try {
-            const response = await fetch("https://api.rawg.io/api/genres?key=65f57c71e58e4703a6b14f979b6d8fbb");
+            const response = await fetch(getRawgUrl("genres"));
             if (!response.ok) throw new Error('Failed to fetch genres');
             const data = await response.json();
             setGenres(data.results);
