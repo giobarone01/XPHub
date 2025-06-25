@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export default function PageTitle({ children, subtitle, className = "" }) {
     return (
-        <div className={`my-10 ${className}`}>
+        <div className={`mt-1 sm:mt-2 md:mt-3 lg:mt-6 mb-6 ${className}`}>
             <motion.h1
                 className="text-2xl sm:text-3xl md:text-4xl font-bold relative inline-block"
                 initial={{ opacity: 0, y: -20 }}

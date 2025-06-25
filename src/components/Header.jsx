@@ -35,27 +35,29 @@ export default function Header({ toggleSidebar }) {
 
         if (profile?.avatar_url) {
             downloadImage(profile.avatar_url);
+        } else {
+            setAvatarUrl(null);
         }
     }, [profile]);
 
     return (
         <header className="sticky top-0 z-40 bg-my-black">
-            <nav className="w-full mx-auto px-4 sm:px-8 pt-6 flex items-center justify-between">
+            <nav className="w-full mx-auto px-4 sm:px-6 md:px-8 pt-3 sm:pt-4 md:pt-5 pb-3 sm:pb-4 md:pb-4 flex items-center justify-between">
 
                 <button
                     onClick={toggleSidebar}
                     className="md:inline-block lg:hidden ml-1 mr-3 p-2 rounded hover:bg-my-cyan/30 focus:outline-none"
                     aria-label="Toggle sidebar"
                 >
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 sm:w-6 sm:h-6 w-5 h-5 md:w-7 md:h-7" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
 
                 <div className="flex items-center space-x-3 flex-shrink-0">
                     <Link to="/" className="flex items-center space-x-2 rounded px-1">
-                        <img src={logo} alt="XPHub Logo" className="h-8 w-auto" />
-                        <span className="font-bold text-xl text-white hover:text-my-cyan transition-colors duration-200 hidden lg:inline">
+                        <img src={logo} alt="XPHub Logo" className="h-6 w-auto sm:h-7 md:h-8 lg:h-8" />
+                        <span className="font-bold text-lg sm:text-lg md:text-xl lg:text-xl text-white hover:text-my-cyan transition-colors duration-200 hidden lg:inline">
                             XPHub
                         </span>
                     </Link>
@@ -82,10 +84,10 @@ export default function Header({ toggleSidebar }) {
                                     <img
                                         src={avatarUrl}
                                         alt="Avatar"
-                                        className="w-10 h-10 rounded-full object-cover border border-white"
+                                        className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 lg:w-11 lg:h-11 rounded-full object-cover border border-white"
                                     />
                                 ) : (
-                                    <div className="w-10 h-10 rounded-full bg-gray-400 border border-white" />
+                                    <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 rounded-full bg-gray-400 border border-white" />
                                 )}
                                 <span className="text-white font-medium hidden sm:inline">
                                     {profile?.username}

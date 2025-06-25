@@ -55,7 +55,7 @@ export default function HomePage() {
                 </Grid>
             )}
             {popularData?.results?.length > 0 && (
-                <div className="container mx-auto px-4">
+                <div className="container mx-auto px-4 mt-10">
                     <h2 className="mb-4 text-xl font-bold text-white title-with-line">Most Popular Games</h2>
                     <GamesSlider
                         items={popularData.results.slice(0, 15)}

@@ -7,7 +7,11 @@ export default function Avatar({ url, size, onUpload }) {
     const [uploading, setUploading] = useState(false)
 
     useEffect(() => {
-        if (url) downloadImage(url)
+        if (url) {
+            downloadImage(url)
+        } else {
+            setAvatarUrl(null)
+        }
     }, [url])
 
     const downloadImage = async (path) => {
@@ -50,19 +54,19 @@ export default function Avatar({ url, size, onUpload }) {
             setUploading(false)
         }
     }
-    
+
     const handleRemoveAvatar = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        
-        // Creiamo un evento personalizzato più completo
+
         const customEvent = {
-            preventDefault: () => {}, // Questa funzione viene chiamata in updateProfile
-            stopPropagation: () => {}, // Aggiungiamo anche questa per sicurezza
-            target: { files: [] } // Aggiungiamo la struttura completa dell'evento
+            preventDefault: () => {},
+            stopPropagation: () => {},
+            target: { files: [] }
         };
-        
-        // Passiamo null come URL per rimuovere l'avatar
+
+        setAvatarUrl(null);
+
         onUpload(customEvent, null);
     }
 
@@ -82,7 +86,7 @@ export default function Avatar({ url, size, onUpload }) {
                             type="button"
                             onClick={handleRemoveAvatar}
                             className="bg-red-500/70 text-white p-2 rounded-full hover:bg-red-500 transition-all duration-300"
-                            title="Rimuovi immagine"
+                            title="Remove image"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />

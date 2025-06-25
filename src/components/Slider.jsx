@@ -25,7 +25,7 @@ export default function GamesSlider({
   };
 
   return (
-    <div className="mt-8 mb-4">
+    <div className="mt-0">
       {title && (
         <h2 className="mb-4 text-xl font-bold text-white relative inline-block">
           {title}
