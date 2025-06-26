@@ -13,6 +13,7 @@ import DevelopersPage from "../pages/topdevelopers";
 import DeveloperDetailPage from "../pages/topdevelopers/detail";
 import FilterPage from "../pages/filterpage";
 import UpcomingPage from "../pages/upcomingpage";
+import GameTherapistPage from "../pages/gametherapist";
 import ProtectedRoute from "./ProtectedRoute";
 
 export function Routing() {
@@ -27,6 +28,7 @@ export function Routing() {
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/filter" element={<FilterPage />} />
                     <Route path="/upcoming" element={<UpcomingPage />} />
+                    <Route path="/therapist" element={<GameTherapistPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/account" element={

@@ -62,6 +62,13 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
                     >
                         All games
                     </Link>
+                    <Link
+                        to="/therapist"
+                        className="mb-6 block pt-2 text-gray-300 hover:text-my-cyan transition-colors duration-250 font-semibold text-white text-lg sm:text-xl"
+                        onClick={() => isOpen && toggleSidebar()}
+                    >
+                        Game Therapist
+                    </Link>
             </aside>
         </>
     );
