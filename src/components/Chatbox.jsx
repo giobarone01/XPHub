@@ -2,6 +2,7 @@ import { useState, useContext, useRef, useEffect } from "react";
 import supabase from "../supabase/supabase-client";
 import SessionContext from "../context/SessionContext";
 import RealtimeChat from "./RealtimeChat";
+import { toast } from 'react-toastify';
 
 export default function Chatbox({ data }) {
     const { session } = useContext(SessionContext);
@@ -33,12 +34,17 @@ export default function Chatbox({ data }) {
         event.preventDefault();
         if (!message.trim()) return;
 
+        if (!session) {
+            toast.info("You need to sign in to participate in the chat");
+            return;
+        }
+
         setSending(true);
         const { error } = await supabase
             .from("messages")
             .insert({
-                profile_id: session?.user.id,
-                profile_username: session?.user.user_metadata.username,
+                profile_id: session.user.id,
+                profile_username: session.user.user_metadata.username,
                 game_id: data.id,
                 content: message,
             })
@@ -67,15 +73,15 @@ export default function Chatbox({ data }) {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         onInput={handleTextareaInput}
-                        placeholder="Be nice..."
+                        placeholder={session ? "Be nice..." : "Sign in to join the chat"}
                         maxLength={300}
                         rows={1}
-                            className="flex-1 bg-black/70 text-white rounded-2xl px-4 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-pink-500/40 text-xs sm:text-sm shadow-inner shadow-white/5"
+                        className="flex-1 bg-black/70 text-white rounded-2xl px-4 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-pink-500/40 text-xs sm:text-sm shadow-inner shadow-white/5"
                         style={{ minHeight: "24px", maxHeight: "96px", overflowY: "hidden" }}
                     />
                     <button
                         type="submit"
-                        disabled={sending || !message.trim()}
+                        disabled={sending || !message.trim() || !session}
                         className="bg-black/20 hover:bg-black/40 text-white rounded-full px-6 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         style={{ width: "90px", flexShrink: 0 }}
                     >
@@ -83,6 +89,11 @@ export default function Chatbox({ data }) {
                     </button>
                 </form>
                 {errorMsg && <p className="text-red-500 text-sm mt-2">{errorMsg}</p>}
+                {!session && (
+                    <p className="text-my-cyan text-xs mt-2 text-center">
+                        You need to sign in to participate in the chat
+                    </p>
+                )}
             </div>
         </div>
     );

@@ -31,7 +31,7 @@ export default function QuestionScreen({ question, options, currentQuestionIndex
                 ))}
             </div>
 
-            // Progress-bar
+            {/* Progress Bar */}
             <div className="flex justify-center mb-4">
                 <div className="flex space-x-1">
                     {Array.from({ length: totalQuestions }).map((_, index) => (

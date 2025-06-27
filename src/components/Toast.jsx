@@ -1,5 +1,6 @@
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../toast.css';
 
 export default function Toast() {
     return (
@@ -16,15 +17,16 @@ export default function Toast() {
             theme="dark"
             style={{
                 '--toastify-color-dark': '#1c1c1c',
-                '--toastify-color-success': '#00ff88',
+                '--toastify-color-success': 'var(--my-green)',
                 '--toastify-color-error': '#ff0055',
-                '--toastify-color-info': '#00ffff',
+                '--toastify-color-info': 'var(--my-cyan)',
                 '--toastify-color-warning': '#ffaa00',
-                '--toastify-icon-color-success': 'var(--toastify-color-success)',
-                '--toastify-icon-color-error': 'var(--toastify-color-error)',
-                '--toastify-icon-color-info': 'var(--toastify-color-info)',
-                '--toastify-icon-color-warning': 'var(--toastify-color-warning)',
+                '--toastify-icon-color-success': 'var(--my-green)',
+                '--toastify-icon-color-error': '#ff0055',
+                '--toastify-icon-color-info': 'var(--my-cyan)',
+                '--toastify-icon-color-warning': '#ffaa00',
                 '--toastify-text-color-dark': '#ffffff',
+                '--toastify-font-family': 'inherit',
             }}
         />
     );

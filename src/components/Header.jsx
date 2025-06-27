@@ -42,36 +42,31 @@ export default function Header({ toggleSidebar }) {
 
     return (
         <header className="sticky top-0 z-40 bg-my-black">
-            <nav className="w-full mx-auto px-4 sm:px-6 md:px-8 pt-3 sm:pt-4 md:pt-5 pb-3 sm:pb-4 md:pb-4 flex items-center justify-between">
+            <nav className="w-full mx-auto px-3 sm:px-6 md:px-8 pt-3 sm:pt-4 md:pt-5 pb-3 sm:pb-4 md:pb-4 flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                    <button
+                        onClick={toggleSidebar}
+                        className="md:inline-block lg:hidden p-2.5 rounded hover:bg-my-cyan/30 focus:outline-none"
+                        aria-label="Toggle sidebar"
+                    >
+                        <svg className="w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
 
-                <button
-                    onClick={toggleSidebar}
-                    className="md:inline-block lg:hidden ml-1 mr-3 p-2 rounded hover:bg-my-cyan/30 focus:outline-none"
-                    aria-label="Toggle sidebar"
-                >
-                    <svg className="w-6 h-6 sm:w-6 sm:h-6 w-5 h-5 md:w-7 md:h-7" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-
-                <div className="flex items-center space-x-3 flex-shrink-0">
                     <Link to="/" className="flex items-center space-x-2 rounded px-1">
-                        <img src={logo} alt="XPHub Logo" className="h-6 w-auto sm:h-7 md:h-8 lg:h-8" />
+                        <img src={logo} alt="XPHub Logo" className="h-7 w-auto sm:h-7 md:h-8 lg:h-8" />
                         <span className="font-bold text-lg sm:text-lg md:text-xl lg:text-xl text-white hover:text-my-cyan transition-colors duration-200 hidden lg:inline">
                             XPHub
                         </span>
                     </Link>
                 </div>
 
-                <div className="flex-1 max-w-xl mx-4 hidden md:block">
+                <div className="flex-1 max-w-full md:max-w-xl px-2 md:px-4 mx-0 md:mx-4">
                     <SearchBar />
                 </div>
 
-                <div className="flex items-center space-x-4">
-                    <div className="md:hidden mr-2">
-                        <SearchBar mobile />
-                    </div>
-
+                <div className="flex items-center">
                     {session ? (
                         <div className="relative">
                             <button
@@ -84,7 +79,7 @@ export default function Header({ toggleSidebar }) {
                                     <img
                                         src={avatarUrl}
                                         alt="Avatar"
-                                        className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 lg:w-11 lg:h-11 rounded-full object-cover border border-white"
+                                        className="w-9 h-9 sm:w-9 sm:h-9 md:w-10 md:h-10 lg:w-11 lg:h-11 rounded-full object-cover border border-white"
                                     />
                                 ) : (
                                     <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 rounded-full bg-gray-400 border border-white" />
@@ -134,24 +129,24 @@ export default function Header({ toggleSidebar }) {
                         <>
                             <Link
                                 to="/login"
-                                className="hidden sm:inline-block text-white hover:text-my-cyan transition-colors duration-200 px-3 py-1"
+                                className="hidden sm:inline-block text-white hover:text-my-cyan transition-colors duration-200 px-4 py-2 rounded-full text-base"
                             >
                                 Login
                             </Link>
                             <Link
                                 to="/register"
-                                className="hidden sm:inline-block bg-my-cyan text-black font-semibold text-sm px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-200"
+                                className="hidden sm:inline-block bg-my-purple text-white font-semibold text-base px-5 py-2 rounded-full hover:bg-my-purple/90 transition-colors duration-200"
                             >
-                                Register
+                                Sign up
                             </Link>
 
                             <div className="sm:hidden relative">
                                 <button
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                    className="text-white p-2 rounded-full hover:bg-my-cyan/20 focus:outline-none"
+                                    className="text-white p-2.5 rounded-full hover:bg-my-cyan/20 focus:outline-none"
                                     aria-label="Account menu"
                                 >
-                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                     </svg>
                                 </button>
@@ -160,17 +155,17 @@ export default function Header({ toggleSidebar }) {
                                     <div className="absolute right-0 mt-2 w-48 bg-my-black rounded-lg shadow-lg py-2 border border-gray-700 z-50">
                                         <Link
                                             to="/login"
-                                            className="block px-4 py-2 text-sm text-gray-300 hover:bg-my-cyan hover:text-black transition"
+                                            className="block px-4 py-3 text-sm text-gray-300 hover:bg-my-cyan/70 hover:text-white transition"
                                             onClick={() => setIsDropdownOpen(false)}
                                         >
                                             Login
                                         </Link>
                                         <Link
                                             to="/register"
-                                            className="block px-4 py-2 text-sm text-gray-300 hover:bg-my-cyan hover:text-black transition"
+                                            className="block px-4 py-3 text-sm font-semibold text-gray-300 hover:bg-my-purple hover:text-white transition"
                                             onClick={() => setIsDropdownOpen(false)}
                                         >
-                                            Register
+                                            Sign up
                                         </Link>
                                     </div>
                                 )}
