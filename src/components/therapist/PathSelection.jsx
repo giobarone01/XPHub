@@ -10,7 +10,7 @@ export default function PathSelection({ onSelectPath }) {
             transition={{ duration: 0.3 }}
         >
             <h2 className="text-xl font-semibold mb-3 text-white text-center">
-                Scegli il tipo di terapia videoludica
+                Choose your gaming therapy
             </h2>
 
             <div className="flex flex-col space-y-2 sm:space-y-3 max-w-md mx-auto">
@@ -22,8 +22,8 @@ export default function PathSelection({ onSelectPath }) {
                         <FaUserAlt className="text-sm sm:text-base"/>
                     </div>
                     <div>
-                        <h3 className="font-medium text-white text-sm sm:text-base">Analisi del Carattere</h3>
-                        <p className="text-xs text-gray-300">Scopri giochi adatti alla tua personalità</p>
+                        <h3 className="font-medium text-white text-sm sm:text-base">Character Analysis</h3>
+                        <p className="text-xs text-gray-300">Discover games that match your personality</p>
                     </div>
                 </div>
 
@@ -35,14 +35,14 @@ export default function PathSelection({ onSelectPath }) {
                         <FaSmile className="text-sm sm:text-base" />
                     </div>
                     <div>
-                        <h3 className="font-medium text-white text-sm sm:text-base">Terapia dell'Umore</h3>
-                        <p className="text-xs text-gray-300">Trova giochi adatti al tuo stato d'animo</p>
+                        <h3 className="font-medium text-white text-sm sm:text-base">Mood Therapy</h3>
+                        <p className="text-xs text-gray-300">Find games that suit your current mood</p>
                     </div>
                 </div>
             </div>
 
             <div className="mt-6 text-center text-xs text-gray-400">
-                <p>Seleziona l'opzione più adatta alle tue esigenze</p>
+                <p>Select the option that best fits your needs</p>
             </div>
         </motion.div>
     );

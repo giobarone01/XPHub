@@ -22,12 +22,12 @@ export default function ResultsScreen({
             <div className="text-center mb-4 sm:mb-6">
                 <h2 className="text-lg sm:text-xl font-semibold text-white">
                     {selectedPath === 'character'
-                        ? "Risultati della terapia"
-                        : "La tua prescrizione videoludica"}
+                        ? "Therapy Results"
+                        : "Your Gaming Prescription"}
                 </h2>
                 {platformName && (
                     <p className="text-my-cyan text-xs sm:text-sm mt-1">
-                        per {platformName}
+                        for {platformName}
                     </p>
                 )}
             </div>
@@ -44,9 +44,9 @@ export default function ResultsScreen({
                 </>
             ) : (
                 <div className="py-3 sm:py-4 text-center">
-                    <h3 className="text-base sm:text-lg font-medium text-my-cyan mb-1 sm:mb-2">Nessun gioco trovato</h3>
+                    <h3 className="text-base sm:text-lg font-medium text-my-cyan mb-1 sm:mb-2">No games found</h3>
                     <p className="text-gray-300 mb-2 sm:mb-3 text-xs sm:text-sm">
-                        Non ho trovato giochi che corrispondono alle tue preferenze per la piattaforma selezionata.
+                        I couldn't find games that match your preferences for the selected platform.
                     </p>
                 </div>
             )}
@@ -59,7 +59,7 @@ export default function ResultsScreen({
                     tabIndex={0}
                 >
                     <div className="flex items-center justify-center gap-1 sm:gap-2 py-1">
-                        <span className="text-xs sm:text-sm font-semibold">Ricomincia</span>
+                        <span className="text-xs sm:text-sm font-semibold">Restart</span>
                     </div>
                 </div>
 
@@ -71,7 +71,7 @@ export default function ResultsScreen({
                         tabIndex={0}
                     >
                         <div className="flex items-center justify-center gap-1 sm:gap-2 py-1">
-                            <span className="text-xs sm:text-sm font-semibold">Prova terapia dell'umore</span>
+                            <span className="text-xs sm:text-sm font-semibold">Try mood therapy</span>
                         </div>
                     </div>
                 ) : (
@@ -82,7 +82,7 @@ export default function ResultsScreen({
                         tabIndex={0}
                     >
                         <div className="flex items-center justify-center gap-1 sm:gap-2 py-1">
-                            <span className="text-xs sm:text-sm font-semibold">Prova analisi carattere</span>
+                            <span className="text-xs sm:text-sm font-semibold">Try character analysis</span>
                         </div>
                     </div>
                 )}
@@ -93,7 +93,7 @@ export default function ResultsScreen({
                     role="button"
                     tabIndex={0}
                 >
-                    <FaArrowLeft className="text-xs sm:text-sm" /> <span className="text-xs sm:text-sm font-semibold">Cambia piattaforma</span>
+                    <FaArrowLeft className="text-xs sm:text-sm" /> <span className="text-xs sm:text-sm font-semibold">Change platform</span>
                 </div>
             </div>
         </motion.div>

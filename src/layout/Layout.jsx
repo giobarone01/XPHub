@@ -26,8 +26,8 @@ export default function Layout() {
                     />
                 )}
 
-                <main className="flex-1 pt-1 sm:pt-2 md:pt-3 lg:pt-4 pb-10 px-8 overflow-x-hidden">
-                    <div className="w-full px-2 sm:px-4">
+                <main className="flex-1 pt-1 sm:pt-2 md:pt-3 lg:pt-4 pb-10 px-2 sm:px-6 md:px-8 overflow-x-hidden">
+                    <div className="w-full px-4 sm:px-2 md:px-4">
                         <Outlet />
                     </div>
                 </main>

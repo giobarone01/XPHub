@@ -10,11 +10,11 @@ export default function PlatformSelection({ platforms, onSelectPlatform, onBack,
             transition={{ duration: 0.3 }}
         >
             <h2 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-white text-center">
-                Su quale piattaforma vuoi la terapia videoludica?
+                Which platform do you want for your gaming therapy?
             </h2>
 
             <p className="text-gray-300 mb-3 sm:mb-4 text-center text-xs sm:text-sm">
-                Seleziona la tua piattaforma per ricevere consigli personalizzati
+                Select your platform to receive personalized recommendations
             </p>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 sm:gap-2 max-h-[200px] sm:max-h-[250px] overflow-y-auto p-1 sm:p-2 mb-3 sm:mb-4">
@@ -26,7 +26,7 @@ export default function PlatformSelection({ platforms, onSelectPlatform, onBack,
                 >
                     <div className="flex items-center justify-center gap-1 sm:gap-2 py-0.5 sm:py-1">
                         <FaGamepad className="text-xs sm:text-sm" />
-                        <span className="text-xs sm:text-sm font-semibold">Tutte</span>
+                        <span className="text-xs sm:text-sm font-semibold">All</span>
                     </div>
                 </div>
 
@@ -53,7 +53,7 @@ export default function PlatformSelection({ platforms, onSelectPlatform, onBack,
                     tabIndex={0}
                 >
                     <FaArrowLeft className="text-xs sm:text-sm" />
-                    <span className="text-xs sm:text-sm font-semibold">Indietro</span>
+                    <span className="text-xs sm:text-sm font-semibold">Back</span>
                 </div>
             </div>
         </motion.div>

@@ -105,7 +105,7 @@ export default function GameTherapistPage() {
 
     return (
         <>
-            <PageTitle subtitle="Scopri quali giochi sono perfetti per te">
+            <PageTitle subtitle="Discover which games are perfect for you">
                 Game <span className="gradient-text">Therapist</span>
             </PageTitle>
 
@@ -135,7 +135,7 @@ export default function GameTherapistPage() {
                     >
                         <div className="flex flex-col items-center justify-center py-6">
                             <LoadingSpinner size="lg" />
-                            <p className="mt-3 text-gray-300">Analisi in corso...</p>
+                            <p className="mt-3 text-gray-300">Analysis in progress...</p>
                         </div>
                     </motion.div>
                 ) : !showResults ? (

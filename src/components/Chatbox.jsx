@@ -60,40 +60,45 @@ export default function Chatbox({ data }) {
         setSending(false);
     };
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            handleMessageSubmit(event);
+        }
+    };
+
     return (
-        <div className="flex flex-col h-[500px] sm:h-[600px] bg-none overflow-hidden">
+        <div className="flex flex-col h-[400px] sm:h-[500px] md:h-[600px] bg-none overflow-hidden">
             <div className="flex-1 overflow-hidden">
                 <RealtimeChat data={data && data} />
             </div>
-            <div className="p-4">
-                <form onSubmit={handleMessageSubmit} className="flex gap-2 items-end">
+            <div className="p-2 sm:p-4">
+                <div className="flex justify-end mb-1 sm:mb-2 me-3 sm:me-5">
+                    <span className="text-xs text-white/50">{message.length}/300</span>
+                </div>
+                <form onSubmit={handleMessageSubmit} className="flex gap-2 items-end relative">
                     <textarea
                         ref={textareaRef}
                         name="message"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         onInput={handleTextareaInput}
+                        onKeyDown={handleKeyDown}
                         placeholder={session ? "Be nice..." : "Sign in to join the chat"}
                         maxLength={300}
                         rows={1}
-                        className="flex-1 bg-black/70 text-white rounded-2xl px-4 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-pink-500/40 text-xs sm:text-sm shadow-inner shadow-white/5"
+                        className="flex-1 bg-black/70 text-white rounded-2xl px-3 sm:px-4 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-pink-500/40 text-xs sm:text-sm shadow-inner shadow-white/5"
                         style={{ minHeight: "24px", maxHeight: "96px", overflowY: "hidden" }}
                     />
                     <button
                         type="submit"
                         disabled={sending || !message.trim() || !session}
-                        className="bg-black/20 hover:bg-black/40 text-white rounded-full px-6 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        style={{ width: "90px", flexShrink: 0 }}
+                        className="bg-black/20 hover:bg-black/40 text-white rounded-full px-3 sm:px-4 py-1 sm:py-1.5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm"
+                        style={{ width: "70px", sm: { width: "90px" }, flexShrink: 0 }}
                     >
-                        {sending ? "Sending..." : "Send"}
+                        {sending ? "..." : "Send"}
                     </button>
                 </form>
-                {errorMsg && <p className="text-red-500 text-sm mt-2">{errorMsg}</p>}
-                {!session && (
-                    <p className="text-my-cyan text-xs mt-2 text-center">
-                        You need to sign in to participate in the chat
-                    </p>
-                )}
             </div>
         </div>
     );

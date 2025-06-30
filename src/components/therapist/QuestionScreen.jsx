@@ -50,7 +50,7 @@ export default function QuestionScreen({ question, options, currentQuestionIndex
                     role="button"
                     tabIndex={0}
                 >
-                    <FaArrowLeft className="text-xs sm:text-sm" /> <span className="text-xs sm:text-sm font-semibold">Indietro</span>
+                    <FaArrowLeft className="text-xs sm:text-sm" /> <span className="text-xs sm:text-sm font-semibold">Back</span>
                 </div>
             </div>
         </motion.div>
