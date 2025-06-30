@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import MobileOptimizedMotion from "../MobileOptimizedMotion";
 import { FaArrowLeft } from "react-icons/fa";
 import Grid from "../../components/Grid";
 import CardGame from "../../components/CardGame";
@@ -13,7 +13,7 @@ export default function ResultsScreen({
     onChangePlatform 
 }) {
     return (
-        <motion.div
+        <MobileOptimizedMotion
             className="rounded-xl backdrop-blur-sm bg-black/40 p-6 border border-white/10 shadow-inner transition-all duration-300"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -96,6 +96,6 @@ export default function ResultsScreen({
                     <FaArrowLeft className="text-xs sm:text-sm" /> <span className="text-xs sm:text-sm font-semibold">Change platform</span>
                 </div>
             </div>
-        </motion.div>
+        </MobileOptimizedMotion>
     );
 }

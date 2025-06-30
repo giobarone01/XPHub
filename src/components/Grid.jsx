@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 export default function Grid({ children, columns }) {
-    const gridColumns = columns || "grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4";
+    const gridColumns = columns || "grid-cols-1 md:grid-cols-2 lg:grid-cols-4";
 
     return (
         <div className={`container mx-auto grid ${gridColumns} gap-6 md:gap-8 lg:gap-10`}>

@@ -1,9 +1,9 @@
-import { motion } from "framer-motion";
+import MobileOptimizedMotion from "../MobileOptimizedMotion";
 import { FaArrowLeft } from "react-icons/fa";
 
 export default function QuestionScreen({ question, options, currentQuestionIndex, totalQuestions, onAnswer, onBack }) {
     return (
-        <motion.div
+        <MobileOptimizedMotion
             key={currentQuestionIndex}
             className="rounded-xl p-6 backdrop-blur-sm bg-black/40 border border-white/10 shadow-lg transition-all duration-300"
             initial={{ opacity: 0, y: 20 }}
@@ -15,19 +15,16 @@ export default function QuestionScreen({ question, options, currentQuestionIndex
             </h2>
 
             <div className="grid grid-cols-1 gap-2 sm:gap-3 mb-6 sm:mb-8">
-                {options.map((option, index) => (
-                    <motion.div
+                {options.map((option) => (
+                    <div
                         key={option.id}
                         className="w-full bg-white/5 hover:bg-white/10 text-white text-xs sm:text-sm font-semibold p-2 sm:p-3 rounded-lg text-left border border-white/10 hover:border-my-cyan/50 transition-all duration-300 cursor-pointer flex items-center"
                         onClick={() => onAnswer(option.id)}
                         role="button"
                         tabIndex={0}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.2, delay: index * 0.1 }}
                     >
                         <span className="block w-full">{option.text}</span>
-                    </motion.div>
+                    </div>
                 ))}
             </div>
 
@@ -53,6 +50,6 @@ export default function QuestionScreen({ question, options, currentQuestionIndex
                     <FaArrowLeft className="text-xs sm:text-sm" /> <span className="text-xs sm:text-sm font-semibold">Back</span>
                 </div>
             </div>
-        </motion.div>
+        </MobileOptimizedMotion>
     );
 }

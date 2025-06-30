@@ -1,9 +1,9 @@
-import { motion } from "framer-motion";
+import MobileOptimizedMotion from "../MobileOptimizedMotion";
 import { FaUserAlt, FaSmile } from "react-icons/fa";
 
 export default function PathSelection({ onSelectPath }) {
     return (
-        <motion.div
+        <MobileOptimizedMotion
             className="rounded-xl p-6 backdrop-blur-sm bg-black/40 border border-white/10 shadow-lg transition-all duration-300"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -44,6 +44,6 @@ export default function PathSelection({ onSelectPath }) {
             <div className="mt-6 text-center text-xs text-gray-400">
                 <p>Select the option that best fits your needs</p>
             </div>
-        </motion.div>
+        </MobileOptimizedMotion>
     );
 }

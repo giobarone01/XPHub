@@ -1,9 +1,9 @@
-import { motion } from "framer-motion";
+import MobileOptimizedMotion from "../MobileOptimizedMotion";
 import { FaGamepad, FaArrowLeft } from "react-icons/fa";
 
 export default function PlatformSelection({ platforms, onSelectPlatform, onBack, hasAnswers }) {
     return (
-        <motion.div
+        <MobileOptimizedMotion
             className="rounded-xl p-6 backdrop-blur-sm bg-black/40 border border-white/10 hover:border-my-cyan/50 transition-all duration-300"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -56,6 +56,6 @@ export default function PlatformSelection({ platforms, onSelectPlatform, onBack,
                     <span className="text-xs sm:text-sm font-semibold">Back</span>
                 </div>
             </div>
-        </motion.div>
+        </MobileOptimizedMotion>
     );
 }

@@ -8,6 +8,7 @@ import PlatformSelection from "../../components/therapist/PlatformSelection";
 import QuestionScreen from "../../components/therapist/QuestionScreen";
 import ResultsScreen from "../../components/therapist/ResultsScreen";
 import { characterQuestions, moodQuestions, characterTherapistPhrases, moodTherapistPhrases } from "../../context/therapistData";
+import MobileOptimizedMotion from "../../components/MobileOptimizedMotion";
 
 export default function GameTherapistPage() {
     const {
@@ -127,7 +128,7 @@ export default function GameTherapistPage() {
                         hasAnswers={Object.keys(answers).length > 0}
                     />
                 ) : loading ? (
-                    <motion.div
+                    <MobileOptimizedMotion
                         className="rounded-xl p-6 backdrop-blur-sm bg-black/40 border border-white/10 shadow-lg transition-all duration-300"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -137,7 +138,7 @@ export default function GameTherapistPage() {
                             <LoadingSpinner size="lg" />
                             <p className="mt-3 text-gray-300">Analysis in progress...</p>
                         </div>
-                    </motion.div>
+                    </MobileOptimizedMotion>
                 ) : !showResults ? (
                     <QuestionScreen
                         question={getCurrentQuestions()[currentQuestion].text}
