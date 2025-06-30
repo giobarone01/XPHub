@@ -11,7 +11,7 @@
 }
 
 
-/*--- FORM REGISTRAZIONE ---*/
+/*--- FORMS---*/
 .heroui-input-label-outside {
     color: white !important;
 }
@@ -20,7 +20,16 @@
 .heroui-input-label-outside[data-focused="true"] {
     color: white !important;
 }
-/*--- FINE FORM REGISTRAZIONE ---*/
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-text-fill-color: white !important;
+    -webkit-box: 0 0 0 30px var(--my-black) inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+/*--- END FORMS ---*/
 
 .gradient-text {
     background: linear-gradient(90deg, #ffffff, #a0a0a0);

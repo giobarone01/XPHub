@@ -33,7 +33,7 @@ export default function LoginPage() {
             console.log(errors);
             return;
         }
-        
+
         setIsLoading(true);
         try {
             let { error: signInError } = await supabase.auth.signInWithPassword({
@@ -78,25 +78,25 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 bg-my-black">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-my-black">
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="w-full max-w-sm p-4 sm:p-5 rounded-lg bg-my-black mx-auto translate-y-[-8vh]"
+        >
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="w-full max-w-md p-8 rounded-lg bg-my-black"
+                initial={{ scale: 0.9 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, type: "spring" }}
+                className="text-center mb-5"
             >
-                <motion.div
-                    initial={{ scale: 0.9 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.2, type: "spring" }}
-                    className="text-center mb-8"
-                >
-                    <div className="flex justify-center mb-6">
-                        <img src={logo} alt="Logo" className="h-15"/>
-                    </div>
+                <div className="flex justify-center mb-4">
+                    <img src={logo} alt="Logo" className="h-12 sm:h-14" />
+                </div>
 
-                    <h1 className="text-3xl font-bold mb-2 text-white">Welcome Back</h1>
-                </motion.div>
+                <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-white">Welcome Back</h1>
+            </motion.div>
 
                 <form onSubmit={onSubmit} noValidate className="space-y-0">
                     <motion.div
@@ -108,7 +108,7 @@ export default function LoginPage() {
                         <Input
                             isClearable
                             label="Email"
-                            labelPlacement="outside"
+                            labelPlacement="inside"
                             name="email"
                             type="email"
                             variant="bordered"
@@ -119,9 +119,9 @@ export default function LoginPage() {
                             errorMessage={formErrors.email}
                             className="w-full"
                             classNames={{
-                                label: "heroui-input-label-outside text-my-cyan",
-                                inputWrapper: "bg-my-black border-my-purple",
-                                input: "text-white placeholder-zinc-500",
+                                label: "heroui-input-label-inside text-sm sm:text-base text-white",
+                                inputWrapper: "bg-white/5 border-my-purple/50 hover:border-my-cyan/50 rounded-xl transition-all duration-300",
+                                input: "text-white placeholder-zinc-500 text-sm sm:text-base",
                             }}
                         />
                     </motion.div>
@@ -134,7 +134,7 @@ export default function LoginPage() {
                     >
                         <Input
                             label="Password"
-                            labelPlacement="outside"
+                            labelPlacement="inside"
                             name="password"
                             type={showPassword ? "text" : "password"}
                             variant="bordered"
@@ -143,7 +143,6 @@ export default function LoginPage() {
                             onBlur={onBlur("password")}
                             isInvalid={isInvalid("password")}
                             errorMessage={formErrors.password}
-                            description="At least 8 characters with uppercase, lowercase and number"
                             className="w-full"
                             endContent={
                                 <button
@@ -155,9 +154,9 @@ export default function LoginPage() {
                                 </button>
                             }
                             classNames={{
-                                label: "heroui-input-label-outside text-my-cyan",
-                                inputWrapper: "bg-my-black border-my-purple",
-                                input: "text-white placeholder-zinc-500",
+                                label: "heroui-input-label-inside text-sm sm:text-base text-white",
+                                inputWrapper: "bg-white/5 border-my-purple/50 hover:border-my-cyan/50 rounded-xl transition-all duration-300",
+                                input: "text-white placeholder-zinc-500 text-sm sm:text-base",
                             }}
                         />
                     </motion.div>
@@ -188,7 +187,7 @@ export default function LoginPage() {
                     transition={{ delay: 0.7 }}
                     className="text-center mt-6"
                 >
-                    <p className="text-zinc-400">
+                    <p className="text-zinc-400 text-sm sm:text-base">
                         Don't have an account?{" "}
                         <Link
                             to="/register"

@@ -26,17 +26,21 @@ export default function UpcomingPage() {
         return `${formatDate(today)},${formatDate(sixMonthsLater)}`;
     }
 
+    const { data, loading, error, updateUrl } = useFetchSolution("");
 
-    const initialUrl = getRawgUrl("games", { dates: getNextSixMonths(), ordering: "released", page: page });
-
-    const { data, loading, error, updateUrl } = useFetchSolution(initialUrl);
+    useEffect(() => {
+        updateUrl(getRawgUrl("games", { dates: getNextSixMonths(), ordering: "released", page: page }));
+    }, [page, updateUrl]);
 
     useEffect(() => {
         if (data && data.results) {
             if (page === 1) {
                 setAllGames(data.results);
             } else {
-                setAllGames(prev => [...prev, ...data.results]);
+                const newGames = data.results.filter(newGame =>
+                    !allGames.some(existingGame => existingGame.id === newGame.id)
+                );
+                setAllGames(prev => [...prev, ...newGames]);
             }
         }
     }, [data, page]);
@@ -44,7 +48,6 @@ export default function UpcomingPage() {
     const loadMore = () => {
         const nextPage = page + 1;
         setPage(nextPage);
-        updateUrl(getRawgUrl("games", { dates: getNextSixMonths(), ordering: "released", page: nextPage }));
     };
 
     return (

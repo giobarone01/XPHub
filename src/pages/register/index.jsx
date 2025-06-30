@@ -86,24 +86,24 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 bg-my-black">
+        <div className="min-h-screen flex flex-col justify-center items-center bg-my-black">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="w-full max-w-md p-8 rounded-lg bg-my-black"
+                className="w-full max-w-sm p-4 sm:p-5 rounded-lg bg-my-black mx-auto translate-y-[-8vh]"
             >
                 <motion.div
                     initial={{ scale: 0.9 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.2, type: "spring" }}
-                    className="text-center mb-8"
+                    className="text-center mb-5"
                 >
-                    <div className="flex justify-center mb-6">
-                        <img src={logo} alt="Logo" className="h-15" />
+                    <div className="flex justify-center mb-4">
+                        <img src={logo} alt="Logo" className="h-12 sm:h-14" />
                     </div>
 
-                    <h1 className="text-3xl font-bold mb-2 text-white">Create Your Account</h1>
+                    <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-white">Create Your Account</h1>
                 </motion.div>
 
                 <form onSubmit={onSubmit} noValidate className="space-y-0">
@@ -111,12 +111,12 @@ export default function RegisterPage() {
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="mb-1"
+                        className="mb-6"
                     >
                         <Input
                             isClearable
                             label="Email"
-                            labelPlacement="outside"
+                            labelPlacement="inside"
                             name="email"
                             type="email"
                             variant="bordered"
@@ -127,9 +127,9 @@ export default function RegisterPage() {
                             errorMessage={formErrors.email}
                             className="w-full"
                             classNames={{
-                                label: "heroui-input-label-outside text-my-cyan",
-                                inputWrapper: "bg-my-black border-my-purple",
-                                input: "text-white placeholder-zinc-500",
+                                label: "heroui-input-label-inside text-sm sm:text-base text-white",
+                                inputWrapper: "bg-white/5 border-my-purple/50 hover:border-my-cyan/50 rounded-xl transition-all duration-300",
+                                input: "text-white text-sm sm:text-base",
                             }}
                         />
                     </motion.div>
@@ -142,7 +142,7 @@ export default function RegisterPage() {
                     >
                         <Input
                             label="First Name"
-                            labelPlacement="outside"
+                            labelPlacement="inside"
                             name="firstName"
                             variant="bordered"
                             value={formState.firstName}
@@ -152,15 +152,15 @@ export default function RegisterPage() {
                             errorMessage={formErrors.firstName}
                             className="w-full"
                             classNames={{
-                                label: "heroui-input-label-outside text-my-cyan",
-                                inputWrapper: "bg-my-black border-my-purple",
-                                input: "text-white placeholder-zinc-500",
+                                label: "heroui-input-label-inside text-sm sm:text-base text-white",
+                                inputWrapper: "bg-white/5 border-my-purple/50 hover:border-my-cyan/50 rounded-xl transition-all duration-300",
+                                input: "text-white placeholder-zinc-500 text-sm sm:text-base",
                             }}
                         />
 
                         <Input
                             label="Last Name"
-                            labelPlacement="outside"
+                            labelPlacement="inside"
                             name="lastName"
                             variant="bordered"
                             value={formState.lastName}
@@ -170,9 +170,9 @@ export default function RegisterPage() {
                             errorMessage={formErrors.lastName}
                             className="w-full"
                             classNames={{
-                                label: "heroui-input-label-outside text-my-cyan",
-                                inputWrapper: "bg-my-black border-my-purple",
-                                input: "text-white placeholder-zinc-500",
+                                label: "heroui-input-label-inside text-sm sm:text-base text-white",
+                                inputWrapper: "bg-white/5 border-my-purple/50 hover:border-my-cyan/50 rounded-xl transition-all duration-300",
+                                input: "text-white placeholder-zinc-500 text-sm sm:text-base",
                             }}
                         />
                     </motion.div>
@@ -185,7 +185,7 @@ export default function RegisterPage() {
                     >
                         <Input
                             label="Username"
-                            labelPlacement="outside"
+                            labelPlacement="inside"
                             name="username"
                             variant="bordered"
                             value={formState.username}
@@ -195,9 +195,9 @@ export default function RegisterPage() {
                             errorMessage={formErrors.username}
                             className="w-full"
                             classNames={{
-                                label: "heroui-input-label-outside text-my-cyan",
-                                inputWrapper: "bg-my-black border-my-purple",
-                                input: "text-white placeholder-zinc-500",
+                                label: "heroui-input-label-inside text-sm sm:text-base text-white",
+                                inputWrapper: "bg-white/5 border-my-purple/50 hover:border-my-cyan/50 rounded-xl transition-all duration-300",
+                                input: "text-white placeholder-zinc-500 text-sm sm:text-base",
                             }}
                         />
                     </motion.div>
@@ -210,7 +210,7 @@ export default function RegisterPage() {
                     >
                         <Input
                             label="Password"
-                            labelPlacement="outside"
+                            labelPlacement="inside"
                             name="password"
                             type={showPassword ? "text" : "password"}
                             variant="bordered"
@@ -219,7 +219,6 @@ export default function RegisterPage() {
                             onBlur={onBlur("password")}
                             isInvalid={isInvalid("password")}
                             errorMessage={formErrors.password}
-                            description="At least 8 characters with uppercase, lowercase and number"
                             className="w-full"
                             endContent={
                                 <button
@@ -231,9 +230,9 @@ export default function RegisterPage() {
                                 </button>
                             }
                             classNames={{
-                                label: "heroui-input-label-outside text-my-cyan",
-                                inputWrapper: "bg-my-black border-my-purple",
-                                input: "text-white placeholder-zinc-500",
+                                label: "heroui-input-label-inside text-sm sm:text-base text-white",
+                                inputWrapper: "bg-white/5 border-my-purple/50 hover:border-my-cyan/50 rounded-xl transition-all duration-300",
+                                input: "text-white placeholder-zinc-500 text-sm sm:text-base",
                             }}
                         />
                     </motion.div>
@@ -264,7 +263,7 @@ export default function RegisterPage() {
                     transition={{ delay: 0.9 }}
                     className="text-center mt-6"
                 >
-                    <p className="text-zinc-400">
+                    <p className="text-zinc-400 text-sm sm:text-base">
                         Already have an account?{" "}
                         <Link
                             to="/login"
