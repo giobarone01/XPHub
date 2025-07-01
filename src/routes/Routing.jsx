@@ -14,6 +14,9 @@ import DeveloperDetailPage from "../pages/topdevelopers/detail";
 import FilterPage from "../pages/filterpage";
 import UpcomingPage from "../pages/upcomingpage";
 import GameTherapistPage from "../pages/gametherapist";
+import AboutPage from "../pages/about";
+import ContactPage from "../pages/contact";
+import PrivacyPage from "../pages/privacy";
 import ProtectedRoute from "./ProtectedRoute";
 
 export function Routing() {
@@ -38,6 +41,9 @@ export function Routing() {
                     } />
                     <Route path="/developers" element={<DevelopersPage />} />
                     <Route path="/developers/:id" element={<DeveloperDetailPage />} />
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="/contact" element={<ContactPage />} />
+                    <Route path="/privacy" element={<PrivacyPage />} />
                     <Route path="*" element={<ErrorPage />} />
                 </Route>
             </Routes>
