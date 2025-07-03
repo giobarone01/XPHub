@@ -18,6 +18,8 @@ import AboutPage from "../pages/about";
 import ContactPage from "../pages/contact";
 import PrivacyPage from "../pages/privacy";
 import ProtectedRoute from "./ProtectedRoute";
+import GuessTheGamePage from "../pages/minigames/guess";
+import MinigamesPage from "../pages/minigames";
 
 export function Routing() {
     return (
@@ -44,6 +46,8 @@ export function Routing() {
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="/contact" element={<ContactPage />} />
                     <Route path="/privacy" element={<PrivacyPage />} />
+                    <Route path="/minigames" element={<MinigamesPage />} />
+                    <Route path="/minigames/guess" element={<GuessTheGamePage />} />
                     <Route path="*" element={<ErrorPage />} />
                 </Route>
             </Routes>

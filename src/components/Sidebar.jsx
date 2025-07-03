@@ -69,6 +69,13 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
                     >
                         Game Therapist
                     </Link>
+                    <Link
+                        to="/minigames"
+                        className="mb-6 block pt-2 text-gray-300 hover:text-my-cyan transition-colors duration-250 font-semibold text-white text-lg sm:text-xl"
+                        onClick={() => isOpen && toggleSidebar()}
+                    >
+                        Minigames
+                    </Link>
             </aside>
         </>
     );
