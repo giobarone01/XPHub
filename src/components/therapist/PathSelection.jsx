@@ -17,6 +17,8 @@ export default function PathSelection({ onSelectPath }) {
                 <div
                     onClick={() => onSelectPath('character')}
                     className="flex items-center p-2 sm:p-3 rounded-lg border border-my-purple/90 hover:border-my-purple/80 bg-my-purple/40 hover:bg-my-purple/20 cursor-pointer transition-all duration-200 w-full sm:w-auto"
+                    role="button"
+                    tabIndex={0}
                 >
                     <div className="bg-my-purple/40 p-1.5 sm:p-2 rounded-full mr-2 sm:mr-3">
                         <FaUserAlt className="text-sm sm:text-base"/>
@@ -30,6 +32,8 @@ export default function PathSelection({ onSelectPath }) {
                 <div
                     onClick={() => onSelectPath('mood')}
                     className="flex items-center p-2 sm:p-3 rounded-lg border border-my-cyan/30 hover:border-my-cyan/80 bg-my-cyan/10 hover:bg-my-cyan/20 cursor-pointer transition-all duration-200 w-full sm:w-auto"
+                    role="button"
+                    tabIndex={0}
                 >
                     <div className="bg-my-cyan/20 p-1.5 sm:p-2 rounded-full mr-2 sm:mr-3">
                         <FaSmile className="text-sm sm:text-base" />

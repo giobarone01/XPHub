@@ -10,13 +10,21 @@ import { FaArrowRight } from "react-icons/fa";
 export default function CardGame({ game }) {
     const genres = game.genres?.map((g) => g.name).join(", ") || "N/A";
 
+    const normalizePlatformSlug = (slug) => {
+        if (slug.includes("playstation")) return "playstation";
+        if (slug.includes("xbox")) return "xbox";
+        if (slug.includes("nintendo")) return "nintendo";
+        return slug;
+    };
+    const uniquePlatforms = [...new Set(
+        game.platforms?.map(p => normalizePlatformSlug(p.platform.slug)) || []
+    )];
+
     return (
         <Card className="relative h-[280px] sm:h-[320px] md:h-[350px] w-full overflow-hidden hover:scale-105 transition-transform duration-300">
             <CardHeader className="absolute z-10 top-1 flex-col !items-start p-2 sm:p-3">
                 <div className="flex gap-1 sm:gap-2 text-white drop-shadow-lg mb-1">
-                    {[...new Set(
-                        game.platforms?.map(p => p.platform.slug)
-                    )].map((slug, i) => (
+                    {uniquePlatforms.map((slug, i) => (
                         <PlatformIcon key={i} platform={slug} className="text-xs sm:text-sm md:text-base" />
                     ))}
                 </div>

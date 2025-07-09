@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import PageTitle from "../../components/PageTitle";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import TherapistContext from "../../context/TherapistContext";
@@ -104,6 +104,77 @@ export default function GameTherapistPage() {
         return platform ? platform.name : "";
     };
 
+    const getCurrentScreen = () => {
+        if (showPathSelection) {
+            return {
+                id: "path-selection",
+                component: <PathSelection onSelectPath={handlePathSelection} />
+            };
+        } else if (showPlatformSelection) {
+            return {
+                id: "platform-selection",
+                component: <PlatformSelection
+                    platforms={platforms}
+                    onSelectPlatform={handlePlatformSelection}
+                    onBack={() => {
+                        if (Object.keys(answers).length > 0) {
+                            setShowPlatformSelection(false);
+                        } else {
+                            setShowPathSelection(true);
+                            resetQuiz();
+                        }
+                    }}
+                    hasAnswers={Object.keys(answers).length > 0}
+                />
+            };
+        } else if (loading) {
+            return {
+                id: "loading",
+                component: <MobileOptimizedMotion
+                    className="rounded-xl p-6 backdrop-blur-sm bg-black/40 border border-white/10 shadow-lg transition-all duration-300"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <div className="flex flex-col items-center justify-center py-6">
+                        <LoadingSpinner size="lg" />
+                        <p className="mt-3 text-gray-300">Analysis in progress...</p>
+                    </div>
+                </MobileOptimizedMotion>
+            };
+        } else if (!showResults) {
+            return {
+                id: `question-${currentQuestion}`,
+                component: <QuestionScreen
+                    question={getCurrentQuestions()[currentQuestion].text}
+                    options={getCurrentQuestions()[currentQuestion].options}
+                    currentQuestionIndex={currentQuestion}
+                    totalQuestions={getCurrentQuestions().length}
+                    onAnswer={handleAnswer}
+                    onBack={handleBackInQuestions}
+                />
+            };
+        } else {
+            return {
+                id: "results",
+                component: <ResultsScreen
+                    selectedPath={selectedPath}
+                    platformName={getSelectedPlatformName()}
+                    randomPhrase={getRandomPhrase()}
+                    recommendedGames={recommendedGames}
+                    onRestart={resetQuiz}
+                    onSwitchPath={handleSwitchPath}
+                    onChangePlatform={() => {
+                        setShowPlatformSelection(true);
+                        setShowResults(false);
+                    }}
+                />
+            };
+        }
+    };
+
+    const currentScreen = getCurrentScreen();
+
     return (
         <>
             <PageTitle subtitle="Discover which games are perfect for you">
@@ -111,57 +182,17 @@ export default function GameTherapistPage() {
             </PageTitle>
 
             <div className="mx-auto">
-                {showPathSelection ? (
-                    <PathSelection onSelectPath={handlePathSelection} />
-                ) : showPlatformSelection ? (
-                    <PlatformSelection
-                        platforms={platforms}
-                        onSelectPlatform={handlePlatformSelection}
-                        onBack={() => {
-                            if (Object.keys(answers).length > 0) {
-                                setShowPlatformSelection(false);
-                            } else {
-                                setShowPathSelection(true);
-                                resetQuiz();
-                            }
-                        }}
-                        hasAnswers={Object.keys(answers).length > 0}
-                    />
-                ) : loading ? (
-                    <MobileOptimizedMotion
-                        className="rounded-xl p-6 backdrop-blur-sm bg-black/40 border border-white/10 shadow-lg transition-all duration-300"
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={currentScreen.id}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.3 }}
                     >
-                        <div className="flex flex-col items-center justify-center py-6">
-                            <LoadingSpinner size="lg" />
-                            <p className="mt-3 text-gray-300">Analysis in progress...</p>
-                        </div>
-                    </MobileOptimizedMotion>
-                ) : !showResults ? (
-                    <QuestionScreen
-                        question={getCurrentQuestions()[currentQuestion].text}
-                        options={getCurrentQuestions()[currentQuestion].options}
-                        currentQuestionIndex={currentQuestion}
-                        totalQuestions={getCurrentQuestions().length}
-                        onAnswer={handleAnswer}
-                        onBack={handleBackInQuestions}
-                    />
-                ) : (
-                    <ResultsScreen
-                        selectedPath={selectedPath}
-                        platformName={getSelectedPlatformName()}
-                        randomPhrase={getRandomPhrase()}
-                        recommendedGames={recommendedGames}
-                        onRestart={resetQuiz}
-                        onSwitchPath={handleSwitchPath}
-                        onChangePlatform={() => {
-                            setShowPlatformSelection(true);
-                            setShowResults(false);
-                        }}
-                    />
-                )}
+                        {currentScreen.component}
+                    </motion.div>
+                </AnimatePresence>
             </div>
         </>
     );

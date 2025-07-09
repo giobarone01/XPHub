@@ -4,7 +4,6 @@ import { FaArrowLeft } from "react-icons/fa";
 export default function QuestionScreen({ question, options, currentQuestionIndex, totalQuestions, onAnswer, onBack }) {
     return (
         <MobileOptimizedMotion
-            key={currentQuestionIndex}
             className="rounded-xl p-6 backdrop-blur-sm bg-black/40 border border-white/10 shadow-lg transition-all duration-300"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

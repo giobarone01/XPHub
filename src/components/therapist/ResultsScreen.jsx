@@ -3,14 +3,14 @@ import { FaArrowLeft } from "react-icons/fa";
 import Grid from "../../components/Grid";
 import CardGame from "../../components/CardGame";
 
-export default function ResultsScreen({ 
-    selectedPath, 
-    platformName, 
-    randomPhrase, 
-    recommendedGames, 
-    onRestart, 
-    onSwitchPath, 
-    onChangePlatform 
+export default function ResultsScreen({
+    selectedPath,
+    platformName,
+    randomPhrase,
+    recommendedGames,
+    onRestart,
+    onSwitchPath,
+    onChangePlatform
 }) {
     return (
         <MobileOptimizedMotion

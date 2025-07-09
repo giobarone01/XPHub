@@ -21,7 +21,7 @@ export default function MinigamesPage() {
             </PageTitle>
 
             <div className="mx-auto">
-                <Grid columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                <Grid columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                     {MINIGAMES.map((game) => (
                         <MiniGameCard key={game.id} game={game} />
                     ))}
