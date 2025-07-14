@@ -1,4 +1,5 @@
 import MobileOptimizedMotion from "../MobileOptimizedMotion";
+import TouchFeedback from "../TouchFeedback";
 import { FaArrowLeft } from "react-icons/fa";
 import Grid from "../../components/Grid";
 import CardGame from "../../components/CardGame";
@@ -52,8 +53,9 @@ export default function ResultsScreen({
             )}
 
             <div className="mt-4 flex flex-wrap gap-2 justify-center">
-                <div
+                <TouchFeedback
                     className="bg-my-purple hover:bg-my-purple/80 text-white m-2 sm:m-3 px-2 sm:px-3 py-1 sm:py-2 rounded-3xl border border-transparent hover:border-white/50 transition-all duration-300 cursor-pointer w-full sm:w-auto text-center justify-center"
+                    activeClassName="bg-my-purple/60 border-white/70"
                     onClick={onRestart}
                     role="button"
                     tabIndex={0}
@@ -61,11 +63,12 @@ export default function ResultsScreen({
                     <div className="flex items-center justify-center gap-1 sm:gap-2 py-1">
                         <span className="text-xs sm:text-sm font-semibold">Restart</span>
                     </div>
-                </div>
+                </TouchFeedback>
 
                 {selectedPath === 'character' ? (
-                    <div
+                    <TouchFeedback
                         className="bg-my-cyan hover:bg-my-cyan/80 text-black m-2 sm:m-3 px-2 sm:px-3 py-1 sm:py-2 rounded-3xl border border-transparent hover:border-white/50 transition-all duration-300 cursor-pointer w-full sm:w-auto text-center justify-center"
+                        activeClassName="bg-my-cyan/60 border-white/70"
                         onClick={() => onSwitchPath('mood')}
                         role="button"
                         tabIndex={0}
@@ -73,10 +76,11 @@ export default function ResultsScreen({
                         <div className="flex items-center justify-center gap-1 sm:gap-2 py-1">
                             <span className="text-xs sm:text-sm font-semibold">Try mood therapy</span>
                         </div>
-                    </div>
+                    </TouchFeedback>
                 ) : (
-                    <div
+                    <TouchFeedback
                         className="bg-my-cyan hover:bg-my-cyan/80 text-black m-2 sm:m-3 px-2 sm:px-3 py-1 sm:py-2 rounded-3xl border border-transparent hover:border-white/50 transition-all duration-300 cursor-pointer w-full sm:w-auto text-center justify-center"
+                        activeClassName="bg-my-cyan/60 border-white/70"
                         onClick={() => onSwitchPath('character')}
                         role="button"
                         tabIndex={0}
@@ -84,17 +88,18 @@ export default function ResultsScreen({
                         <div className="flex items-center justify-center gap-1 sm:gap-2 py-1">
                             <span className="text-xs sm:text-sm font-semibold">Try character analysis</span>
                         </div>
-                    </div>
+                    </TouchFeedback>
                 )}
 
-                <div
+                <TouchFeedback
                     className="bg-white/5 hover:bg-white/10 text-white m-3 px-3 py-2 rounded-3xl border border-transparent hover:border-my-purple/50 transition-all duration-300 flex items-center gap-1 sm:gap-2 cursor-pointer w-full sm:w-auto text-center justify-center sm:justify-start"
+                    activeClassName="bg-white/20 border-my-purple/70"
                     onClick={onChangePlatform}
                     role="button"
                     tabIndex={0}
                 >
                     <FaArrowLeft className="text-xs sm:text-sm" /> <span className="text-xs sm:text-sm font-semibold">Change platform</span>
-                </div>
+                </TouchFeedback>
             </div>
         </MobileOptimizedMotion>
     );

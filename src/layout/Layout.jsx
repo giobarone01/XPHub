@@ -15,7 +15,7 @@ export default function Layout() {
     return (
         <div className="min-h-screen bg-my-black text-white flex flex-col">
             <header className="top-0">
-                <Header toggleSidebar={toggleSidebar} />
+                <Header toggleSidebar={toggleSidebar} shouldHideSidebar={shouldHideSidebar} />
             </header>
 
             <div className="flex flex-1 w-full">

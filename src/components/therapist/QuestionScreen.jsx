@@ -1,4 +1,5 @@
 import MobileOptimizedMotion from "../MobileOptimizedMotion";
+import TouchFeedback from "../TouchFeedback";
 import { FaArrowLeft } from "react-icons/fa";
 
 export default function QuestionScreen({ question, options, currentQuestionIndex, totalQuestions, onAnswer, onBack }) {
@@ -15,15 +16,16 @@ export default function QuestionScreen({ question, options, currentQuestionIndex
 
             <div className="grid grid-cols-1 gap-2 sm:gap-3 mb-6 sm:mb-8">
                 {options.map((option) => (
-                    <div
+                    <TouchFeedback
                         key={option.id}
+                        activeClassName="bg-white/20 border-my-cyan"
                         className="w-full bg-white/5 hover:bg-white/10 text-white text-xs sm:text-sm font-semibold p-2 sm:p-3 rounded-lg text-left border border-white/10 hover:border-my-cyan/50 transition-all duration-300 cursor-pointer flex items-center"
                         onClick={() => onAnswer(option.id)}
                         role="button"
                         tabIndex={0}
                     >
                         <span className="block w-full">{option.text}</span>
-                    </div>
+                    </TouchFeedback>
                 ))}
             </div>
 
@@ -40,14 +42,15 @@ export default function QuestionScreen({ question, options, currentQuestionIndex
             </div>
 
             <div className="flex justify-end mt-3">
-                <div
+                <TouchFeedback
+                    activeClassName="bg-white/20 border-my-purple"
                     className="bg-white/5 hover:bg-white/10 text-white px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-transparent hover:border-my-purple/50 transition-all duration-300 flex items-center gap-1 sm:gap-2 cursor-pointer w-auto"
                     onClick={onBack}
                     role="button"
                     tabIndex={0}
                 >
                     <FaArrowLeft className="text-xs sm:text-sm" /> <span className="text-xs sm:text-sm font-semibold">Back</span>
-                </div>
+                </TouchFeedback>
             </div>
         </MobileOptimizedMotion>
     );

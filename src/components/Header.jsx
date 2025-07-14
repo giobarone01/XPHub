@@ -5,7 +5,7 @@ import logo from '../assets/logo.png';
 import SearchBar from './SearchBar.jsx';
 import SessionContext from "../context/SessionContext";
 
-export default function Header({ toggleSidebar }) {
+export default function Header({ toggleSidebar, shouldHideSidebar }) {
     const { session, profile } = useContext(SessionContext);
     const navigate = useNavigate();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -44,15 +44,17 @@ export default function Header({ toggleSidebar }) {
         <header className="sticky top-0 z-40 bg-my-black">
             <nav className="w-full mx-auto px-3 sm:px-6 md:px-8 pt-3 sm:pt-4 md:pt-5 pb-3 sm:pb-4 md:pb-4 flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                    <button
-                        onClick={toggleSidebar}
-                        className="md:inline-block lg:hidden p-2.5 rounded hover:bg-my-cyan/30 focus:outline-none"
-                        aria-label="Toggle sidebar"
-                    >
-                        <svg className="w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
+                    {!shouldHideSidebar && (
+                        <button
+                            onClick={toggleSidebar}
+                            className="md:inline-block lg:hidden p-2.5 rounded hover:bg-my-cyan/30 focus:outline-none"
+                            aria-label="Toggle sidebar"
+                        >
+                            <svg className="w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                    )}
 
                     <Link to="/" className="flex items-center space-x-2 rounded px-1">
                         <img src={logo} alt="XPHub Logo" className="h-7 w-auto sm:h-7 md:h-8 lg:h-8" />
