@@ -30,7 +30,6 @@ export default function LoginPage() {
         if (error) {
             const errors = getErrors(error);
             setFormErrors(errors);
-            console.log(errors);
             return;
         }
 

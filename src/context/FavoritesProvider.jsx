@@ -14,7 +14,6 @@ export default function FavoritesProvider ({ children }){
             .select("*")
             .eq("user_id", session?.user.id);
         if (error) {
-            console.log(error);
             toast.error("Error loading favorites");
         } else {
             setFavorites(favourites);
@@ -34,15 +33,13 @@ export default function FavoritesProvider ({ children }){
                     },
                 ])
                 .select();
-                
+
             if (error) {
-                console.log("Error adding to favorites:", error);
                 toast.error("Unable to add to favorites");
             } else {
                 toast.success("Added to favorites");
             }
         } catch (error) {
-            console.log("Unexpected error:", error);
             toast.error("An unexpected error occurred");
         }
     };
@@ -57,7 +54,6 @@ export default function FavoritesProvider ({ children }){
         .eq("user_id", session.user.id);
 
     if (error) {
-        console.log("Error removing favorite:", error);
         toast.error("Unable to remove from favorites");
     } else {
         setFavorites((prev) => prev.filter((fav) => fav.game_id !== game_id));

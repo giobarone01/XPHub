@@ -23,7 +23,6 @@ export default function Avatar({ url, size, onUpload }) {
             const url = URL.createObjectURL(data)
             setAvatarUrl(url)
         } catch (error) {
-            console.log('Error downloading image: ', error.message)
             toast.error('Error loading image')
         }
     }

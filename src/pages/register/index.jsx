@@ -32,7 +32,6 @@ export default function RegisterPage() {
         if (error) {
             const errors = getErrors(error);
             setFormErrors(errors);
-            console.log(errors);
             return;
         }
 

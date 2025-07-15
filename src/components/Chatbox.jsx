@@ -51,7 +51,6 @@ export default function Chatbox({ data }) {
             .select();
 
         if (error) {
-            console.log(error);
             setErrorMsg("Error. Try Again");
         } else {
             setMessage("");
