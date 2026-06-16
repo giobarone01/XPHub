@@ -1,9 +1,7 @@
-import React from 'react';
-
-export default function RatingStars({ rating, showValue = true }) {
+export default function RatingStars({ rating, showValue = true, showLabel = true, className = "" }) {
     return (
-        <p className="text-tiny text-white/80 flex items-center gap-1">
-            Rating:
+        <p className={`flex items-center gap-1 text-white/80 ${className || "text-tiny"}`}>
+            {showLabel && "Rating:"}
             {[...Array(5)].map((_, i) => (
                 <span key={i} className={i < Math.round(rating) ? "text-yellow-400" : "text-gray-600"}>
                     ★

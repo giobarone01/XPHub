@@ -106,8 +106,10 @@ h1, h2, h3 {
     transition: opacity 0.3s ease;
     pointer-events: none;
 }
-.tilt-card:hover .card-spotlight {
-    opacity: 1;
+@media (hover: hover) {
+    .tilt-card:hover .card-spotlight {
+        opacity: 1;
+    }
 }
 
 /* Slow Ken Burns zoom for hero imagery */

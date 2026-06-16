@@ -1,15 +1,16 @@
 import { useRef } from "react";
 
-const prefersReduced = () =>
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const tiltDisabled = () =>
+    typeof window === "undefined" ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+    window.matchMedia("(hover: none), (pointer: coarse)").matches;
 
 export default function useTilt({ max = 8 } = {}) {
     const ref = useRef(null);
 
     const onMouseMove = (e) => {
         const el = ref.current;
-        if (!el || prefersReduced()) return;
+        if (!el || tiltDisabled()) return;
         const r = el.getBoundingClientRect();
         const px = (e.clientX - r.left) / r.width;
         const py = (e.clientY - r.top) / r.height;
