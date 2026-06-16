@@ -2,7 +2,6 @@ import useFetchSolution from "../../hook/useFetchSolution.jsx";
 import DeveloperCard from "../../components/DeveloperCard.jsx";
 import Grid from "../../components/Grid.jsx";
 import SkeletonCardGame from "../../components/SkeletonCard.jsx";
-import { motion } from "framer-motion";
 import PageTitle from "../../components/PageTitle.jsx";
 import { getRawgUrl } from "../../config/api.js";
 

@@ -21,12 +21,12 @@ export default function UserStats() {
 
             setLoading(true);
 
-            const { data: favorites, error: favError } = await supabase
+            const { data: favorites } = await supabase
                 .from("favorites")
                 .select("*", { count: "exact" })
                 .eq("user_id", session.user.id);
 
-            const { data: comments, error: commentsError } = await supabase
+            const { data: comments } = await supabase
                 .from("messages")
                 .select("*", { count: "exact" })
                 .eq("profile_id", session.user.id);

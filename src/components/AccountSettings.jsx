@@ -1,5 +1,4 @@
-import { useState, useContext } from "react";
-import SessionContext from "../context/SessionContext";
+import { useState } from "react";
 import supabase from "../supabase/supabase-client";
 import { FaCog, FaLock, FaSignOutAlt } from "react-icons/fa";
 import { toast } from 'react-toastify';
@@ -8,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function AccountSettings() {
-    const { session } = useContext(SessionContext);
     const [loading, setLoading] = useState(false);
     const [showPasswordForm, setShowPasswordForm] = useState(false);
     const navigate = useNavigate();

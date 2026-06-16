@@ -21,7 +21,7 @@ export default function CardGame({ game }) {
     )];
 
     return (
-        <Card className="relative h-[280px] sm:h-[320px] md:h-[350px] w-full overflow-hidden hover:scale-105 transition-transform duration-300">
+        <Card className="group relative h-[280px] sm:h-[320px] md:h-[350px] w-full overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:ring-2 hover:ring-my-cyan/60 hover:shadow-[0_10px_35px_-5px_rgba(0,255,255,0.25)]">
             <CardHeader className="absolute z-10 top-1 flex-col !items-start p-2 sm:p-3">
                 <div className="flex gap-1 sm:gap-2 text-white drop-shadow-lg mb-1">
                     {uniquePlatforms.map((slug, i) => (
@@ -37,8 +37,10 @@ export default function CardGame({ game }) {
                 <ToggleFavorite data={game} className="text-sm sm:text-base" />
             </div>
 
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent">
-                <LazyLoadGameImage image={game.background_image || FallbackCardImg } alt={game.name} />
+            <div className="absolute inset-0 overflow-hidden bg-gradient-to-t from-black/70 via-transparent to-transparent">
+                <div className="w-full h-full transition-transform duration-500 ease-out group-hover:scale-110">
+                    <LazyLoadGameImage image={game.background_image || FallbackCardImg } alt={game.name} />
+                </div>
             </div>
 
             <CardFooter className="absolute bottom-0 z-20 flex items-center justify-between rounded-xl bg-black/50 transition-all duration-300 p-2 sm:p-3 w-full">

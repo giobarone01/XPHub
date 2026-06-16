@@ -16,7 +16,7 @@ export default function HomePage() {
     });
     const { data, loading, error } = useFetchSolution(initialUrl);
 
-    const { data: popularData, loading: loadingPopular, error: errorPopular } = useFetchSolution(
+    const { data: popularData, error: errorPopular } = useFetchSolution(
         getRawgUrl("games", { ordering: "-added", page: 1 })
     );
 

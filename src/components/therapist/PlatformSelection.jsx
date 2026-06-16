@@ -2,7 +2,7 @@ import MobileOptimizedMotion from "../MobileOptimizedMotion";
 import TouchFeedback from "../TouchFeedback";
 import { FaGamepad, FaArrowLeft } from "react-icons/fa";
 
-export default function PlatformSelection({ platforms, onSelectPlatform, onBack, hasAnswers }) {
+export default function PlatformSelection({ platforms, onSelectPlatform, onBack }) {
     return (
         <MobileOptimizedMotion
             className="rounded-xl p-6 backdrop-blur-sm bg-black/40 border border-white/10 hover:border-my-cyan/50 transition-all duration-300"

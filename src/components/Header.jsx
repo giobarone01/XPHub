@@ -1,5 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import supabase from "../supabase/supabase-client";
 import logo from '../assets/logo.png';
 import SearchBar from './SearchBar.jsx';
@@ -10,16 +11,34 @@ export default function Header({ toggleSidebar, shouldHideSidebar }) {
     const navigate = useNavigate();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [avatarUrl, setAvatarUrl] = useState(null);
+    const dropdownRef = useRef(null);
 
     const signOut = async () => {
         const { error } = await supabase.auth.signOut();
         if (error) {
-            console.error('Logout error:', error);
-            alert('Error during sign out');
+            toast.error('Error during sign out');
             return;
         }
         navigate('/', { replace: true });
     };
+
+    useEffect(() => {
+        if (!isDropdownOpen) return;
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        };
+        const handleEscape = (event) => {
+            if (event.key === "Escape") setIsDropdownOpen(false);
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("keydown", handleEscape);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("keydown", handleEscape);
+        };
+    }, [isDropdownOpen]);
 
     useEffect(() => {
         const downloadImage = async (path) => {
@@ -70,7 +89,7 @@ export default function Header({ toggleSidebar, shouldHideSidebar }) {
 
                 <div className="flex items-center">
                     {session ? (
-                        <div className="relative">
+                        <div className="relative" ref={dropdownRef}>
                             <button
                                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                                 className="flex items-center space-x-2 focus:outline-none cursor-pointer"
@@ -102,7 +121,6 @@ export default function Header({ toggleSidebar, shouldHideSidebar }) {
                             {isDropdownOpen && (
                                 <div
                                     className="absolute top-full right-0 mt-2 w-48 bg-my-black rounded-lg shadow-lg py-2 border border-gray-700 z-50"
-                                    onMouseLeave={() => setIsDropdownOpen(false)}
                                 >
                                     <Link
                                         to="/account"
@@ -142,7 +160,7 @@ export default function Header({ toggleSidebar, shouldHideSidebar }) {
                                 Sign up
                             </Link>
 
-                            <div className="sm:hidden relative">
+                            <div className="sm:hidden relative" ref={dropdownRef}>
                                 <button
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                                     className="text-white p-2.5 rounded-full hover:bg-my-cyan/20 focus:outline-none"

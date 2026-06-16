@@ -1,56 +1,61 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Homepage from '../pages/homepage';
-import ErrorPage from '../pages/error';
-import GenrePage from "../pages/genrepage";
-import GamePage from "../pages/gamepage";
 import Layout from "../layout/Layout";
-import SearchPage from "../pages/searchpage";
-import RegisterPage from "../pages/register";
-import LoginPage from "../pages/login";
-import AccountPage from "../pages/account";
 import ScrollToTop from "../components/ScrollToTop";
-import DevelopersPage from "../pages/topdevelopers";
-import DeveloperDetailPage from "../pages/topdevelopers/detail";
-import FilterPage from "../pages/filterpage";
-import UpcomingPage from "../pages/upcomingpage";
-import GameTherapistPage from "../pages/gametherapist";
-import AboutPage from "../pages/about";
-import ContactPage from "../pages/contact";
-import PrivacyPage from "../pages/privacy";
 import ProtectedRoute from "./ProtectedRoute";
-import GuessTheGamePage from "../pages/minigames/guess";
-import MinigamesPage from "../pages/minigames";
+import LoadingSpinner from "../components/LoadingSpinner";
+
+const Homepage = lazy(() => import("../pages/homepage"));
+const ErrorPage = lazy(() => import("../pages/error"));
+const GenrePage = lazy(() => import("../pages/genrepage"));
+const GamePage = lazy(() => import("../pages/gamepage"));
+const SearchPage = lazy(() => import("../pages/searchpage"));
+const RegisterPage = lazy(() => import("../pages/register"));
+const LoginPage = lazy(() => import("../pages/login"));
+const AccountPage = lazy(() => import("../pages/account"));
+const DevelopersPage = lazy(() => import("../pages/topdevelopers"));
+const DeveloperDetailPage = lazy(() => import("../pages/topdevelopers/detail"));
+const FilterPage = lazy(() => import("../pages/filterpage"));
+const UpcomingPage = lazy(() => import("../pages/upcomingpage"));
+const GameTherapistPage = lazy(() => import("../pages/gametherapist"));
+const AboutPage = lazy(() => import("../pages/about"));
+const ContactPage = lazy(() => import("../pages/contact"));
+const PrivacyPage = lazy(() => import("../pages/privacy"));
+const GuessTheGamePage = lazy(() => import("../pages/minigames/guess"));
+const MinigamesPage = lazy(() => import("../pages/minigames"));
 
 export function Routing() {
     return (
         <BrowserRouter>
             <ScrollToTop />
-            <Routes>
-                <Route element={<Layout />}>
-                    <Route path="/" element={<Homepage />} />
-                    <Route path="/games/:genre" element={<GenrePage />} />
-                    <Route path="/games/:slug/:id" element={<GamePage />} />
-                    <Route path="/search" element={<SearchPage />} />
-                    <Route path="/filter" element={<FilterPage />} />
-                    <Route path="/upcoming" element={<UpcomingPage />} />
-                    <Route path="/therapist" element={<GameTherapistPage />} />
-                    <Route path="/register" element={<RegisterPage />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/account" element={
-                        <ProtectedRoute>
-                            <AccountPage />
-                        </ProtectedRoute>
-                    } />
-                    <Route path="/developers" element={<DevelopersPage />} />
-                    <Route path="/developers/:id" element={<DeveloperDetailPage />} />
-                    <Route path="/about" element={<AboutPage />} />
-                    <Route path="/contact" element={<ContactPage />} />
-                    <Route path="/privacy" element={<PrivacyPage />} />
-                    <Route path="/minigames" element={<MinigamesPage />} />
-                    <Route path="/minigames/guess" element={<GuessTheGamePage />} />
-                    <Route path="*" element={<ErrorPage />} />
-                </Route>
-            </Routes>
+            <Suspense fallback={<LoadingSpinner size="lg" className="min-h-[60vh]" />}>
+                <Routes>
+                    <Route element={<Layout />}>
+                        <Route path="/" element={<Homepage />} />
+                        <Route path="/games/:genre" element={<GenrePage />} />
+                        <Route path="/games/:slug/:id" element={<GamePage />} />
+                        <Route path="/search" element={<SearchPage />} />
+                        <Route path="/filter" element={<FilterPage />} />
+                        <Route path="/upcoming" element={<UpcomingPage />} />
+                        <Route path="/therapist" element={<GameTherapistPage />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/account" element={
+                            <ProtectedRoute>
+                                <AccountPage />
+                            </ProtectedRoute>
+                        } />
+                        <Route path="/developers" element={<DevelopersPage />} />
+                        <Route path="/developers/:id" element={<DeveloperDetailPage />} />
+                        <Route path="/about" element={<AboutPage />} />
+                        <Route path="/contact" element={<ContactPage />} />
+                        <Route path="/privacy" element={<PrivacyPage />} />
+                        <Route path="/minigames" element={<MinigamesPage />} />
+                        <Route path="/minigames/guess" element={<GuessTheGamePage />} />
+                        <Route path="*" element={<ErrorPage />} />
+                    </Route>
+                </Routes>
+            </Suspense>
         </BrowserRouter>
     );
 }

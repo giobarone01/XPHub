@@ -1,5 +1,4 @@
-import { useState, useContext } from "react";
-import SessionContext from "../../context/SessionContext";
+import { useState } from "react";
 import AccountForm from "../../components/AccountForm";
 import FavoritesSection from "../../components/FavoritesSection";
 import UserStats from "../../components/UserStats";
@@ -7,7 +6,6 @@ import AccountSettings from "../../components/AccountSettings";
 import { FaUser, FaHeart, FaChartBar, FaCog } from "react-icons/fa";
 
 export default function AccountPage() {
-    const { session, profile } = useContext(SessionContext);
     const [activeTab, setActiveTab] = useState("profile");
 
     return (

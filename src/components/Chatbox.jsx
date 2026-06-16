@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 export default function Chatbox({ data }) {
     const { session } = useContext(SessionContext);
     const [message, setMessage] = useState("");
-    const [errorMsg, setErrorMsg] = useState("");
+    const [, setErrorMsg] = useState("");
     const [sending, setSending] = useState(false);
     const textareaRef = useRef(null);
 

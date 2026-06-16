@@ -2,7 +2,6 @@ import { useContext, useState, useEffect } from "react";
 import FavoritesContext from "../context/FavoritesContext";
 import { FaTrashAlt, FaHeart, FaSort } from "react-icons/fa";
 import CompactGameCard from "./CompactGameCard";
-import useFetchSolution from "../hook/useFetchSolution";
 import LoadMoreButton from "./LoadMoreButton";
 import { getRawgUrl } from "../config/api.js";
 import LoadingSpinner from "./LoadingSpinner";

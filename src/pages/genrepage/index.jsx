@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import CardGame from "../../components/CardGame";
 import usePaginatedFetch from "../../hook/usePaginatedFetch";
 import Grid from "../../components/Grid";

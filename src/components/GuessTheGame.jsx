@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Button } from '@heroui/react';
 import { FaSkull, FaTrophy } from 'react-icons/fa';
 import LazyLoadGameImage from './LazyLoadGameImage';

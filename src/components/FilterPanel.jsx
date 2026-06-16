@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 
 export default function FilterPanel({
-    showFilters,
     platforms,
     genres,
     publishers,
