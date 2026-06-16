@@ -13,8 +13,8 @@ export default function Layout() {
     const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
     return (
-        <div className="min-h-screen bg-my-black text-white flex flex-col">
-            <header className="top-0">
+        <div className="app-bg min-h-screen text-white flex flex-col">
+            <header className="sticky top-0 z-50">
                 <Header toggleSidebar={toggleSidebar} shouldHideSidebar={shouldHideSidebar} />
             </header>
 

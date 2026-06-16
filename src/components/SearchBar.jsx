@@ -7,7 +7,6 @@ export default function Searchbar() {
     const [search, setSearch] = useState("");
     const [ariaInvalid, setAriaInvalid] = useState(null);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
-    const [isFocused, setIsFocused] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
@@ -32,28 +31,24 @@ export default function Searchbar() {
     return (
         <form
             onSubmit={handleSearch}
-            className={`bg-my-black rounded-full flex items-center px-2.5 md:px-3 lg:px-4 py-1 md:py-1.5 border-2 border-gray-700 w-full transition-all duration-300 ${isFocused ? 'border-my-purple ring-2 ring-my-purple/30 scale-[1.01]' : 'hover:border-my-purple'}`}
+            className={`group flex w-full items-center gap-2 rounded-full border bg-my-black/60 px-3.5 py-2 backdrop-blur-sm transition-all duration-300 focus-within:border-my-cyan/60 focus-within:ring-2 focus-within:ring-my-cyan/20 ${ariaInvalid ? "border-red-400/60" : "border-white/10 hover:border-white/20"}`}
         >
+            <button
+                type="submit"
+                className="text-gray-400 transition-colors group-focus-within:text-my-cyan hover:text-my-cyan cursor-pointer"
+                aria-label="Search"
+            >
+                <FaSearch className="h-4 w-4" />
+            </button>
             <input
                 type="text"
                 name="search"
-                placeholder={ariaInvalid
-                    ? "Search for something..."
-                    : (isMobile ? "Search games..." : "Search for games...")}
+                placeholder={isMobile ? "Search games..." : "Search for games..."}
                 onChange={(e) => setSearch(e.target.value)}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
                 value={search}
                 aria-invalid={ariaInvalid}
-                className={`bg-my-black text-white text-sm md:text-base placeholder-gray-400 px-1.5 md:px-3 py-0.5 rounded-full focus:outline-none w-full ${ariaInvalid ? "placeholder-red-400" : ""}`}
+                className={`w-full bg-transparent text-sm text-white placeholder-gray-400 focus:outline-none md:text-base ${ariaInvalid ? "placeholder-red-400" : ""}`}
             />
-            <button
-                type="submit"
-                className={`text-gray-300 px-1.5 md:px-3 lg:px-4 py-1 md:py-1.5 rounded-full transition-all duration-300 ${isFocused ? 'text-my-cyan scale-110' : 'hover:text-my-cyan'} focus:outline-none focus:text-my-cyan cursor-pointer`}
-                aria-label="Search"
-            >
-                <FaSearch className="w-3.5 h-3.5 md:w-4 md:h-4" />
-            </button>
         </form>
     );
 }

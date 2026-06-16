@@ -60,7 +60,7 @@ export default function Header({ toggleSidebar, shouldHideSidebar }) {
     }, [profile]);
 
     return (
-        <header className="sticky top-0 z-40 bg-my-black">
+        <header className="z-40 bg-my-black/80 backdrop-blur-md border-b border-white/5">
             <nav className="w-full mx-auto px-3 sm:px-6 md:px-8 pt-3 sm:pt-4 md:pt-5 pb-3 sm:pb-4 md:pb-4 flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                     {!shouldHideSidebar && (
@@ -75,15 +75,15 @@ export default function Header({ toggleSidebar, shouldHideSidebar }) {
                         </button>
                     )}
 
-                    <Link to="/" className="flex items-center space-x-2 rounded px-1">
-                        <img src={logo} alt="XPHub Logo" className="h-7 w-auto sm:h-7 md:h-8 lg:h-8" />
-                        <span className="font-bold text-lg sm:text-lg md:text-xl lg:text-xl text-white hover:text-my-cyan transition-colors duration-200 hidden lg:inline">
+                    <Link to="/" className="flex items-center gap-2 rounded px-1">
+                        <img src={logo} alt="XPHub Logo" className="h-7 w-auto md:h-8" />
+                        <span className="hidden sm:inline font-bold text-lg md:text-xl text-white transition-colors duration-200 hover:text-my-cyan">
                             XPHub
                         </span>
                     </Link>
                 </div>
 
-                <div className="flex-1 max-w-full md:max-w-xl px-2 md:px-4 mx-0 md:mx-4">
+                <div className="flex-1 max-w-md mx-2 sm:mx-4">
                     <SearchBar />
                 </div>
 
@@ -149,13 +149,13 @@ export default function Header({ toggleSidebar, shouldHideSidebar }) {
                         <>
                             <Link
                                 to="/login"
-                                className="hidden sm:inline-block text-white hover:text-my-cyan transition-colors duration-200 px-4 py-2 rounded-full text-base"
+                                className="hidden sm:inline-block rounded-full border border-white/10 px-4 py-1.5 text-sm text-gray-200 transition-colors duration-200 hover:border-white/25 hover:text-white"
                             >
                                 Login
                             </Link>
                             <Link
                                 to="/register"
-                                className="hidden sm:inline-block bg-my-purple text-white font-semibold text-base px-5 py-2 rounded-full hover:bg-my-purple/90 transition-colors duration-200"
+                                className="ml-2 hidden sm:inline-block rounded-full bg-gradient-to-r from-my-cyan to-my-purple px-5 py-1.5 text-sm font-semibold text-white shadow-md shadow-my-purple/30 transition-transform duration-200 hover:scale-105"
                             >
                                 Sign up
                             </Link>

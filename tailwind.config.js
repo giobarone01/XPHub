@@ -10,9 +10,10 @@ export const theme = {
   extend: {
     colors: {
       my: {
-        purple: "#4b0082",
-        cyan: "#00ffff",
-        black: "#1c1c1c",
+        purple: "#7c3aed",
+        "purple-light": "#a78bfa",
+        cyan: "#22d3ee",
+        black: "#16161d",
         green: "#00ff88",
       },
       white: "#ffffff",

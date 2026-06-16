@@ -1,11 +1,11 @@
 import CardGame from "../../components/CardGame";
 import Grid from "../../components/Grid";
 import useFetchSolution from "../../hook/useFetchSolution";
-import LoadingSpinner from "../../components/LoadingSpinner";
 import GamesSlider from "../../components/Slider";
 import CompactGameCard from "../../components/CompactGameCard";
 import SkeletonCardGame from "../../components/SkeletonCard";
 import PageTitle from "../../components/PageTitle";
+import HeroFeatured from "../../components/HeroFeatured";
 import { getRawgUrl } from "../../config/api.js";
 
 export default function HomePage() {
@@ -35,9 +35,21 @@ export default function HomePage() {
         return `${formatDate(sixMonthsAgo)},${formatDate(today)}`;
     }
 
+    const featured = data?.results?.[0];
+    const restGames = data?.results?.slice(1) || [];
+
     return (
         <>
             {(error || errorPopular) && <article className="container mx-auto">{error || errorPopular}</article>}
+
+            {loading ? (
+                <div className="container mx-auto px-4 mb-10">
+                    <div className="h-[360px] sm:h-[420px] md:h-[480px] rounded-2xl bg-my-black/60 animate-pulse" />
+                </div>
+            ) : (
+                <HeroFeatured game={featured} />
+            )}
+
             <div className="container mx-auto px-4">
                 <PageTitle subtitle="Top games released in the last months">
                     New and <span className="gradient-text">Trending</span>
@@ -51,7 +63,7 @@ export default function HomePage() {
                 </Grid>
             ) : (
                 <Grid>
-                    {data?.results.map((game) => <CardGame key={game.id} game={game} />)}
+                    {restGames.map((game) => <CardGame key={game.id} game={game} />)}
                 </Grid>
             )}
             {popularData?.results?.length > 0 && (
