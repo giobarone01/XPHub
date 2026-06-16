@@ -6,8 +6,10 @@ import PlatformIcon from "./PlatformIcon";
 import RatingStars from "./RatingStars";
 import FallbackCardImg from "../assets/fallbackcard.png";
 import { FaArrowRight } from "react-icons/fa";
+import useTilt from "../hook/useTilt";
 
 export default function CardGame({ game }) {
+    const tilt = useTilt({ max: 7 });
     const genres = game.genres?.map((g) => g.name).join(", ") || "N/A";
 
     const normalizePlatformSlug = (slug) => {
@@ -21,7 +23,13 @@ export default function CardGame({ game }) {
     )];
 
     return (
-        <Card className="group relative h-[280px] sm:h-[320px] md:h-[350px] w-full overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:ring-2 hover:ring-my-cyan/60 hover:shadow-[0_10px_35px_-5px_rgba(0,255,255,0.25)]">
+        <div
+            ref={tilt.ref}
+            onMouseMove={tilt.onMouseMove}
+            onMouseLeave={tilt.onMouseLeave}
+            className="tilt-card group h-[280px] sm:h-[320px] md:h-[350px] w-full"
+        >
+        <Card className="tilt-inner relative h-full w-full overflow-hidden transition-shadow duration-300 hover:ring-2 hover:ring-my-cyan/60 hover:shadow-[0_18px_40px_-10px_rgba(34,211,238,0.35)]">
             <CardHeader className="absolute z-10 top-1 flex-col !items-start p-2 sm:p-3">
                 <div className="flex gap-1 sm:gap-2 text-white drop-shadow-lg mb-1">
                     {uniquePlatforms.map((slug, i) => (
@@ -43,6 +51,8 @@ export default function CardGame({ game }) {
                 </div>
             </div>
 
+            <div className="card-spotlight" />
+
             <CardFooter className="absolute bottom-0 z-20 flex items-center justify-between rounded-xl bg-black/50 transition-all duration-300 p-2 sm:p-3 w-full">
                 <div className="flex flex-col gap-0.5 sm:gap-1 max-w-[65%] overflow-hidden">
                     <p className="text-xs sm:text-tiny text-white/80 line-clamp-1">{genres}</p>
@@ -59,5 +69,6 @@ export default function CardGame({ game }) {
                 </Button>
             </CardFooter>
         </Card>
+        </div>
     );
 }

@@ -21,6 +21,11 @@
 
 body {
     font-family: var(--font-body);
+    background-color: var(--bg-base);
+    background-image:
+        radial-gradient(900px 520px at 82% -8%, rgba(124, 58, 237, 0.28), transparent 60%),
+        radial-gradient(760px 480px at -8% 18%, rgba(34, 211, 238, 0.16), transparent 55%);
+    background-attachment: fixed;
 }
 
 h1, h2, h3 {
@@ -28,13 +33,123 @@ h1, h2, h3 {
     letter-spacing: -0.01em;
 }
 
-/* App background: deep base with soft neon glows for depth */
+/* Animated aurora background: slow drifting neon blobs behind the UI */
 .app-bg {
-    background-color: var(--bg-base);
-    background-image:
-        radial-gradient(900px 520px at 82% -8%, rgba(124, 58, 237, 0.22), transparent 60%),
-        radial-gradient(760px 480px at -8% 18%, rgba(34, 211, 238, 0.12), transparent 55%);
-    background-attachment: fixed;
+    position: relative;
+    z-index: 0;
+}
+.aurora-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+.aurora-bg::before,
+.aurora-bg::after {
+    content: "";
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+}
+.aurora-bg::before {
+    width: 60vw;
+    height: 60vw;
+    left: 58%;
+    top: -18%;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.45), transparent 60%);
+    animation: drift1 22s ease-in-out infinite alternate;
+}
+.aurora-bg::after {
+    width: 48vw;
+    height: 48vw;
+    left: -12%;
+    top: 18%;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.30), transparent 60%);
+    animation: drift2 27s ease-in-out infinite alternate;
+}
+@keyframes drift1 {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to { transform: translate3d(-6%, 9%, 0) scale(1.18); }
+}
+@keyframes drift2 {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to { transform: translate3d(9%, -7%, 0) scale(1.12); }
+}
+
+/* 3D tilt + cursor spotlight for cards */
+@property --a {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+.tilt-card {
+    perspective: 1000px;
+    --rx: 0deg;
+    --ry: 0deg;
+    --mx: 50%;
+    --my: 50%;
+}
+.tilt-inner {
+    transform: rotateX(var(--rx)) rotateY(var(--ry));
+    transform-style: preserve-3d;
+    transition: transform 0.18s ease-out;
+    will-change: transform;
+}
+.card-spotlight {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    border-radius: inherit;
+    background: radial-gradient(240px circle at var(--mx) var(--my), rgba(34, 211, 238, 0.22), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+.tilt-card:hover .card-spotlight {
+    opacity: 1;
+}
+
+/* Slow Ken Burns zoom for hero imagery */
+.ken-burns {
+    animation: kenburns 24s ease-in-out infinite alternate;
+}
+@keyframes kenburns {
+    from { transform: scale(1) translate3d(0, 0, 0); }
+    to { transform: scale(1.12) translate3d(-2%, -2%, 0); }
+}
+
+/* Rotating gradient border */
+.anim-border {
+    position: relative;
+}
+.anim-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(from var(--a), var(--my-cyan), var(--my-purple), var(--my-cyan));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: borderspin 6s linear infinite;
+    pointer-events: none;
+}
+@keyframes borderspin {
+    to { --a: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .aurora-bg::before,
+    .aurora-bg::after,
+    .ken-burns,
+    .anim-border::before {
+        animation: none !important;
+    }
+    .tilt-inner {
+        transition: none;
+    }
 }
 
 /* Coherent focus ring across all interactive elements */

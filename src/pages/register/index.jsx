@@ -85,12 +85,12 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col justify-center items-center bg-my-black">
+        <div className="min-h-screen flex flex-col justify-center items-center">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="w-full max-w-sm p-4 sm:p-5 rounded-lg bg-my-black mx-auto translate-y-[-8vh]"
+                className="w-full max-w-sm p-6 sm:p-7 rounded-2xl border border-white/10 bg-my-black/50 shadow-2xl backdrop-blur-md mx-auto translate-y-[-8vh]"
             >
                 <motion.div
                     initial={{ scale: 0.9 }}

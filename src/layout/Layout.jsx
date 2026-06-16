@@ -14,6 +14,7 @@ export default function Layout() {
 
     return (
         <div className="app-bg min-h-screen text-white flex flex-col">
+            <div className="aurora-bg" aria-hidden="true" />
             <header className="sticky top-0 z-50">
                 <Header toggleSidebar={toggleSidebar} shouldHideSidebar={shouldHideSidebar} />
             </header>

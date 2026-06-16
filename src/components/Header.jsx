@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FaUserCircle } from "react-icons/fa";
 import supabase from "../supabase/supabase-client";
 import logo from '../assets/logo.png';
 import SearchBar from './SearchBar.jsx';
@@ -163,12 +164,10 @@ export default function Header({ toggleSidebar, shouldHideSidebar }) {
                             <div className="sm:hidden relative" ref={dropdownRef}>
                                 <button
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                    className="text-white p-2.5 rounded-full hover:bg-my-cyan/20 focus:outline-none"
+                                    className="text-gray-200 p-1.5 rounded-full hover:text-my-cyan hover:bg-my-cyan/10 focus:outline-none transition-colors"
                                     aria-label="Account menu"
                                 >
-                                    <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                    </svg>
+                                    <FaUserCircle className="w-8 h-8" />
                                 </button>
 
                                 {isDropdownOpen && (
